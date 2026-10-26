@@ -1081,6 +1081,7 @@ export function PresentationApp({
                   const thumb =
                     SLIDE_MEDIA_MAP[s.id]?.primaryImage ||
                     "/images/night-sky-dark/images (9).jpg";
+                  const hasVideo = Boolean(SLIDE_MEDIA_MAP[s.id]?.videoUrl);
                   return (
                     <button
                       key={s.id}
@@ -1122,9 +1123,16 @@ export function PresentationApp({
                           <span className="bg-slate-950/90 backdrop-blur-md px-2.5 py-0.5 rounded-lg border border-slate-700/80 text-cyan-300 shadow">
                             SLIDE {String(s.id).padStart(2, "0")}
                           </span>
-                          <span className="bg-slate-950/90 backdrop-blur-md px-2.5 py-0.5 rounded-lg border border-slate-800 text-[11px] text-slate-300">
-                            Act {s.actNumber}
-                          </span>
+                          <div className="flex items-center gap-1.5">
+                            {hasVideo && (
+                              <span className="bg-indigo-950/90 backdrop-blur-md px-2 py-0.5 rounded-lg border border-indigo-500/50 text-[10px] text-indigo-300 shadow flex items-center gap-1">
+                                <span>🎬</span> Video
+                              </span>
+                            )}
+                            <span className="bg-slate-950/90 backdrop-blur-md px-2.5 py-0.5 rounded-lg border border-slate-800 text-[11px] text-slate-300">
+                              Act {s.actNumber}
+                            </span>
+                          </div>
                         </div>
 
                         {/* Active Badge hoặc Topic Tag trên ảnh */}

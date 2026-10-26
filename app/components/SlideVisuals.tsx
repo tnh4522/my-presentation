@@ -46,7 +46,8 @@ export const SLIDE_MEDIA_MAP: Record<
     primaryImage: "/images/night-sky-dark/images (6).jpg",
     secondaryImage:
       "/images/night-sky-dark/digitally-created-3-dimensional-starry-sky-with-royalty-free-image-1747340356.avif",
-    credit: "Golden Horizon & 3D Starfield",
+    videoUrl: "/videos/night-sky-dark/141454-777657300_medium.mp4",
+    credit: "Golden Horizon & 3D Starfield Video",
   },
   7: {
     primaryImage: "/images/night-sky-dark/2MQtRGPwiA7BBYFUvrjhaa-1920-80.jpg",
@@ -60,7 +61,8 @@ export const SLIDE_MEDIA_MAP: Record<
   9: {
     primaryImage: "/images/night-sky-dark/cena.jpg",
     secondaryImage: "/images/night-sky-dark/images (10).jpg",
-    credit: "Centaurus A Dark Cosmic Dust Lane",
+    videoUrl: "/videos/night-sky-dark/141447-777657278_medium.mp4",
+    credit: "Centaurus A Dark Cosmic Dust & Gas Nebula Video",
   },
   10: {
     primaryImage: "/images/night-sky-dark/images (12).jpg",
@@ -87,7 +89,8 @@ export const SLIDE_MEDIA_MAP: Record<
   15: {
     primaryImage: "/images/night-sky-dark/23825795249_3b22921aef_o.webp",
     secondaryImage: "/images/night-sky-dark/images (4).jpg",
-    credit: "Ancient Starlight Reaching Earth",
+    videoUrl: "/videos/night-sky-dark/169951-842348732_medium.mp4",
+    credit: "Ancient Starlight Traveling Across Deep Space Video",
   },
   16: {
     primaryImage: "/images/night-sky-dark/images (12).jpg",
@@ -98,12 +101,14 @@ export const SLIDE_MEDIA_MAP: Record<
   17: {
     primaryImage: "/images/night-sky-dark/Whirlpool-Galaxy-NGC-5195-Sc.webp",
     secondaryImage: "/images/night-sky-dark/images (11).jpg",
-    credit: "Whirlpool Spiral Galaxy NGC 5195 (Hubble)",
+    videoUrl: "/videos/night-sky-dark/18492-292594998_medium.mp4",
+    credit: "Whirlpool Spiral Galaxy Rotation Video",
   },
   18: {
     primaryImage: "/images/night-sky-dark/eath-universeITG-1737468674509-scaled.avif",
     secondaryImage: "/images/night-sky-dark/eso1019a.jpg",
-    credit: "Earth & The Observable Universe Horizon",
+    videoUrl: "/videos/night-sky-dark/215695_medium.mp4",
+    credit: "Earth & The Observable Universe Horizon Video",
   },
   19: {
     primaryImage: "/images/night-sky-dark/A6CPB4I4X46PGDQFXZIINNFOUE.webp",
@@ -113,7 +118,8 @@ export const SLIDE_MEDIA_MAP: Record<
   20: {
     primaryImage: "/images/night-sky-dark/images (7).jpg",
     secondaryImage: "/images/night-sky-dark/quantum-gravity-curved-spacetime-galaxy.webp",
-    credit: "Human Reflection Under the Cosmos",
+    videoUrl: "/videos/night-sky-dark/215762_medium.mp4",
+    credit: "Human Reflection Under Infinite Starlight Video",
   },
 };
 
@@ -124,7 +130,7 @@ export function SlideVisual({ slideId }: SlideVisualProps) {
   const [splitPos, setSplitPos] = useState<number>(50); // Slide 7
   const [dustStep, setDustStep] = useState<number>(3); // Slide 10
   const [showOverlay, setShowOverlay] = useState<boolean>(true);
-  const [useVideoOnSlide1, setUseVideoOnSlide1] = useState<boolean>(true);
+  const [useVideo, setUseVideo] = useState<boolean>(true);
   const [videoError, setVideoError] = useState<boolean>(false);
   const videoRef = useRef<HTMLVideoElement | null>(null);
 
@@ -133,13 +139,47 @@ export function SlideVisual({ slideId }: SlideVisualProps) {
   const containerBase =
     "relative w-full h-full min-h-[180px] flex flex-col justify-between rounded-2xl overflow-hidden bg-[#03050c] select-none group";
 
-  // Floating top-right controls (clean photo button removed)
+  // Floating top-right controls with automatic Photo/Video toggle for any slide with videoUrl
   const renderOverlayToggle = (extraControl?: React.ReactNode) => {
-    if (!extraControl) return null;
     return (
       <div className="absolute top-2.5 right-2.5 z-30 flex items-center gap-1.5">
+        {media.videoUrl && !videoError && (
+          <button
+            type="button"
+            onClick={() => setUseVideo((prev) => !prev)}
+            className="px-2.5 py-1 rounded-lg text-[11px] font-mono bg-cyan-950/90 text-cyan-200 border border-cyan-500/40 hover:border-cyan-300 backdrop-blur-md cursor-pointer transition shadow"
+            title={useVideo ? "Chuyển sang ảnh tĩnh" : "Bật video chuyển động"}
+          >
+            {useVideo ? "🖼 Photo" : "🎬 Video"}
+          </button>
+        )}
         {extraControl}
       </div>
+    );
+  };
+
+  const renderBackdrop = (altText: string, customImgClass = "object-cover") => {
+    if (useVideo && !videoError && media.videoUrl) {
+      return (
+        <video
+          ref={videoRef}
+          src={media.videoUrl}
+          poster={media.primaryImage}
+          autoPlay
+          loop
+          muted
+          playsInline
+          onError={() => setVideoError(true)}
+          className={`absolute inset-0 w-full h-full ${customImgClass}`}
+        />
+      );
+    }
+    return (
+      <img
+        src={media.primaryImage}
+        alt={altText}
+        className={`absolute inset-0 w-full h-full ${customImgClass} transition-transform duration-700 group-hover:scale-105`}
+      />
     );
   };
 
@@ -149,41 +189,12 @@ export function SlideVisual({ slideId }: SlideVisualProps) {
         <div
           className={`${containerBase} border border-cyan-500/30 shadow-[0_0_50px_-15px_rgba(34,211,238,0.35)]`}
         >
-          {/* Real Photo or Video Backdrop (Sound muted permanently for video) */}
-          {useVideoOnSlide1 && !videoError && media.videoUrl ? (
-            <video
-              ref={videoRef}
-              src={media.videoUrl}
-              poster={media.primaryImage}
-              autoPlay
-              loop
-              muted
-              playsInline
-              onError={() => setVideoError(true)}
-              className="absolute inset-0 w-full h-full object-cover"
-            />
-          ) : (
-            <img
-              src={media.primaryImage}
-              alt="Deep starry night sky over mountain horizon"
-              className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-            />
-          )}
+          {renderBackdrop("Deep starry night sky over mountain horizon")}
 
           {/* Subtle gradient vignette */}
           <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#02040a] via-transparent to-[#02040a]/50" />
 
-          {renderOverlayToggle(
-            !videoError && (
-              <button
-                type="button"
-                onClick={() => setUseVideoOnSlide1((prev) => !prev)}
-                className="px-2.5 py-1 rounded-lg text-[11px] font-mono bg-cyan-950/90 text-cyan-200 border border-cyan-500/40 hover:border-cyan-300 backdrop-blur-md cursor-pointer"
-              >
-                {useVideoOnSlide1 ? "🖼 Photo" : "🎬 Video"}
-              </button>
-            )
-          )}
+          {renderOverlayToggle()}
         </div>
       );
 
@@ -767,11 +778,7 @@ export function SlideVisual({ slideId }: SlideVisualProps) {
     case 6:
       return (
         <div className={`${containerBase} border border-amber-400/45 p-3`}>
-          <img
-            src={media.primaryImage}
-            alt="Night landscape with glowing golden sky"
-            className="absolute inset-0 w-full h-full object-cover"
-          />
+          {renderBackdrop("Night landscape with glowing golden sky")}
 
           {/* Interactive Golden Solar-Brightness Overlay */}
           <div
@@ -1045,11 +1052,7 @@ export function SlideVisual({ slideId }: SlideVisualProps) {
     case 9:
       return (
         <div className={`${containerBase} border border-indigo-500/35`}>
-          <img
-            src={media.primaryImage}
-            alt="Centaurus A galaxy with thick dark cosmic dust cloud absorbing starlight"
-            className="absolute inset-0 w-full h-full object-cover"
-          />
+          {renderBackdrop("Centaurus A galaxy with dark cosmic dust cloud absorbing starlight")}
           <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#03050c]/85 via-transparent to-[#03050c]/45" />
 
           {renderOverlayToggle()}
@@ -1630,11 +1633,7 @@ export function SlideVisual({ slideId }: SlideVisualProps) {
     case 15:
       return (
         <div className={`${containerBase} border border-cyan-500/35`}>
-          <img
-            src={media.primaryImage}
-            alt="Starlight streaming across dark space toward Earth horizon"
-            className="absolute inset-0 w-full h-full object-cover"
-          />
+          {renderBackdrop("Starlight streaming across dark space toward Earth horizon")}
           <div className="pointer-events-none absolute inset-0 bg-[#03050e]/65" />
 
           {renderOverlayToggle()}
@@ -1843,11 +1842,7 @@ export function SlideVisual({ slideId }: SlideVisualProps) {
     case 17:
       return (
         <div className={`${containerBase} border border-violet-500/35`}>
-          <img
-            src={media.primaryImage}
-            alt="Whirlpool Spiral Galaxy NGC 5195"
-            className="absolute inset-0 w-full h-full object-cover"
-          />
+          {renderBackdrop("Whirlpool Spiral Galaxy NGC 5195")}
           <div className="pointer-events-none absolute inset-0 bg-[#040510]/45" />
 
           {renderOverlayToggle()}
@@ -1934,11 +1929,7 @@ export function SlideVisual({ slideId }: SlideVisualProps) {
     case 18:
       return (
         <div className={`${containerBase} border border-rose-500/35`}>
-          <img
-            src={media.primaryImage}
-            alt="Earth and the observable universe horizon"
-            className="absolute inset-0 w-full h-full object-cover"
-          />
+          {renderBackdrop("Earth and the observable universe horizon")}
           <div className="pointer-events-none absolute inset-0 bg-[#030308]/55" />
 
           {renderOverlayToggle()}
@@ -2174,11 +2165,7 @@ export function SlideVisual({ slideId }: SlideVisualProps) {
         <div
           className={`${containerBase} justify-between border border-cyan-500/35 p-3.5`}
         >
-          <img
-            src={media.primaryImage}
-            alt="Human reflection under the starry night sky"
-            className="absolute inset-0 w-full h-full object-cover"
-          />
+          {renderBackdrop("Human reflection under the starry night sky")}
           <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#03050c]/95 via-[#03050c]/65 to-[#03050c]/45" />
 
           {renderOverlayToggle()}
