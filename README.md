@@ -5,7 +5,6 @@ Personal interactive web presentation hub built with Next.js, React, and Tailwin
 ## Current Presentations
 
 1. **Why Is the Night Sky Dark?** (*Olbers' Paradox & The Secret of Our Universe*)
-   - **Level:** B1 English
    - **Slides:** 20 interactive slides with real astronomy photography, deep-space video, interactive SVG diagrams, and built-in Speaker Notes / Voiceover (TTS).
    - **Route:** `/presentations/why-is-the-night-sky-dark` (or launch directly from the Home Hub `/`).
 

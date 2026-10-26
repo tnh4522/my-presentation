@@ -12,7 +12,7 @@ export interface PresentationDeck {
   subtitle: string;
   description: string;
   category: string;
-  level: string;
+  level?: string;
   coverImage: string;
   videoPreview?: string;
   accent: SlideAccent;
@@ -33,16 +33,14 @@ export const PRESENTATIONS: PresentationDeck[] = [
     description:
       "A 20-slide cinematic deep-space presentation exploring how a simple question about the dark night sky confused astronomers for 100 years and revealed that our universe had a beginning.",
     category: "Astronomy & Cosmology",
-    level: "B1 English",
     coverImage:
-      "/images/04-Dunkery-Beacon-Keith-Trueman-d4dd113-e1597842367814.webp",
-    videoPreview: "/images/snaptik.vn_7680564940909907208.mp4",
+      "/images/night-sky-dark/04-Dunkery-Beacon-Keith-Trueman-d4dd113-e1597842367814.webp",
+    videoPreview: "/images/night-sky-dark/interstellar.mp4",
     accent: "cyan",
     tags: [
       "Olbers' Paradox",
       "Big Bang",
       "Cosmology",
-      "B1 English",
       "Voiceover Notes",
     ],
     slideCount: SLIDES.length,

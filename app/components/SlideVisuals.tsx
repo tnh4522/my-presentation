@@ -16,103 +16,103 @@ export const SLIDE_MEDIA_MAP: Record<
   }
 > = {
   1: {
-    primaryImage: "/images/images (9).jpg",
-    secondaryImage: "/images/23825795249_3b22921aef_o.webp",
-    videoUrl: "/images/snaptik.vn_7680564940909907208.mp4",
+    primaryImage: "/images/night-sky-dark/images (9).jpg",
+    secondaryImage: "/images/night-sky-dark/23825795249_3b22921aef_o.webp",
+    videoUrl: "/images/night-sky-dark/interstellar.mp4",
     credit: "Deep Starry Horizon & Cosmic Video",
   },
   2: {
     primaryImage:
-      "/images/04-Dunkery-Beacon-Keith-Trueman-d4dd113-e1597842367814.webp",
-    secondaryImage: "/images/A6CPB4I4X46PGDQFXZIINNFOUE.webp",
+      "/images/night-sky-dark/04-Dunkery-Beacon-Keith-Trueman-d4dd113-e1597842367814.webp",
+    secondaryImage: "/images/night-sky-dark/A6CPB4I4X46PGDQFXZIINNFOUE.webp",
     credit: "Dunkery Beacon Night Sky Silhouette",
   },
   3: {
-    primaryImage: "/images/WUCynKkbic2oBm3N3utuPW.jpg",
-    secondaryImage: "/images/ESSAY-TOPIMAGE.webp",
+    primaryImage: "/images/night-sky-dark/WUCynKkbic2oBm3N3utuPW.jpg",
+    secondaryImage: "/images/night-sky-dark/ESSAY-TOPIMAGE.webp",
     credit: "Milky Way Arch & 1823 Astronomy",
   },
   4: {
-    primaryImage: "/images/v5n22xGyNNHLzSnSArbrVH.jpg",
-    secondaryImage: "/images/eso1019a.jpg",
+    primaryImage: "/images/night-sky-dark/v5n22xGyNNHLzSnSArbrVH.jpg",
+    secondaryImage: "/images/night-sky-dark/eso1019a.jpg",
     credit: "Concentric Orbits & Deep Star Shells",
   },
   5: {
-    primaryImage: "/images/Stars-in-the-sky.webp",
-    secondaryImage: "/images/eso1019a.jpg",
+    primaryImage: "/images/night-sky-dark/Stars-in-the-sky.webp",
+    secondaryImage: "/images/night-sky-dark/eso1019a.jpg",
     credit: "Forest Trees vs. Deep Space Starfield",
   },
   6: {
-    primaryImage: "/images/images (6).jpg",
+    primaryImage: "/images/night-sky-dark/images (6).jpg",
     secondaryImage:
-      "/images/digitally-created-3-dimensional-starry-sky-with-royalty-free-image-1747340356.avif",
+      "/images/night-sky-dark/digitally-created-3-dimensional-starry-sky-with-royalty-free-image-1747340356.avif",
     credit: "Golden Horizon & 3D Starfield",
   },
   7: {
-    primaryImage: "/images/2MQtRGPwiA7BBYFUvrjhaa-1920-80.jpg",
-    secondaryImage: "/images/images (8).jpg",
+    primaryImage: "/images/night-sky-dark/2MQtRGPwiA7BBYFUvrjhaa-1920-80.jpg",
+    secondaryImage: "/images/night-sky-dark/images (8).jpg",
     credit: "Light vs. Dark Sky Comparison",
   },
   8: {
-    primaryImage: "/images/ESSAY-TOPIMAGE.webp",
+    primaryImage: "/images/night-sky-dark/ESSAY-TOPIMAGE.webp",
     credit: "Celestial Star Trails Geometry",
   },
   9: {
-    primaryImage: "/images/cena.jpg",
-    secondaryImage: "/images/images (10).jpg",
+    primaryImage: "/images/night-sky-dark/cena.jpg",
+    secondaryImage: "/images/night-sky-dark/images (10).jpg",
     credit: "Centaurus A Dark Cosmic Dust Lane",
   },
   10: {
-    primaryImage: "/images/images (12).jpg",
+    primaryImage: "/images/night-sky-dark/images (12).jpg",
     credit: "Heated Glowing Nebula Dust (NASA/Hubble)",
   },
   11: {
     primaryImage:
-      "/images/Crab-Nebula-exposures-image-astronomers-explosion-NASA.webp",
+      "/images/night-sky-dark/Crab-Nebula-exposures-image-astronomers-explosion-NASA.webp",
     credit: "Shattered Cosmic Model · Crab Nebula (NASA)",
   },
   12: {
-    primaryImage: "/images/quantum-gravity-curved-spacetime-galaxy.webp",
+    primaryImage: "/images/night-sky-dark/quantum-gravity-curved-spacetime-galaxy.webp",
     credit: "Curved Spacetime & Cosmic Paradox",
   },
   13: {
-    primaryImage: "/images/NGC_4414_(NASA-med).jpg",
+    primaryImage: "/images/night-sky-dark/NGC_4414_(NASA-med).jpg",
     credit: "NGC 4414 Isolated Galaxy (NASA Hubble)",
   },
   14: {
-    primaryImage: "/images/DM0HT8_WEB.webp",
-    secondaryImage: "/images/images (5).jpg",
+    primaryImage: "/images/night-sky-dark/DM0HT8_WEB.webp",
+    secondaryImage: "/images/night-sky-dark/images (5).jpg",
     credit: "Cosmic Cycles & Finite Time",
   },
   15: {
-    primaryImage: "/images/23825795249_3b22921aef_o.webp",
-    secondaryImage: "/images/images (4).jpg",
+    primaryImage: "/images/night-sky-dark/23825795249_3b22921aef_o.webp",
+    secondaryImage: "/images/night-sky-dark/images (4).jpg",
     credit: "Ancient Starlight Reaching Earth",
   },
   16: {
-    primaryImage: "/images/images (12).jpg",
+    primaryImage: "/images/night-sky-dark/images (12).jpg",
     secondaryImage:
-      "/images/Crab-Nebula-exposures-image-astronomers-explosion-NASA.webp",
+      "/images/night-sky-dark/Crab-Nebula-exposures-image-astronomers-explosion-NASA.webp",
     credit: "Primordial Cosmic Expansion & Birth of Stars",
   },
   17: {
-    primaryImage: "/images/Whirlpool-Galaxy-NGC-5195-Sc.webp",
-    secondaryImage: "/images/images (11).jpg",
+    primaryImage: "/images/night-sky-dark/Whirlpool-Galaxy-NGC-5195-Sc.webp",
+    secondaryImage: "/images/night-sky-dark/images (11).jpg",
     credit: "Whirlpool Spiral Galaxy NGC 5195 (Hubble)",
   },
   18: {
-    primaryImage: "/images/eath-universeITG-1737468674509-scaled.avif",
-    secondaryImage: "/images/eso1019a.jpg",
+    primaryImage: "/images/night-sky-dark/eath-universeITG-1737468674509-scaled.avif",
+    secondaryImage: "/images/night-sky-dark/eso1019a.jpg",
     credit: "Earth & The Observable Universe Horizon",
   },
   19: {
-    primaryImage: "/images/A6CPB4I4X46PGDQFXZIINNFOUE.webp",
-    secondaryImage: "/images/images (11).jpg",
+    primaryImage: "/images/night-sky-dark/A6CPB4I4X46PGDQFXZIINNFOUE.webp",
+    secondaryImage: "/images/night-sky-dark/images (11).jpg",
     credit: "Searching the Unreachable Cosmos",
   },
   20: {
-    primaryImage: "/images/images (7).jpg",
-    secondaryImage: "/images/quantum-gravity-curved-spacetime-galaxy.webp",
+    primaryImage: "/images/night-sky-dark/images (7).jpg",
+    secondaryImage: "/images/night-sky-dark/quantum-gravity-curved-spacetime-galaxy.webp",
     credit: "Human Reflection Under the Cosmos",
   },
 };
@@ -125,7 +125,6 @@ export function SlideVisual({ slideId }: SlideVisualProps) {
   const [dustStep, setDustStep] = useState<number>(3); // Slide 10
   const [showOverlay, setShowOverlay] = useState<boolean>(true);
   const [useVideoOnSlide1, setUseVideoOnSlide1] = useState<boolean>(true);
-  const [videoMuted, setVideoMuted] = useState<boolean>(true);
   const [videoError, setVideoError] = useState<boolean>(false);
   const videoRef = useRef<HTMLVideoElement | null>(null);
 
@@ -134,20 +133,15 @@ export function SlideVisual({ slideId }: SlideVisualProps) {
   const containerBase =
     "relative w-full h-full min-h-[180px] flex flex-col justify-between rounded-2xl overflow-hidden bg-[#03050c] select-none group";
 
-  // Floating top-right toggle to view clean photo vs interactive overlay
-  const renderOverlayToggle = (extraControl?: React.ReactNode) => (
-    <div className="absolute top-2.5 right-2.5 z-30 flex items-center gap-1.5">
-      {extraControl}
-      <button
-        type="button"
-        onClick={() => setShowOverlay((prev) => !prev)}
-        className="px-2.5 py-1 rounded-lg text-[11px] font-mono bg-slate-950/85 text-slate-200 border border-slate-700/90 hover:border-cyan-400 backdrop-blur-md transition cursor-pointer shadow-lg"
-        title="Toggle between clean real photo and interactive diagram overlay"
-      >
-        {showOverlay ? "📷 Clean Photo" : "✨ Show Diagram"}
-      </button>
-    </div>
-  );
+  // Floating top-right controls (clean photo button removed)
+  const renderOverlayToggle = (extraControl?: React.ReactNode) => {
+    if (!extraControl) return null;
+    return (
+      <div className="absolute top-2.5 right-2.5 z-30 flex items-center gap-1.5">
+        {extraControl}
+      </div>
+    );
+  };
 
   switch (slideId) {
     case 1:
@@ -155,7 +149,7 @@ export function SlideVisual({ slideId }: SlideVisualProps) {
         <div
           className={`${containerBase} border border-cyan-500/30 shadow-[0_0_50px_-15px_rgba(34,211,238,0.35)]`}
         >
-          {/* Real Photo or Video Backdrop */}
+          {/* Real Photo or Video Backdrop (Sound muted permanently for video) */}
           {useVideoOnSlide1 && !videoError && media.videoUrl ? (
             <video
               ref={videoRef}
@@ -163,7 +157,7 @@ export function SlideVisual({ slideId }: SlideVisualProps) {
               poster={media.primaryImage}
               autoPlay
               loop
-              muted={videoMuted}
+              muted
               playsInline
               onError={() => setVideoError(true)}
               className="absolute inset-0 w-full h-full object-cover"
@@ -181,45 +175,14 @@ export function SlideVisual({ slideId }: SlideVisualProps) {
 
           {renderOverlayToggle(
             !videoError && (
-              <div className="flex items-center gap-1">
-                <button
-                  type="button"
-                  onClick={() => setUseVideoOnSlide1((prev) => !prev)}
-                  className="px-2.5 py-1 rounded-lg text-[11px] font-mono bg-cyan-950/90 text-cyan-200 border border-cyan-500/40 hover:border-cyan-300 backdrop-blur-md cursor-pointer"
-                >
-                  {useVideoOnSlide1 ? "🖼 Photo" : "🎬 Video"}
-                </button>
-                {useVideoOnSlide1 && (
-                  <button
-                    type="button"
-                    onClick={() => setVideoMuted((prev) => !prev)}
-                    className="px-2 py-1 rounded-lg text-[11px] font-mono bg-slate-950/85 text-slate-200 border border-slate-700 hover:border-cyan-400 backdrop-blur-md cursor-pointer"
-                    title="Toggle Video Audio"
-                  >
-                    {videoMuted ? "🔇" : "🔊"}
-                  </button>
-                )}
-              </div>
+              <button
+                type="button"
+                onClick={() => setUseVideoOnSlide1((prev) => !prev)}
+                className="px-2.5 py-1 rounded-lg text-[11px] font-mono bg-cyan-950/90 text-cyan-200 border border-cyan-500/40 hover:border-cyan-300 backdrop-blur-md cursor-pointer"
+              >
+                {useVideoOnSlide1 ? "🖼 Photo" : "🎬 Video"}
+              </button>
             )
-          )}
-
-          {showOverlay && (
-            <div className="relative z-10 mt-auto p-4 flex items-end justify-between gap-3">
-              <div className="bg-slate-950/80 backdrop-blur-md border border-cyan-500/35 rounded-xl px-3.5 py-2.5 max-w-xs">
-                <div className="text-[10px] font-mono uppercase tracking-widest text-cyan-400">
-                  The 100-Year Mystery
-                </div>
-                <div className="text-xs sm:text-sm font-semibold text-white mt-0.5">
-                  Billions of stars shine in space — yet the night sky above
-                  Earth remains dark.
-                </div>
-              </div>
-              <img
-                src={media.secondaryImage}
-                alt="Milky Way over clouds"
-                className="hidden sm:block w-24 h-16 object-cover rounded-lg border border-cyan-400/40 shadow-lg"
-              />
-            </div>
           )}
         </div>
       );
@@ -2230,7 +2193,7 @@ export function SlideVisual({ slideId }: SlideVisualProps) {
             <div className="relative z-10 grid grid-cols-3 gap-2.5 my-auto">
               <div className="flex flex-col items-center text-center p-2.5 rounded-xl bg-slate-950/85 backdrop-blur-md border border-rose-500/40 shadow-lg">
                 <img
-                  src="/images/v5n22xGyNNHLzSnSArbrVH.jpg"
+                  src="/images/night-sky-dark/v5n22xGyNNHLzSnSArbrVH.jpg"
                   alt="Newton Gravity Orbits"
                   className="w-full h-14 object-cover rounded-lg mb-1.5 border border-rose-500/30"
                 />
@@ -2247,7 +2210,7 @@ export function SlideVisual({ slideId }: SlideVisualProps) {
 
               <div className="flex flex-col items-center text-center p-2.5 rounded-xl bg-slate-950/85 backdrop-blur-md border border-amber-500/40 shadow-lg">
                 <img
-                  src="/images/quantum-gravity-curved-spacetime-galaxy.webp"
+                  src="/images/night-sky-dark/quantum-gravity-curved-spacetime-galaxy.webp"
                   alt="Maxwell Waves"
                   className="w-full h-14 object-cover rounded-lg mb-1.5 border border-amber-500/30"
                 />
@@ -2264,7 +2227,7 @@ export function SlideVisual({ slideId }: SlideVisualProps) {
 
               <div className="flex flex-col items-center text-center p-2.5 rounded-xl bg-slate-950/90 backdrop-blur-md border border-cyan-400/60 shadow-[0_0_25px_-8px_rgba(34,211,238,0.5)]">
                 <img
-                  src="/images/04-Dunkery-Beacon-Keith-Trueman-d4dd113-e1597842367814.webp"
+                  src="/images/night-sky-dark/04-Dunkery-Beacon-Keith-Trueman-d4dd113-e1597842367814.webp"
                   alt="Olbers Dark Sky"
                   className="w-full h-14 object-cover rounded-lg mb-1.5 border border-cyan-400/40"
                 />

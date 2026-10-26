@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect, useCallback, useRef } from "react";
 import Link from "next/link";
 import { SLIDES, ACTS, SlideData, SlideAccent } from "../data/slides";
 import { PresentationDeck } from "../data/presentations";
@@ -84,6 +84,9 @@ const ACCENT_STYLES: Record<
   },
 };
 
+const BACKGROUND_MUSIC_URL =
+  "/sound-background/night-sky-dark/Hans Zimmer - Interstellar - Main Theme (Piano Version) + Sheet Music - YouTube.mp3";
+
 interface PresentationAppProps {
   deck?: PresentationDeck;
   initialMode?: "deck" | "gamma";
@@ -104,12 +107,65 @@ export function PresentationApp({
   const [currentIndex, setCurrentIndex] = useState<number>(initialSlideIndex);
   const [viewMode, setViewMode] = useState<"deck" | "gamma">(initialMode);
   const [showOverview, setShowOverview] = useState<boolean>(false);
+  const [overviewActFilter, setOverviewActFilter] = useState<number | "all">("all");
   const [showVideoModal, setShowVideoModal] = useState<boolean>(false);
   const [showNotes, setShowNotes] = useState<boolean>(true);
   const [largeTeleprompter, setLargeTeleprompter] = useState<boolean>(false);
   const [speakingSlideId, setSpeakingSlideId] = useState<number | null>(null);
   const [autoPlayDeck, setAutoPlayDeck] = useState<boolean>(false);
   const [copiedId, setCopiedId] = useState<number | null>(null);
+
+  // Background Piano Music (Interstellar Main Theme - Piano Version)
+  const bgAudioRef = useRef<HTMLAudioElement | null>(null);
+  const [isBgmPlaying, setIsBgmPlaying] = useState<boolean>(false);
+  const [bgmVolume, setBgmVolume] = useState<number>(0.07); // Âm lượng nhẹ nhàng 7% làm nền
+
+  useEffect(() => {
+    const audio = bgAudioRef.current;
+    if (!audio) return;
+    audio.volume = bgmVolume;
+
+    const playPromise = audio.play();
+    if (playPromise !== undefined) {
+      playPromise
+        .then(() => {
+          setIsBgmPlaying(true);
+        })
+        .catch(() => {
+          // Trình duyệt chặn autoplay khi chưa có tương tác -> Tự động phát khi tương tác lần đầu
+          setIsBgmPlaying(false);
+          const handleFirstGesture = () => {
+            if (bgAudioRef.current) {
+              bgAudioRef.current.volume = bgmVolume;
+              bgAudioRef.current
+                .play()
+                .then(() => setIsBgmPlaying(true))
+                .catch(() => {});
+            }
+            window.removeEventListener("pointerdown", handleFirstGesture);
+            window.removeEventListener("keydown", handleFirstGesture);
+          };
+          window.addEventListener("pointerdown", handleFirstGesture, { once: true });
+          window.addEventListener("keydown", handleFirstGesture, { once: true });
+        });
+    }
+  }, [bgmVolume]);
+
+  const toggleBgm = useCallback(() => {
+    const audio = bgAudioRef.current;
+    if (!audio) return;
+
+    if (audio.paused) {
+      audio.volume = bgmVolume;
+      audio
+        .play()
+        .then(() => setIsBgmPlaying(true))
+        .catch(() => {});
+    } else {
+      audio.pause();
+      setIsBgmPlaying(false);
+    }
+  }, [bgmVolume]);
 
   const currentSlide = slides[currentIndex] ?? slides[0];
 
@@ -119,6 +175,14 @@ export function PresentationApp({
     }
     setSpeakingSlideId(null);
   }, []);
+
+  const handleExitToHub = useCallback(() => {
+    stopSpeech();
+    if (bgAudioRef.current) {
+      bgAudioRef.current.pause();
+    }
+    onBackToHub?.();
+  }, [stopSpeech, onBackToHub]);
 
   const speakSlide = useCallback(
     (slide: SlideData, autoAdvance = false) => {
@@ -283,7 +347,7 @@ export function PresentationApp({
         id={`slide-card-${slide.id}`}
         className={`relative w-full ${
           isScrollMode
-            ? "rounded-3xl"
+            ? "rounded-3xl min-h-[82vh] flex flex-col justify-between"
             : "flex-1 min-h-0 flex flex-col justify-between rounded-2xl sm:rounded-3xl"
         } border ${style.border} bg-[#060919]/92 backdrop-blur-xl shadow-[0_20px_70px_-20px_rgba(0,0,0,0.85)] overflow-hidden transition-all duration-300`}
       >
@@ -298,7 +362,7 @@ export function PresentationApp({
           className={`pointer-events-none absolute inset-0 bg-gradient-to-br ${style.glow}`}
         />
 
-        <div className="relative z-10 shrink-0 flex flex-wrap items-center justify-between gap-2 px-5 py-2.5 border-b border-slate-800/80">
+        <div className="relative z-10 shrink-0 flex flex-wrap items-center justify-between gap-2 px-5 sm:px-7 py-2.5 border-b border-slate-800/80">
           <div className="flex items-center gap-2.5">
             <span
               className={`font-mono text-xs sm:text-sm font-bold tracking-wider ${style.numberText} bg-slate-950/90 border border-slate-800 px-2.5 py-0.5 rounded-lg`}
@@ -317,21 +381,18 @@ export function PresentationApp({
             >
               {slide.tag}
             </span>
-            <span className="text-[11px] font-mono text-slate-400 bg-slate-900/90 border border-slate-800 px-2 py-0.5 rounded-full">
-              {deck?.level ?? "B1 English"}
-            </span>
           </div>
         </div>
 
         <div
-          className={`relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-4 sm:gap-5 px-5 ${
+          className={`relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-4 sm:gap-6 xl:gap-8 px-5 sm:px-7 ${
             isScrollMode
-              ? "py-6 items-stretch"
-              : "py-3 flex-1 min-h-0 items-stretch overflow-hidden"
+              ? "py-6 flex-1 items-stretch"
+              : "py-3.5 flex-1 min-h-0 items-stretch overflow-hidden"
           }`}
         >
           <div
-            className={`lg:col-span-6 flex flex-col justify-between ${
+            className={`lg:col-span-5 xl:col-span-5 flex flex-col justify-between ${
               isScrollMode ? "space-y-5" : "min-h-0 overflow-y-auto pr-1 gap-2"
             }`}
           >
@@ -413,6 +474,24 @@ export function PresentationApp({
                   </li>
                 ))}
               </ul>
+
+              {slide.id === 1 && (
+                <div className="flex items-center gap-3 p-3 rounded-2xl bg-cyan-950/40 border border-cyan-500/30 backdrop-blur-sm">
+                  <img
+                    src="/images/night-sky-dark/23825795249_3b22921aef_o.webp"
+                    alt="Milky Way over clouds"
+                    className="w-20 h-14 object-cover rounded-xl border border-cyan-400/40 shadow-lg shrink-0"
+                  />
+                  <div>
+                    <div className="text-[10px] font-mono uppercase tracking-widest text-cyan-400 font-bold">
+                      The 100-Year Mystery
+                    </div>
+                    <div className="text-xs sm:text-sm font-semibold text-white mt-0.5 leading-snug">
+                      Billions of stars shine in space — yet the night sky above Earth remains dark.
+                    </div>
+                  </div>
+                </div>
+              )}
             </div>
 
             {slide.keyStat && (
@@ -439,8 +518,8 @@ export function PresentationApp({
           </div>
 
           <div
-            className={`lg:col-span-6 flex flex-col justify-between gap-2 ${
-              isScrollMode ? "min-h-[320px]" : "min-h-0 overflow-hidden"
+            className={`lg:col-span-7 xl:col-span-7 flex flex-col justify-between gap-2 ${
+              isScrollMode ? "min-h-[380px]" : "min-h-0 overflow-hidden"
             }`}
           >
             <div className="flex-1 min-h-0 flex flex-col">
@@ -461,7 +540,7 @@ export function PresentationApp({
         </div>
 
         {(showNotes || isScrollMode) && (
-          <footer className="relative z-10 shrink-0 mx-5 mb-3 rounded-xl border border-cyan-500/25 bg-[#030612]/95 px-4 py-2.5 shadow-inner">
+          <footer className="relative z-10 shrink-0 mx-5 sm:mx-7 mb-3 rounded-xl border border-cyan-500/25 bg-[#030612]/95 px-4 py-2.5 shadow-inner">
             <div className="flex flex-wrap items-center justify-between gap-2 pb-1.5 mb-1.5 border-b border-slate-800/90">
               <div className="flex items-center gap-2">
                 <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded text-[11px] font-mono font-semibold bg-cyan-500/15 text-cyan-300 border border-cyan-500/30">
@@ -527,22 +606,27 @@ export function PresentationApp({
       className={`relative flex flex-col bg-[#03050c] text-slate-100 ${
         viewMode === "deck"
           ? "h-dvh max-h-dvh w-screen overflow-hidden"
-          : "min-h-screen"
+          : "min-h-screen w-full"
       }`}
     >
+      <audio
+        ref={bgAudioRef}
+        src={BACKGROUND_MUSIC_URL}
+        loop
+        preload="auto"
+        onPlay={() => setIsBgmPlaying(true)}
+        onPause={() => setIsBgmPlaying(false)}
+      />
       <StarfieldCanvas />
 
       <header className="shrink-0 sticky top-0 z-30 border-b border-slate-800/80 bg-[#03050c]/85 backdrop-blur-md">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 h-12 flex items-center justify-between gap-3">
+        <div className="w-full max-w-[1760px] mx-auto px-6 sm:px-10 lg:px-16 xl:px-20 h-12 flex items-center justify-between gap-3">
           {/* Back to Hub + Presentation Title */}
           <div className="flex items-center gap-2.5 min-w-0">
             {onBackToHub ? (
               <button
                 type="button"
-                onClick={() => {
-                  stopSpeech();
-                  onBackToHub();
-                }}
+                onClick={handleExitToHub}
                 className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-xs font-mono bg-slate-900 border border-slate-700 text-cyan-300 hover:border-cyan-400 transition shrink-0 cursor-pointer"
                 title="Return to My Presentations Hub"
               >
@@ -552,7 +636,7 @@ export function PresentationApp({
             ) : (
               <Link
                 href="/"
-                onClick={stopSpeech}
+                onClick={handleExitToHub}
                 className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-xs font-mono bg-slate-900 border border-slate-700 text-cyan-300 hover:border-cyan-400 transition shrink-0"
                 title="Return to My Presentations Hub"
               >
@@ -628,6 +712,40 @@ export function PresentationApp({
               </button>
             </div>
 
+            <div className="inline-flex items-center gap-2 bg-slate-900 border border-slate-800 rounded-lg px-2.5 py-1">
+              <button
+                type="button"
+                onClick={toggleBgm}
+                className={`inline-flex items-center gap-1 text-[11px] font-mono transition cursor-pointer ${
+                  isBgmPlaying
+                    ? "text-cyan-300 font-bold"
+                    : "text-slate-400 hover:text-white"
+                }`}
+                title="Bật / Tắt nhạc nền Piano Interstellar"
+              >
+                <span className={isBgmPlaying ? "animate-pulse" : ""}>
+                  {isBgmPlaying ? "🎵 Music: ON" : "🔇 Music: OFF"}
+                </span>
+              </button>
+
+              <input
+                type="range"
+                min="0.01"
+                max="0.25"
+                step="0.01"
+                value={bgmVolume}
+                onChange={(e) => {
+                  const vol = parseFloat(e.target.value);
+                  setBgmVolume(vol);
+                  if (bgAudioRef.current) {
+                    bgAudioRef.current.volume = vol;
+                  }
+                }}
+                className="w-12 sm:w-16 h-1 bg-slate-700 accent-cyan-400 rounded-lg cursor-pointer"
+                title={`Âm lượng nhạc nền: ${Math.round(bgmVolume * 100)}%`}
+              />
+            </div>
+
             <button
               type="button"
               onClick={() => setShowVideoModal(true)}
@@ -691,10 +809,10 @@ export function PresentationApp({
       </header>
 
       <main
-        className={`relative z-10 flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 flex flex-col justify-between ${
+        className={`relative z-10 flex-1 w-full max-w-[1760px] mx-auto px-6 sm:px-10 lg:px-16 xl:px-20 flex flex-col justify-between ${
           viewMode === "deck"
-            ? "min-h-0 py-2.5 gap-2 overflow-hidden"
-            : "py-6"
+            ? "min-h-0 py-3 sm:py-4 gap-2.5 overflow-hidden"
+            : "py-8"
         }`}
       >
         {viewMode === "deck" ? (
@@ -795,7 +913,7 @@ export function PresentationApp({
                   🎬 Deep Space Video · {deckTitle}
                 </h2>
                 <p className="text-xs font-mono text-slate-400">
-                  /images/snaptik.vn_7680564940909907208.mp4
+                  /images/night-sky-dark/interstellar.mp4
                 </p>
               </div>
               <button
@@ -808,8 +926,8 @@ export function PresentationApp({
             </div>
             <div className="p-4 bg-black flex items-center justify-center">
               <video
-                src="/images/snaptik.vn_7680564940909907208.mp4"
-                poster="/images/images (9).jpg"
+                src="/images/night-sky-dark/interstellar.mp4"
+                poster="/images/night-sky-dark/images (9).jpg"
                 controls
                 autoPlay
                 className="max-h-[75vh] w-auto rounded-xl"
@@ -820,88 +938,201 @@ export function PresentationApp({
       )}
 
       {showOverview && (
-        <div className="fixed inset-0 z-50 bg-black/85 backdrop-blur-lg flex items-center justify-center p-4 sm:p-6 overflow-y-auto">
-          <div className="bg-[#060a18] border border-slate-700 rounded-3xl max-w-6xl w-full max-h-[90vh] flex flex-col overflow-hidden shadow-2xl">
-            <div className="px-6 py-4 border-b border-slate-800 flex items-center justify-between">
-              <div>
-                <h2 className="font-display text-lg font-bold text-white">
-                  All {slides.length} Presentation Slides · Visual Overview
-                </h2>
-                <p className="text-xs font-mono text-slate-400">
-                  Click any slide to jump directly · Press ESC or G to close
-                </p>
-              </div>
-              <button
-                type="button"
-                onClick={() => setShowOverview(false)}
-                className="px-3 py-1.5 rounded-xl text-xs font-mono bg-slate-800 text-slate-200 hover:bg-slate-700 cursor-pointer"
-              >
-                ✕ Close
-              </button>
-            </div>
+        <div className="fixed inset-0 z-50 bg-black/85 backdrop-blur-xl flex items-center justify-center p-3 sm:p-6 overflow-y-auto">
+          <div className="bg-[#050816] border border-cyan-500/40 rounded-3xl max-w-7xl w-full max-h-[94vh] flex flex-col overflow-hidden shadow-[0_0_80px_-20px_rgba(34,211,238,0.35)]">
+            {/* Modal Header */}
+            <div className="px-6 py-4 border-b border-slate-800/90 flex flex-wrap items-center justify-between gap-3 bg-[#03050c]/90">
+              <div className="flex flex-wrap items-center gap-3">
+                <div className="flex items-center gap-2.5">
+                  <h2 className="font-display text-lg font-bold text-white">
+                    All {slides.length} Presentation Slides · Visual Overview
+                  </h2>
+                  <span className="px-2.5 py-0.5 rounded-full text-xs font-mono bg-cyan-950 border border-cyan-500/40 text-cyan-300">
+                    {overviewActFilter === "all"
+                      ? `${slides.length} Cards`
+                      : `Act ${overviewActFilter}`}
+                  </span>
+                </div>
 
-            <div className="p-6 overflow-y-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3.5">
-              {slides.map((s, idx) => {
-                const isCurrent = idx === currentIndex;
-                const thumb = SLIDE_MEDIA_MAP[s.id]?.primaryImage;
-                return (
+                {/* Act Filter Pills */}
+                <div className="flex items-center gap-1 bg-slate-900/90 border border-slate-800 p-0.5 rounded-lg">
                   <button
-                    key={s.id}
                     type="button"
-                    onClick={() => {
-                      stopSpeech();
-                      setCurrentIndex(idx);
-                      setShowOverview(false);
-                      if (viewMode === "gamma") {
-                        setTimeout(() => {
-                          document
-                            .getElementById(`slide-card-${s.id}`)
-                            ?.scrollIntoView({ behavior: "smooth" });
-                        }, 100);
-                      }
-                    }}
-                    className={`text-left rounded-2xl border transition flex flex-col justify-between overflow-hidden cursor-pointer ${
-                      isCurrent
-                        ? "bg-cyan-950/60 border-cyan-400 shadow-[0_0_20px_rgba(34,211,238,0.3)]"
-                        : "bg-slate-900/75 border-slate-800 hover:border-slate-600"
+                    onClick={() => setOverviewActFilter("all")}
+                    className={`px-2.5 py-0.5 rounded-md text-xs font-mono transition cursor-pointer ${
+                      overviewActFilter === "all"
+                        ? "bg-cyan-500/20 text-cyan-300 border border-cyan-500/40 font-bold"
+                        : "text-slate-400 hover:text-white"
                     }`}
                   >
-                    <div className="relative h-24 w-full overflow-hidden bg-slate-950">
-                      {thumb && (
+                    All ({slides.length})
+                  </button>
+                  {acts.map((act) => (
+                    <button
+                      key={act.number}
+                      type="button"
+                      onClick={() => setOverviewActFilter(act.number)}
+                      className={`px-2.5 py-0.5 rounded-md text-xs font-mono transition cursor-pointer ${
+                        overviewActFilter === act.number
+                          ? "bg-cyan-500/20 text-cyan-300 border border-cyan-500/40 font-bold"
+                          : "text-slate-400 hover:text-white"
+                      }`}
+                    >
+                      Act {act.number}
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              <div className="flex items-center gap-2">
+                <span className="hidden lg:inline text-xs font-mono text-slate-400">
+                  Nhấn ESC hoặc G để đóng
+                </span>
+                <button
+                  type="button"
+                  onClick={() => setShowOverview(false)}
+                  className="px-3.5 py-1.5 rounded-xl text-xs font-mono font-semibold bg-slate-800 hover:bg-slate-700 text-slate-200 hover:text-white border border-slate-700 transition cursor-pointer"
+                >
+                  ✕ Close (ESC)
+                </button>
+              </div>
+            </div>
+
+            {/* Modal Cards Grid: 50% Top Thumbnail, 50% Bottom Rich Slide Information */}
+            <div className="p-5 sm:p-6 overflow-y-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
+              {slides
+                .filter(
+                  (s) =>
+                    overviewActFilter === "all" ||
+                    s.actNumber === overviewActFilter
+                )
+                .map((s) => {
+                  const slideRealIndex = s.id - 1;
+                  const isCurrent = slideRealIndex === currentIndex;
+                  const thumb =
+                    SLIDE_MEDIA_MAP[s.id]?.primaryImage ||
+                    "/images/night-sky-dark/images (9).jpg";
+                  return (
+                    <button
+                      key={s.id}
+                      type="button"
+                      onClick={() => {
+                        stopSpeech();
+                        setCurrentIndex(slideRealIndex);
+                        setShowOverview(false);
+                        if (viewMode === "gamma") {
+                          setTimeout(() => {
+                            document
+                              .getElementById(`slide-card-${s.id}`)
+                              ?.scrollIntoView({ behavior: "smooth" });
+                          }, 100);
+                        }
+                      }}
+                      className={`group text-left rounded-2xl border transition-all duration-200 flex flex-col items-stretch overflow-hidden cursor-pointer shadow-xl hover:shadow-cyan-500/25 hover:-translate-y-1.5 min-h-[420px] h-[420px] ${
+                        isCurrent
+                          ? "bg-[#060919] border-cyan-400 ring-2 ring-cyan-400/50 shadow-[0_0_30px_rgba(34,211,238,0.35)]"
+                          : "bg-[#060919] border-slate-800/90 hover:border-cyan-500/50"
+                      }`}
+                    >
+                      {/* Nửa trên (Top 50%): Ảnh Thumbnail xem trước của slide */}
+                      <div className="relative w-full h-52 shrink-0 overflow-hidden bg-slate-950">
                         <img
                           src={thumb}
                           alt={s.title}
-                          className="w-full h-full object-cover opacity-85"
+                          className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                          loading="lazy"
+                          onError={(e) => {
+                            e.currentTarget.src =
+                              "/images/night-sky-dark/images (9).jpg";
+                          }}
                         />
-                      )}
-                      <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-transparent to-black/40" />
-                      <div className="absolute top-2 left-2.5 right-2.5 flex items-center justify-between text-[11px] font-mono text-cyan-300 font-bold">
-                        <span className="bg-slate-950/80 px-2 py-0.5 rounded">
-                          SLIDE {String(s.id).padStart(2, "0")}
-                        </span>
-                        <span className="bg-slate-950/80 px-2 py-0.5 rounded text-[10px] text-slate-300">
-                          Act {s.actNumber}
-                        </span>
-                      </div>
-                    </div>
+                        <div className="absolute inset-0 bg-gradient-to-t from-[#060919] via-transparent to-black/60 pointer-events-none" />
 
-                    <div className="p-3 flex-1 flex flex-col justify-between gap-2">
-                      <div>
-                        <div className="font-display font-bold text-sm text-white line-clamp-1">
-                          {s.title}
+                        {/* Badges trên thumbnail */}
+                        <div className="absolute top-2.5 left-2.5 right-2.5 flex items-center justify-between text-xs font-mono font-bold z-10">
+                          <span className="bg-slate-950/90 backdrop-blur-md px-2.5 py-0.5 rounded-lg border border-slate-700/80 text-cyan-300 shadow">
+                            SLIDE {String(s.id).padStart(2, "0")}
+                          </span>
+                          <span className="bg-slate-950/90 backdrop-blur-md px-2.5 py-0.5 rounded-lg border border-slate-800 text-[11px] text-slate-300">
+                            Act {s.actNumber}
+                          </span>
                         </div>
-                        <div className="text-xs text-slate-400 mt-1 line-clamp-2">
-                          {s.bullets[0]?.text}
+
+                        {/* Active Badge hoặc Topic Tag trên ảnh */}
+                        <div className="absolute bottom-2.5 left-2.5 right-2.5 flex items-center justify-between z-10">
+                          {isCurrent ? (
+                            <span className="bg-cyan-400 text-slate-950 px-2.5 py-0.5 rounded-md text-[10px] font-mono font-extrabold shadow-[0_0_12px_#22d3ee]">
+                              ● ACTIVE NOW
+                            </span>
+                          ) : (
+                            <span className="text-[11px] font-mono text-slate-300 bg-slate-950/85 backdrop-blur-sm px-2 py-0.5 rounded border border-slate-800/80 truncate max-w-[85%]">
+                              {s.act.split("·")[1]?.trim() || s.act}
+                            </span>
+                          )}
                         </div>
                       </div>
-                      <div className="pt-2 border-t border-slate-800/80 flex items-center justify-between text-[11px] font-mono text-slate-400">
-                        <span className="truncate">{s.tag}</span>
-                        <span>🎙️ Note</span>
+
+                      {/* Nửa dưới (Bottom 50%): Toàn bộ thông tin & văn bản slide */}
+                      <div className="p-4 sm:p-5 flex-1 flex flex-col justify-between gap-3 bg-[#060919] border-t border-slate-800/70">
+                        <div>
+                          {/* Slide Title */}
+                          <h3 className="font-display font-bold text-base sm:text-lg text-white group-hover:text-cyan-300 transition line-clamp-1">
+                            {s.title}
+                          </h3>
+
+                          {/* Subtitle if available */}
+                          {s.subtitle && (
+                            <p className="text-xs font-mono text-cyan-400/90 line-clamp-1 mt-0.5">
+                              {s.subtitle}
+                            </p>
+                          )}
+
+                          {/* Slide Bullets / Text Information */}
+                          <div className="space-y-1.5 mt-2.5">
+                            {s.bullets.slice(0, 2).map((b, bIdx) => (
+                              <div
+                                key={bIdx}
+                                className="flex items-start gap-1.5 text-xs text-slate-300 leading-relaxed"
+                              >
+                                <span className="text-cyan-400 shrink-0 font-bold mt-0.5">
+                                  ›
+                                </span>
+                                <span className="line-clamp-2">
+                                  {b.label && (
+                                    <strong className="text-slate-100 font-semibold mr-1">
+                                      {b.label}
+                                    </strong>
+                                  )}
+                                  {b.text}
+                                </span>
+                              </div>
+                            ))}
+                          </div>
+                        </div>
+
+                        {/* Footer Info: Category Tag & Key Stat / Voiceover hint */}
+                        <div className="pt-2.5 border-t border-slate-800/80 flex items-center justify-between text-xs font-mono gap-2">
+                          <span className="truncate text-cyan-400 font-medium bg-cyan-950/50 px-2 py-0.5 rounded border border-cyan-500/30">
+                            {s.tag}
+                          </span>
+
+                          {s.keyStat ? (
+                            <span
+                              className="shrink-0 text-amber-300 font-semibold bg-amber-950/40 px-2 py-0.5 rounded border border-amber-500/30 text-[11px]"
+                              title={s.keyStat.label}
+                            >
+                              {s.keyStat.value}
+                            </span>
+                          ) : (
+                            <span className="shrink-0 text-slate-400">
+                              🎙️ Note
+                            </span>
+                          )}
+                        </div>
                       </div>
-                    </div>
-                  </button>
-                );
-              })}
+                    </button>
+                  );
+                })}
             </div>
           </div>
         </div>

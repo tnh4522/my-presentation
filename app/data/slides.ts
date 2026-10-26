@@ -40,7 +40,7 @@ export const SLIDES: SlideData[] = [
     act: "Act I · The Mystery of Night",
     title: "Why Is the Night Sky Dark?",
     subtitle: "Olbers' Paradox & The Secret of Our Universe",
-    tag: "B1 English · Cosmic Presentation",
+    tag: "Cosmic Presentation",
     accent: "cyan",
     bullets: [
       {
