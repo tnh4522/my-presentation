@@ -109,7 +109,7 @@ export function PresentationApp({
   const [showOverview, setShowOverview] = useState<boolean>(false);
   const [overviewActFilter, setOverviewActFilter] = useState<number | "all">("all");
   const [showVideoModal, setShowVideoModal] = useState<boolean>(false);
-  const [showNotes, setShowNotes] = useState<boolean>(true);
+  const [showNotes, setShowNotes] = useState<boolean>(false);
   const [largeTeleprompter, setLargeTeleprompter] = useState<boolean>(false);
   const [speakingSlideId, setSpeakingSlideId] = useState<number | null>(null);
   const [autoPlayDeck, setAutoPlayDeck] = useState<boolean>(false);
