@@ -87,6 +87,44 @@ const ACCENT_STYLES: Record<
 const BACKGROUND_MUSIC_URL =
   "/sound-background/night-sky-dark/Hans Zimmer - Interstellar - Main Theme (Piano Version) + Sheet Music - YouTube.mp3";
 
+const COSMIC_VIDEOS = [
+  {
+    id: "interstellar",
+    name: "Interstellar Theme",
+    path: "/videos/night-sky-dark/interstellar.mp4",
+  },
+  {
+    id: "nebula-1",
+    name: "Cosmic Nebula",
+    path: "/videos/night-sky-dark/141447-777657278_medium.mp4",
+  },
+  {
+    id: "nebula-2",
+    name: "Star Cluster",
+    path: "/videos/night-sky-dark/141454-777657300_medium.mp4",
+  },
+  {
+    id: "deep-space",
+    name: "Deep Space Stars",
+    path: "/videos/night-sky-dark/169951-842348732_medium.mp4",
+  },
+  {
+    id: "galaxy",
+    name: "Spinning Galaxy",
+    path: "/videos/night-sky-dark/18492-292594998_medium.mp4",
+  },
+  {
+    id: "horizon-1",
+    name: "Cosmic Horizon",
+    path: "/videos/night-sky-dark/215695_medium.mp4",
+  },
+  {
+    id: "horizon-2",
+    name: "Infinite Starlight",
+    path: "/videos/night-sky-dark/215762_medium.mp4",
+  },
+];
+
 interface PresentationAppProps {
   deck?: PresentationDeck;
   initialMode?: "deck" | "gamma";
@@ -109,6 +147,9 @@ export function PresentationApp({
   const [showOverview, setShowOverview] = useState<boolean>(false);
   const [overviewActFilter, setOverviewActFilter] = useState<number | "all">("all");
   const [showVideoModal, setShowVideoModal] = useState<boolean>(false);
+  const [selectedVideoUrl, setSelectedVideoUrl] = useState<string>(
+    "/videos/night-sky-dark/interstellar.mp4"
+  );
   const [showNotes, setShowNotes] = useState<boolean>(false);
   const [largeTeleprompter, setLargeTeleprompter] = useState<boolean>(false);
   const [speakingSlideId, setSpeakingSlideId] = useState<number | null>(null);
@@ -905,32 +946,60 @@ export function PresentationApp({
       </main>
 
       {showVideoModal && (
-        <div className="fixed inset-0 z-50 bg-black/90 backdrop-blur-lg flex items-center justify-center p-4 sm:p-6">
-          <div className="bg-[#060a18] border border-cyan-500/40 rounded-3xl max-w-4xl w-full overflow-hidden shadow-2xl">
-            <div className="px-6 py-3.5 border-b border-slate-800 flex items-center justify-between">
+        <div className="fixed inset-0 z-50 bg-black/90 backdrop-blur-lg flex items-center justify-center p-3 sm:p-6 overflow-y-auto">
+          <div className="bg-[#060a18] border border-cyan-500/40 rounded-3xl max-w-5xl w-full overflow-hidden shadow-2xl my-auto">
+            <div className="px-5 py-3.5 border-b border-slate-800 flex flex-wrap items-center justify-between gap-3 bg-[#03050c]/90">
               <div>
-                <h2 className="font-display text-base font-bold text-white">
-                  🎬 Deep Space Video · {deckTitle}
-                </h2>
-                <p className="text-xs font-mono text-slate-400">
-                  /images/night-sky-dark/interstellar.mp4
+                <div className="flex items-center gap-2">
+                  <h2 className="font-display text-base font-bold text-white">
+                    🎬 Deep Space Videos · {deckTitle}
+                  </h2>
+                  <span className="text-[11px] font-mono px-2 py-0.5 rounded-full bg-cyan-950 text-cyan-300 border border-cyan-500/30">
+                    {COSMIC_VIDEOS.length} Videos
+                  </span>
+                </div>
+                <p className="text-xs font-mono text-slate-400 mt-0.5">
+                  {selectedVideoUrl}
                 </p>
               </div>
               <button
                 type="button"
                 onClick={() => setShowVideoModal(false)}
-                className="px-3 py-1 rounded-xl text-xs font-mono bg-slate-800 text-slate-200 hover:bg-slate-700 cursor-pointer"
+                className="px-3.5 py-1.5 rounded-xl text-xs font-mono bg-slate-800 text-slate-200 hover:bg-slate-700 cursor-pointer"
               >
                 ✕ Close
               </button>
             </div>
+
+            {/* Video Selector Tabs */}
+            <div className="px-5 py-2.5 bg-slate-950/80 border-b border-slate-800/80 flex items-center gap-1.5 overflow-x-auto">
+              {COSMIC_VIDEOS.map((v) => {
+                const active = selectedVideoUrl === v.path;
+                return (
+                  <button
+                    key={v.id}
+                    type="button"
+                    onClick={() => setSelectedVideoUrl(v.path)}
+                    className={`px-3 py-1 rounded-lg text-xs font-mono whitespace-nowrap transition cursor-pointer ${
+                      active
+                        ? "bg-cyan-500/20 text-cyan-300 border border-cyan-500/50 font-bold shadow-[0_0_10px_rgba(34,211,238,0.3)]"
+                        : "text-slate-400 hover:text-white bg-slate-900 border border-slate-800"
+                    }`}
+                  >
+                    ▶ {v.name}
+                  </button>
+                );
+              })}
+            </div>
+
             <div className="p-4 bg-black flex items-center justify-center">
               <video
-                src="/images/night-sky-dark/interstellar.mp4"
+                key={selectedVideoUrl}
+                src={selectedVideoUrl}
                 poster="/images/night-sky-dark/images (9).jpg"
                 controls
                 autoPlay
-                className="max-h-[75vh] w-auto rounded-xl"
+                className="max-h-[70vh] w-auto rounded-xl shadow-2xl"
               />
             </div>
           </div>

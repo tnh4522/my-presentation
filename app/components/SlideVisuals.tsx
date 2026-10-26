@@ -18,7 +18,7 @@ export const SLIDE_MEDIA_MAP: Record<
   1: {
     primaryImage: "/images/night-sky-dark/images (9).jpg",
     secondaryImage: "/images/night-sky-dark/23825795249_3b22921aef_o.webp",
-    videoUrl: "/images/night-sky-dark/interstellar.mp4",
+    videoUrl: "/videos/night-sky-dark/interstellar.mp4",
     credit: "Deep Starry Horizon & Cosmic Video",
   },
   2: {

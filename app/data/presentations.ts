@@ -35,7 +35,7 @@ export const PRESENTATIONS: PresentationDeck[] = [
     category: "Astronomy & Cosmology",
     coverImage:
       "/images/night-sky-dark/04-Dunkery-Beacon-Keith-Trueman-d4dd113-e1597842367814.webp",
-    videoPreview: "/images/night-sky-dark/interstellar.mp4",
+    videoPreview: "/videos/night-sky-dark/interstellar.mp4",
     accent: "cyan",
     tags: [
       "Olbers' Paradox",
