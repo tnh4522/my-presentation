@@ -83,7 +83,7 @@ export function PresentationHub() {
                 type="text"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                placeholder="Tìm kiếm chủ đề thuyết trình, từ khóa..."
+                placeholder="Search presentation topics, keywords..."
                 className="w-full rounded-xl bg-slate-900/90 border border-slate-800 px-4 py-2 text-xs sm:text-sm text-slate-100 placeholder:text-slate-500 focus:outline-none focus:border-cyan-400 transition"
               />
               {searchQuery && (
@@ -164,7 +164,7 @@ export function PresentationHub() {
                     }
                     className="inline-flex items-center gap-2 px-5 py-3 rounded-2xl text-sm font-mono font-bold bg-cyan-400 text-slate-950 hover:bg-cyan-300 shadow-[0_0_25px_rgba(34,211,238,0.5)] transition cursor-pointer"
                   >
-                    <span>▶ Trình bày ngay (Slide Deck)</span>
+                    <span>▶ Present Now (Slide Deck)</span>
                   </button>
 
                   <button
@@ -178,7 +178,7 @@ export function PresentationHub() {
                     }
                     className="inline-flex items-center gap-2 px-4 py-3 rounded-2xl text-sm font-mono font-semibold bg-slate-900/90 border border-slate-700 text-slate-200 hover:border-cyan-400 transition cursor-pointer"
                   >
-                    <span>📜 Xem dạng cuộn (All 20 Cards)</span>
+                    <span>📜 Scroll Mode (All 20 Cards)</span>
                   </button>
 
                   <Link
@@ -239,11 +239,10 @@ export function PresentationHub() {
           <div className="flex flex-wrap items-center justify-between gap-4 border-b border-slate-800/80 pb-4">
             <div>
               <h2 className="font-display text-xl sm:text-2xl font-bold text-white">
-                Chủ đề thuyết trình của tôi (My Presentation Topics)
+                My Presentations
               </h2>
               <p className="text-xs sm:text-sm text-slate-400 mt-0.5">
-                Nhấn vào bất kỳ chủ đề hoặc chương (Act) nào bên dưới để bắt đầu
-                trình chiếu.
+                Click any topic or act below to launch the presentation.
               </p>
             </div>
 
@@ -327,7 +326,7 @@ export function PresentationHub() {
                     {/* Jump to Specific Act */}
                     <div className="pt-2 border-t border-slate-800/80">
                       <div className="text-[11px] font-mono uppercase tracking-wider text-slate-400 mb-2">
-                        Chọn nhanh theo chương (Jump to Act):
+                        Jump to Act:
                       </div>
                       <div className="grid grid-cols-1 sm:grid-cols-2 gap-1.5">
                         {deck.acts.map((act) => (
@@ -363,7 +362,7 @@ export function PresentationHub() {
                     }
                     className="flex-1 py-2.5 px-4 rounded-xl text-xs font-mono font-bold bg-cyan-400 text-slate-950 hover:bg-cyan-300 text-center transition cursor-pointer shadow-[0_0_20px_rgba(34,211,238,0.3)]"
                   >
-                    ▶ Bắt đầu thuyết trình (Slide Deck)
+                    ▶ Start Presentation (Slide Deck)
                   </button>
                   <button
                     type="button"
@@ -384,13 +383,13 @@ export function PresentationHub() {
                 ＋
               </div>
               <h3 className="font-display text-lg font-bold text-white">
-                Chủ đề thuyết trình tiếp theo
+                Next Presentation Topic
               </h3>
               <p className="text-xs sm:text-sm text-slate-400 max-w-sm leading-relaxed">
-                Dự án <code className="text-cyan-300">my-presentation</code> đã
-                được thiết kế mở rộng. Khi bạn thêm bài thuyết trình mới vào{" "}
+                The <code className="text-cyan-300">my-presentation</code> platform is
+                built to be easily extensible. Register new decks in{" "}
                 <code className="text-cyan-300">app/data/presentations.ts</code>,
-                chủ đề đó sẽ tự động xuất hiện tại đây!
+                and they will automatically appear here!
               </p>
               <span className="text-[11px] font-mono text-slate-500 bg-slate-900/80 border border-slate-800 px-3 py-1 rounded-full">
                 Ready for new topics · /presentations/[slug]

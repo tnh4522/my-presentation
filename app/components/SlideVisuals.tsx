@@ -148,7 +148,7 @@ export function SlideVisual({ slideId }: SlideVisualProps) {
             type="button"
             onClick={() => setUseVideo((prev) => !prev)}
             className="px-2.5 py-1 rounded-lg text-[11px] font-mono bg-cyan-950/90 text-cyan-200 border border-cyan-500/40 hover:border-cyan-300 backdrop-blur-md cursor-pointer transition shadow"
-            title={useVideo ? "Chuyển sang ảnh tĩnh" : "Bật video chuyển động"}
+            title={useVideo ? "Switch to still photo" : "Enable motion video"}
           >
             {useVideo ? "🖼 Photo" : "🎬 Video"}
           </button>

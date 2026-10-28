@@ -159,7 +159,7 @@ export function PresentationApp({
   // Background Piano Music (Interstellar Main Theme - Piano Version)
   const bgAudioRef = useRef<HTMLAudioElement | null>(null);
   const [isBgmPlaying, setIsBgmPlaying] = useState<boolean>(false);
-  const [bgmVolume, setBgmVolume] = useState<number>(0.07); // Âm lượng nhẹ nhàng 7% làm nền
+  const [bgmVolume, setBgmVolume] = useState<number>(0.07); // Soft 7% background volume
 
   useEffect(() => {
     const audio = bgAudioRef.current;
@@ -173,7 +173,7 @@ export function PresentationApp({
           setIsBgmPlaying(true);
         })
         .catch(() => {
-          // Trình duyệt chặn autoplay khi chưa có tương tác -> Tự động phát khi tương tác lần đầu
+          // Browser autoplay policy: start on first user interaction gesture
           setIsBgmPlaying(false);
           const handleFirstGesture = () => {
             if (bgAudioRef.current) {
@@ -762,7 +762,7 @@ export function PresentationApp({
                     ? "text-cyan-300 font-bold"
                     : "text-slate-400 hover:text-white"
                 }`}
-                title="Bật / Tắt nhạc nền Piano Interstellar"
+                title="Toggle Interstellar Piano Background Music"
               >
                 <span className={isBgmPlaying ? "animate-pulse" : ""}>
                   {isBgmPlaying ? "🎵 Music: ON" : "🔇 Music: OFF"}
@@ -783,7 +783,7 @@ export function PresentationApp({
                   }
                 }}
                 className="w-12 sm:w-16 h-1 bg-slate-700 accent-cyan-400 rounded-lg cursor-pointer"
-                title={`Âm lượng nhạc nền: ${Math.round(bgmVolume * 100)}%`}
+                title={`Background music volume: ${Math.round(bgmVolume * 100)}%`}
               />
             </div>
 
@@ -1055,7 +1055,7 @@ export function PresentationApp({
 
               <div className="flex items-center gap-2">
                 <span className="hidden lg:inline text-xs font-mono text-slate-400">
-                  Nhấn ESC hoặc G để đóng
+                  Press ESC or G to close
                 </span>
                 <button
                   type="button"
@@ -1104,7 +1104,7 @@ export function PresentationApp({
                           : "bg-[#060919] border-slate-800/90 hover:border-cyan-500/50"
                       }`}
                     >
-                      {/* Nửa trên (Top 50%): Ảnh Thumbnail xem trước của slide */}
+                      {/* Top 50%: Slide thumbnail preview */}
                       <div className="relative w-full h-52 shrink-0 overflow-hidden bg-slate-950">
                         <img
                           src={thumb}
@@ -1118,7 +1118,7 @@ export function PresentationApp({
                         />
                         <div className="absolute inset-0 bg-gradient-to-t from-[#060919] via-transparent to-black/60 pointer-events-none" />
 
-                        {/* Badges trên thumbnail */}
+                        {/* Thumbnail badges */}
                         <div className="absolute top-2.5 left-2.5 right-2.5 flex items-center justify-between text-xs font-mono font-bold z-10">
                           <span className="bg-slate-950/90 backdrop-blur-md px-2.5 py-0.5 rounded-lg border border-slate-700/80 text-cyan-300 shadow">
                             SLIDE {String(s.id).padStart(2, "0")}
@@ -1135,7 +1135,7 @@ export function PresentationApp({
                           </div>
                         </div>
 
-                        {/* Active Badge hoặc Topic Tag trên ảnh */}
+                        {/* Active Badge or Topic Tag */}
                         <div className="absolute bottom-2.5 left-2.5 right-2.5 flex items-center justify-between z-10">
                           {isCurrent ? (
                             <span className="bg-cyan-400 text-slate-950 px-2.5 py-0.5 rounded-md text-[10px] font-mono font-extrabold shadow-[0_0_12px_#22d3ee]">
@@ -1149,7 +1149,7 @@ export function PresentationApp({
                         </div>
                       </div>
 
-                      {/* Nửa dưới (Bottom 50%): Toàn bộ thông tin & văn bản slide */}
+                      {/* Bottom 50%: Full slide text & details */}
                       <div className="p-4 sm:p-5 flex-1 flex flex-col justify-between gap-3 bg-[#060919] border-t border-slate-800/70">
                         <div>
                           {/* Slide Title */}
