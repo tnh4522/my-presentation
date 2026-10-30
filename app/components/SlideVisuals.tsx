@@ -2193,7 +2193,7 @@ export function SlideVisual({ slideId }: SlideVisualProps) {
                   fontSize="13"
                   fontWeight="bold"
                 >
-                  ALIEN LIFE? 🛸
+                  ALIEN LIFE / CIVS
                 </text>
                 <text
                   x="97"
@@ -2251,7 +2251,7 @@ export function SlideVisual({ slideId }: SlideVisualProps) {
                   className="w-full h-14 object-cover rounded-lg mb-1.5 border border-rose-500/30"
                 />
                 <div className="text-[11px] font-mono uppercase text-rose-300 font-bold">
-                  Isaac Newton 🍎
+                  Isaac Newton
                 </div>
                 <div className="text-xs font-bold text-white mt-0.5">
                   Falling Apple
@@ -2273,7 +2273,7 @@ export function SlideVisual({ slideId }: SlideVisualProps) {
                   className="w-full h-14 object-cover rounded-lg mb-1.5 border border-amber-500/30"
                 />
                 <div className="text-[11px] font-mono uppercase text-amber-300 font-bold">
-                  J. C. Maxwell ⚡
+                  J. C. Maxwell
                 </div>
                 <div className="text-xs font-bold text-white mt-0.5">
                   Few Equations
@@ -2295,7 +2295,7 @@ export function SlideVisual({ slideId }: SlideVisualProps) {
                   className="w-full h-14 object-cover rounded-lg mb-1.5 border border-cyan-400/40"
                 />
                 <div className="text-[11px] font-mono uppercase text-cyan-300 font-bold">
-                  H. Olbers 🌌
+                  Heinrich Olbers
                 </div>
                 <div className="text-xs font-bold text-white mt-0.5">
                   Dark Night Sky
@@ -2308,7 +2308,7 @@ export function SlideVisual({ slideId }: SlideVisualProps) {
           )}
 
           <div className="relative z-10 text-center text-[11px] font-mono text-cyan-200/90 shrink-0">
-            Keep asking questions · Thank you for listening! ✨
+            Keep asking questions · Thank you for listening!
           </div>
         </div>
       );
