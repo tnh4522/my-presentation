@@ -398,18 +398,6 @@ export function PresentationHub() {
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, [searchQuery]);
 
-  // If a presentation was launched inline from the hub, render PresentationApp directly
-  if (activeLaunch) {
-    return (
-      <PresentationApp
-        deck={activeLaunch.deck}
-        initialMode={activeLaunch.mode}
-        initialSlideIndex={activeLaunch.slideIndex}
-        onBackToHub={() => setActiveLaunch(null)}
-      />
-    );
-  }
-
   const categories = useMemo(
     () => ["All", ...Array.from(new Set(PRESENTATIONS.map((p) => p.category)))],
     []
@@ -435,6 +423,18 @@ export function PresentationHub() {
     () => PRESENTATIONS.find((p) => p.featured) ?? PRESENTATIONS[0],
     []
   );
+
+  // If a presentation was launched inline from the hub, render PresentationApp directly
+  if (activeLaunch) {
+    return (
+      <PresentationApp
+        deck={activeLaunch.deck}
+        initialMode={activeLaunch.mode}
+        initialSlideIndex={activeLaunch.slideIndex}
+        onBackToHub={() => setActiveLaunch(null)}
+      />
+    );
+  }
 
   const handleCopyShareLink = (deck: PresentationDeck) => {
     if (typeof window !== "undefined") {
@@ -631,11 +631,11 @@ export function PresentationHub() {
               {/* Right Milestone Collage: Interactive Slide Portal */}
               <div className="lg:col-span-5 grid grid-cols-2 gap-3 sm:gap-3.5">
                 {[
-                  { id: 1, act: "Act I", tag: "The Mystery" },
-                  { id: 4, act: "Act II", tag: "The Shells" },
-                  { id: 10, act: "Act III", tag: "Thermodynamics" },
-                  { id: 17, act: "Act V", tag: "Redshift" },
-                ].map(({ id: slideNum, act, tag }) => {
+                  { id: 1, act: "Act I" },
+                  { id: 4, act: "Act II" },
+                  { id: 10, act: "Act III" },
+                  { id: 17, act: "Act V" },
+                ].map(({ id: slideNum, act }) => {
                   const slideObj = featuredDeck.slides.find(
                     (s) => s.id === slideNum
                   );

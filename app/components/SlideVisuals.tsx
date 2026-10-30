@@ -206,6 +206,15 @@ export const SlideVisual = React.memo(function SlideVisual({ slideId }: SlideVis
             )}
           </button>
         )}
+        <button
+          type="button"
+          onClick={() => setShowOverlay((prev) => !prev)}
+          className="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg text-[11px] font-mono bg-slate-900/85 text-slate-300 border border-slate-700/60 hover:border-cyan-400 hover:text-cyan-200 backdrop-blur-md cursor-pointer transition shadow focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-cyan-400"
+          title={showOverlay ? "Hide information overlay" : "Show information overlay"}
+          aria-label={showOverlay ? "Hide overlay" : "Show overlay"}
+        >
+          {showOverlay ? "Hide Info" : "Show Info"}
+        </button>
         {extraControl}
       </div>
     );

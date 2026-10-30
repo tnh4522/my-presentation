@@ -4,8 +4,8 @@ import React, {
   createContext,
   useContext,
   useEffect,
-  useState,
   useCallback,
+  useSyncExternalStore,
   ReactNode,
 } from "react";
 
@@ -23,90 +23,103 @@ const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
 
 const STORAGE_KEY = "my-presentation-theme";
 
-export function ThemeProvider({ children }: { children: ReactNode }) {
-  const [theme, setThemeState] = useState<Theme>("dark");
-  const [resolvedTheme, setResolvedTheme] = useState<ResolvedTheme>("dark");
-  const [mounted, setMounted] = useState<boolean>(false);
+function subscribeToTheme(callback: () => void) {
+  if (typeof window === "undefined") return () => {};
+  window.addEventListener("storage", callback);
+  window.addEventListener("theme-change", callback);
+  const mediaQuery = window.matchMedia("(prefers-color-scheme: dark)");
+  mediaQuery.addEventListener("change", callback);
+  return () => {
+    window.removeEventListener("storage", callback);
+    window.removeEventListener("theme-change", callback);
+    mediaQuery.removeEventListener("change", callback);
+  };
+}
 
-  // Initialize theme from localStorage or system preference
-  useEffect(() => {
-    setMounted(true);
-    try {
-      const saved = localStorage.getItem(STORAGE_KEY) as Theme | null;
-      if (saved && (saved === "light" || saved === "dark" || saved === "system")) {
-        setThemeState(saved);
-      } else {
-        // Default to dark for deep-space identity, but respect explicit saved preference
-        setThemeState("dark");
-      }
-    } catch {
-      // Ignore localStorage access issues
+function getThemeSnapshot(): Theme {
+  if (typeof window === "undefined") return "dark";
+  try {
+    const saved = localStorage.getItem(STORAGE_KEY) as Theme | null;
+    if (saved && (saved === "light" || saved === "dark" || saved === "system")) {
+      return saved;
     }
+  } catch {
+    // Ignore localStorage access issues
+  }
+  return "dark";
+}
+
+function getServerThemeSnapshot(): Theme {
+  return "dark";
+}
+
+const emptySubscribe = () => () => {};
+
+export function ThemeProvider({ children }: { children: ReactNode }) {
+  const isMounted = useSyncExternalStore(
+    emptySubscribe,
+    () => true,
+    () => false
+  );
+
+  const theme = useSyncExternalStore(
+    subscribeToTheme,
+    getThemeSnapshot,
+    getServerThemeSnapshot
+  );
+
+  const computeResolvedTheme = useCallback((currentTheme: Theme): ResolvedTheme => {
+    if (currentTheme === "system") {
+      if (typeof window === "undefined") return "dark";
+      return window.matchMedia("(prefers-color-scheme: dark)").matches
+        ? "dark"
+        : "light";
+    }
+    return currentTheme;
   }, []);
 
-  // Update DOM and resolved theme whenever theme changes
+  const resolvedTheme: ResolvedTheme = isMounted
+    ? computeResolvedTheme(theme)
+    : "dark";
+
+  // Update DOM whenever resolved theme changes
   useEffect(() => {
     const root = document.documentElement;
-
-    const computeResolvedTheme = (): ResolvedTheme => {
-      if (theme === "system") {
-        return window.matchMedia("(prefers-color-scheme: dark)").matches
-          ? "dark"
-          : "light";
-      }
-      return theme;
-    };
-
-    const applyTheme = () => {
-      const resolved = computeResolvedTheme();
-      setResolvedTheme(resolved);
-
-      if (resolved === "dark") {
-        root.classList.add("dark");
-        root.classList.remove("light");
-        root.style.colorScheme = "dark";
-      } else {
-        root.classList.add("light");
-        root.classList.remove("dark");
-        root.style.colorScheme = "light";
-      }
-    };
-
-    applyTheme();
-
-    if (theme === "system") {
-      const mediaQuery = window.matchMedia("(prefers-color-scheme: dark)");
-      const handleChange = () => applyTheme();
-      mediaQuery.addEventListener("change", handleChange);
-      return () => mediaQuery.removeEventListener("change", handleChange);
+    if (resolvedTheme === "dark") {
+      root.classList.add("dark");
+      root.classList.remove("light");
+      root.style.colorScheme = "dark";
+    } else {
+      root.classList.add("light");
+      root.classList.remove("dark");
+      root.style.colorScheme = "light";
     }
-  }, [theme]);
+  }, [resolvedTheme]);
 
   const setTheme = useCallback((newTheme: Theme) => {
-    setThemeState(newTheme);
     try {
       localStorage.setItem(STORAGE_KEY, newTheme);
     } catch {
       // Ignore
     }
+    window.dispatchEvent(new Event("theme-change"));
   }, []);
 
   const toggleTheme = useCallback(() => {
-    setThemeState((prev) => {
-      const currentResolved =
-        prev === "system"
-          ? window.matchMedia("(prefers-color-scheme: dark)").matches
-            ? "dark"
-            : "light"
-          : prev;
-      const next: Theme = currentResolved === "dark" ? "light" : "dark";
-      try {
-        localStorage.setItem(STORAGE_KEY, next);
-      } catch {
-        // Ignore
-      }
-      return next;
-    });
+    const currentSaved = getThemeSnapshot();
+    const currentResolved =
+      currentSaved === "system"
+        ? typeof window !== "undefined" && window.matchMedia("(prefers-color-scheme: dark)").matches
+          ? "dark"
+          : "light"
+        : currentSaved;
+    const next: Theme = currentResolved === "dark" ? "light" : "dark";
+    try {
+      localStorage.setItem(STORAGE_KEY, next);
+    } catch {
+      // Ignore
+    }
+    window.dispatchEvent(new Event("theme-change"));
   }, []);
 
   // Global hotkey: 't' / 'T' toggles theme if not currently inside an input/textarea
@@ -132,7 +145,7 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
     <ThemeContext.Provider
       value={{
         theme,
-        resolvedTheme: mounted ? resolvedTheme : "dark",
+        resolvedTheme,
         setTheme,
         toggleTheme,
       }}
