@@ -19,6 +19,17 @@ body {
   font-family: var(--font-sans), system-ui, sans-serif;
 }
 
+/* Themed browser surfaces from DESIGN.md palette */
+::selection {
+  background-color: rgba(34, 211, 238, 0.28);
+  color: #f1f5f9;
+}
+
+input,
+textarea {
+  caret-color: #22d3ee;
+}
+
 h1, h2, h3, .font-display {
   font-family: var(--font-display), system-ui, sans-serif;
 }

@@ -808,14 +808,14 @@ export function PresentationApp({
       <StarfieldCanvas />
 
       <header className="shrink-0 sticky top-0 z-30 border-b border-slate-800/80 bg-[#03050c]/85 backdrop-blur-md">
-        <div className="w-full max-w-[1760px] mx-auto px-3 sm:px-6 lg:px-12 xl:px-16 h-12 flex items-center justify-between gap-2 sm:gap-3">
+        <div className="w-full max-w-[1760px] mx-auto px-3 sm:px-6 lg:px-12 xl:px-16 h-14 sm:h-16 flex items-center justify-between gap-2 sm:gap-4">
           {/* Back to Hub + Presentation Title */}
-          <div className="flex items-center gap-1.5 sm:gap-2.5 min-w-0 flex-1">
+          <div className="flex items-center gap-2 sm:gap-3 min-w-0 flex-1">
             {onBackToHub ? (
               <button
                 type="button"
                 onClick={handleExitToHub}
-                className="inline-flex items-center gap-1 px-2 py-1 rounded-lg text-xs font-mono bg-slate-900 border border-slate-700 text-cyan-300 hover:border-cyan-400 transition shrink-0 cursor-pointer"
+                className="inline-flex items-center gap-1.5 px-2.5 sm:px-3 py-1.5 rounded-xl text-xs sm:text-sm font-mono bg-slate-900 border border-slate-700 text-cyan-300 hover:border-cyan-400 hover:bg-slate-800 transition shrink-0 cursor-pointer"
                 title="Return to My Presentations Hub"
               >
                 <span>←</span>
@@ -825,7 +825,7 @@ export function PresentationApp({
               <Link
                 href="/"
                 onClick={handleExitToHub}
-                className="inline-flex items-center gap-1 px-2 py-1 rounded-lg text-xs font-mono bg-slate-900 border border-slate-700 text-cyan-300 hover:border-cyan-400 transition shrink-0"
+                className="inline-flex items-center gap-1.5 px-2.5 sm:px-3 py-1.5 rounded-xl text-xs sm:text-sm font-mono bg-slate-900 border border-slate-700 text-cyan-300 hover:border-cyan-400 hover:bg-slate-800 transition shrink-0"
                 title="Return to My Presentations Hub"
               >
                 <span>←</span>
@@ -833,11 +833,11 @@ export function PresentationApp({
               </Link>
             )}
 
-            <div className="flex items-center gap-1.5 min-w-0 truncate">
-              <h1 className="font-display text-xs sm:text-sm font-bold text-white truncate">
+            <div className="flex items-center gap-2 min-w-0 truncate">
+              <h1 className="font-display text-sm sm:text-base lg:text-lg font-bold text-white tracking-tight truncate">
                 {deckTitle}
               </h1>
-              <span className="hidden lg:inline text-[11px] font-mono text-cyan-400 shrink-0">
+              <span className="hidden sm:inline text-xs sm:text-sm font-mono text-cyan-400 shrink-0">
                 · {slides.length} Slides
               </span>
             </div>
@@ -853,15 +853,15 @@ export function PresentationApp({
               }}
               aria-expanded={showActMenu}
               aria-haspopup="true"
-              className="flex items-center gap-1.5 px-2 sm:px-3 py-1 rounded-lg text-xs font-mono bg-slate-900/90 border border-slate-800 text-slate-200 hover:border-cyan-500/50 cursor-pointer whitespace-nowrap"
+              className="flex items-center gap-1.5 sm:gap-2 px-2.5 sm:px-3.5 py-1.5 rounded-xl text-xs sm:text-sm font-mono bg-slate-900/90 border border-slate-800 text-slate-200 hover:border-cyan-500/50 hover:bg-slate-800/80 transition cursor-pointer whitespace-nowrap"
               title="Jump to Act chapter"
             >
               <span className="text-cyan-400 font-bold whitespace-nowrap">Act {currentSlide.actNumber}</span>
               <span className="text-slate-600 hidden sm:inline">·</span>
-              <span className="hidden sm:inline text-slate-300 max-w-[140px] truncate">
+              <span className="hidden sm:inline text-slate-300 max-w-[140px] md:max-w-[220px] lg:max-w-[320px] truncate">
                 {acts.find((a) => a.number === currentSlide.actNumber)?.title || `Act ${currentSlide.actNumber}`}
               </span>
-              <span className="text-[10px] text-cyan-400">▾</span>
+              <span className="text-[10px] sm:text-xs text-cyan-400">▾</span>
             </button>
 
             {showActMenu && (
@@ -904,13 +904,13 @@ export function PresentationApp({
           </div>
 
           {/* Right Mode & Action Controls */}
-          <div className="flex items-center gap-1 sm:gap-1.5 shrink-0">
+          <div className="flex items-center gap-1.5 sm:gap-2 shrink-0">
             {/* View Mode Toggle: Deck vs Continuous Read */}
-            <div className="flex items-center bg-slate-900 border border-slate-800 rounded-lg p-0.5">
+            <div className="flex items-center bg-slate-900 border border-slate-800 rounded-xl p-0.5 sm:p-1">
               <button
                 type="button"
                 onClick={() => setViewMode("deck")}
-                className={`px-2 py-0.5 rounded-md text-[11px] font-mono transition cursor-pointer ${
+                className={`px-2.5 sm:px-3 py-1 rounded-lg text-xs sm:text-sm font-mono transition cursor-pointer ${
                   viewMode === "deck"
                     ? "bg-cyan-400 text-slate-950 font-bold"
                     : "text-slate-400 hover:text-white"
@@ -922,7 +922,7 @@ export function PresentationApp({
               <button
                 type="button"
                 onClick={() => setViewMode("gamma")}
-                className={`px-2 py-0.5 rounded-md text-[11px] font-mono transition cursor-pointer ${
+                className={`px-2.5 sm:px-3 py-1 rounded-lg text-xs sm:text-sm font-mono transition cursor-pointer ${
                   viewMode === "gamma"
                     ? "bg-cyan-400 text-slate-950 font-bold"
                     : "text-slate-400 hover:text-white"
@@ -943,20 +943,20 @@ export function PresentationApp({
                 }}
                 aria-expanded={showMediaMenu}
                 aria-haspopup="true"
-                className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-[11px] font-mono border transition cursor-pointer ${
+                className={`inline-flex items-center gap-1.5 sm:gap-2 px-2.5 sm:px-3.5 py-1.5 rounded-xl text-xs sm:text-sm font-mono border transition cursor-pointer ${
                   isBgmPlaying || speakingSlideId !== null || autoPlayDeck
                     ? "bg-cyan-950/80 border-cyan-500/50 text-cyan-300 shadow-[0_0_12px_rgba(34,211,238,0.3)]"
-                    : "bg-slate-900 border-slate-800 text-slate-300 hover:border-slate-700"
+                    : "bg-slate-900 border-slate-800 text-slate-300 hover:border-slate-700 hover:bg-slate-800/80"
                 }`}
                 title="Audio, Voiceover & Video controls"
               >
                 <span className="flex items-center gap-0.5">
-                  <span className={`w-1 h-3 rounded-full bg-cyan-400 ${isBgmPlaying ? "animate-pulse" : "opacity-60"}`} />
-                  <span className={`w-1 h-2 rounded-full bg-cyan-300 ${isBgmPlaying ? "animate-pulse" : "opacity-40"}`} />
                   <span className={`w-1 h-3.5 rounded-full bg-cyan-400 ${isBgmPlaying ? "animate-pulse" : "opacity-60"}`} />
+                  <span className={`w-1 h-2.5 rounded-full bg-cyan-300 ${isBgmPlaying ? "animate-pulse" : "opacity-40"}`} />
+                  <span className={`w-1 h-4 rounded-full bg-cyan-400 ${isBgmPlaying ? "animate-pulse" : "opacity-60"}`} />
                 </span>
                 <span className="hidden sm:inline">Media</span>
-                <span className="text-[10px] text-cyan-400">▾</span>
+                <span className="text-[10px] sm:text-xs text-cyan-400">▾</span>
               </button>
 
               {showMediaMenu && (
@@ -1065,7 +1065,7 @@ export function PresentationApp({
             <button
               type="button"
               onClick={() => setShowOverview((prev) => !prev)}
-              className="hidden sm:inline-flex px-2.5 py-1 rounded-lg text-[11px] font-mono bg-slate-900 border border-slate-700 text-slate-200 hover:border-cyan-400/50 cursor-pointer"
+              className="hidden sm:inline-flex px-3 sm:px-3.5 py-1.5 rounded-xl text-xs sm:text-sm font-mono bg-slate-900 border border-slate-700 text-slate-200 hover:border-cyan-400/50 hover:bg-slate-800/80 hover:text-white transition cursor-pointer"
               title="Open Slide Grid (Shortcut: G)"
             >
               <span>Grid ({slides.length})</span>
@@ -1075,7 +1075,7 @@ export function PresentationApp({
             <button
               type="button"
               onClick={() => setShowShortcutsModal(true)}
-              className="hidden md:inline-flex px-2 py-1 rounded-lg text-[11px] font-mono bg-slate-900 border border-slate-800 text-slate-400 hover:text-cyan-300 hover:border-cyan-500/50 cursor-pointer"
+              className="hidden md:inline-flex px-2.5 sm:px-3 py-1.5 rounded-xl text-xs sm:text-sm font-mono bg-slate-900 border border-slate-800 text-slate-400 hover:text-cyan-300 hover:border-cyan-500/50 hover:bg-slate-800/80 transition cursor-pointer"
               title="Keyboard Shortcuts Cheatsheet (?)"
               aria-label="Keyboard Shortcuts"
             >
@@ -1086,7 +1086,7 @@ export function PresentationApp({
             <button
               type="button"
               onClick={toggleFullscreen}
-              className="hidden sm:inline-flex px-2 py-1 rounded-lg text-[11px] font-mono bg-slate-900 border border-slate-700 text-slate-300 hover:border-cyan-400/50 cursor-pointer"
+              className="hidden sm:inline-flex px-2.5 sm:px-3 py-1.5 rounded-xl text-xs sm:text-sm font-mono bg-slate-900 border border-slate-700 text-slate-300 hover:border-cyan-400/50 hover:bg-slate-800/80 hover:text-white transition cursor-pointer"
               title="Toggle Fullscreen (Shortcut: F)"
             >
               ⛶
@@ -1116,7 +1116,7 @@ export function PresentationApp({
       <main
         className={`relative z-10 flex-1 w-full max-w-[1760px] mx-auto px-3 sm:px-6 lg:px-12 xl:px-16 flex flex-col justify-between ${
           viewMode === "deck"
-            ? "py-2 sm:py-3.5 gap-2 sm:gap-2.5 lg:min-h-0 lg:overflow-hidden"
+            ? "py-2 sm:py-2.5 gap-2 sm:gap-2 lg:min-h-0 lg:overflow-hidden"
             : "py-6 sm:py-8"
         }`}
       >
@@ -1216,13 +1216,13 @@ export function PresentationApp({
               </div>
             )}
 
-            <div className="shrink-0 sticky bottom-2 lg:static z-20 flex items-center justify-between gap-1.5 sm:gap-3 bg-slate-950/95 border border-slate-800/90 rounded-xl px-2.5 sm:px-4 py-1.5 sm:py-2 backdrop-blur-md shadow-2xl">
+            <div className="shrink-0 sticky bottom-2 lg:static z-20 flex items-center justify-between sm:justify-center gap-2 sm:gap-4 md:gap-5 bg-slate-950/90 border border-slate-800/80 rounded-2xl px-2.5 sm:px-4 py-1 sm:py-1.5 backdrop-blur-xl shadow-xl w-full sm:w-auto sm:max-w-fit mx-auto">
               <div className="flex items-center gap-1.5 sm:gap-2">
                 <button
                   type="button"
                   onClick={goPrev}
                   disabled={currentIndex === 0}
-                  className="min-h-[40px] min-w-[40px] px-3 py-1.5 rounded-lg text-xs font-mono font-semibold bg-slate-900 border border-slate-700 text-slate-200 hover:border-cyan-400 disabled:opacity-35 disabled:pointer-events-none inline-flex items-center justify-center cursor-pointer"
+                  className="h-8 sm:h-8.5 px-2.5 sm:px-3 rounded-lg text-xs font-mono font-medium bg-slate-900 border border-slate-700/80 text-slate-300 hover:border-cyan-400 hover:bg-slate-800 disabled:opacity-30 disabled:pointer-events-none inline-flex items-center justify-center cursor-pointer transition"
                 >
                   ← Prev
                 </button>
@@ -1230,7 +1230,7 @@ export function PresentationApp({
                   type="button"
                   onClick={goNext}
                   disabled={currentIndex === slides.length - 1}
-                  className="min-h-[40px] px-3.5 py-1.5 rounded-lg text-xs font-mono font-bold bg-cyan-400 text-slate-950 hover:bg-cyan-300 disabled:opacity-35 disabled:pointer-events-none shadow-[0_0_15px_rgba(34,211,238,0.4)] inline-flex items-center justify-center cursor-pointer"
+                  className="h-8 sm:h-8.5 px-3 sm:px-3.5 rounded-lg text-xs font-mono font-bold bg-cyan-400 text-slate-950 hover:bg-cyan-300 disabled:opacity-30 disabled:pointer-events-none shadow-[0_0_10px_rgba(34,211,238,0.3)] inline-flex items-center justify-center cursor-pointer transition"
                 >
                   Next →
                 </button>
@@ -1240,7 +1240,7 @@ export function PresentationApp({
                 <button
                   type="button"
                   onClick={() => setShowOverview(true)}
-                  className="sm:hidden min-h-[40px] inline-flex items-center gap-1 px-3 py-1 rounded-lg bg-slate-900/90 border border-slate-800 font-mono text-xs text-slate-300 hover:border-cyan-500/50 cursor-pointer"
+                  className="sm:hidden h-8 inline-flex items-center gap-1 px-2.5 py-1 rounded-lg bg-slate-900/90 border border-slate-800 font-mono text-xs text-slate-300 hover:border-cyan-500/50 cursor-pointer"
                   title="Tap to see all slides"
                 >
                   <span className="text-cyan-400 font-bold">{currentIndex + 1}</span>
@@ -1249,7 +1249,7 @@ export function PresentationApp({
                   <span className="text-[10px] text-cyan-400 ml-0.5">▼</span>
                 </button>
 
-                <div className="hidden sm:flex items-center gap-1 overflow-x-auto py-0.5 max-w-full">
+                <div className="hidden sm:flex items-center gap-0.5 md:gap-1 overflow-x-auto py-0.5 px-2 sm:px-3 border-x border-slate-800/80 max-w-full">
                   {slides.map((s, idx) => {
                     const active = idx === currentIndex;
                     return (
@@ -1262,13 +1262,13 @@ export function PresentationApp({
                         }}
                         title={`Slide ${s.id}: ${s.title}`}
                         aria-label={`Go to slide ${s.id}: ${s.title}`}
-                        className="min-w-[28px] min-h-[28px] p-1 flex items-center justify-center cursor-pointer group focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-cyan-400 rounded-full"
+                        className="min-w-[18px] min-h-[22px] p-0.5 flex items-center justify-center cursor-pointer group focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-cyan-400 rounded-full"
                       >
                         <span
-                          className={`h-2 rounded-full transition-all ${
+                          className={`h-1.5 rounded-full transition-all ${
                             active
-                              ? "w-6 bg-cyan-400 shadow-[0_0_10px_#22d3ee]"
-                              : "w-2 bg-slate-700 group-hover:bg-slate-500"
+                              ? "w-5 bg-cyan-400 shadow-[0_0_8px_#22d3ee]"
+                              : "w-1.5 bg-slate-700 group-hover:bg-slate-500"
                           }`}
                         />
                       </button>
@@ -1281,10 +1281,10 @@ export function PresentationApp({
                 <button
                   type="button"
                   onClick={() => setShowNotes((prev) => !prev)}
-                  className={`min-h-[40px] px-2.5 sm:px-3 py-1.5 rounded-lg text-[11px] font-mono border transition inline-flex items-center justify-center cursor-pointer ${
+                  className={`h-8 sm:h-8.5 px-2.5 sm:px-3 rounded-lg text-xs font-mono border transition inline-flex items-center justify-center cursor-pointer ${
                     showNotes
-                      ? "bg-cyan-950/80 border-cyan-500/40 text-cyan-300 shadow-[0_0_10px_rgba(34,211,238,0.2)]"
-                      : "bg-slate-900 border-slate-800 text-slate-400 hover:text-white"
+                      ? "bg-cyan-950/80 border-cyan-500/40 text-cyan-300 shadow-[0_0_8px_rgba(34,211,238,0.2)]"
+                      : "bg-slate-900 border-slate-800 text-slate-400 hover:text-white hover:bg-slate-800"
                   }`}
                   title="Speaker notes (Shortcut: N)"
                 >
