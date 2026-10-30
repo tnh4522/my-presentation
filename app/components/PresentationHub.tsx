@@ -84,12 +84,14 @@ export function PresentationHub() {
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 placeholder="Search presentation topics, keywords..."
-                className="w-full rounded-xl bg-slate-900/90 border border-slate-800 px-4 py-2 text-xs sm:text-sm text-slate-100 placeholder:text-slate-500 focus:outline-none focus:border-cyan-400 transition"
+                aria-label="Search presentation topics"
+                className="w-full rounded-xl bg-slate-900/90 border border-slate-800 px-4 py-2 text-xs sm:text-sm text-slate-100 placeholder:text-slate-400 focus:outline-none focus:border-cyan-400 transition"
               />
               {searchQuery && (
                 <button
                   type="button"
                   onClick={() => setSearchQuery("")}
+                  aria-label="Clear search query"
                   className="absolute right-3 top-1/2 -translate-y-1/2 text-xs text-slate-400 hover:text-white cursor-pointer"
                 >
                   ✕
@@ -178,7 +180,7 @@ export function PresentationHub() {
                     }
                     className="inline-flex items-center gap-2 px-4 py-3 rounded-2xl text-sm font-mono font-semibold bg-slate-900/90 border border-slate-700 text-slate-200 hover:border-cyan-400 transition cursor-pointer"
                   >
-                    <span>📜 Scroll Mode (All 20 Cards)</span>
+                    <span>📜 Continuous Reading Mode</span>
                   </button>
 
                   <Link
@@ -252,9 +254,9 @@ export function PresentationHub() {
                   key={cat}
                   type="button"
                   onClick={() => setSelectedCategory(cat)}
-                  className={`px-3 py-1.5 rounded-xl text-xs font-mono transition cursor-pointer ${
+                  className={`px-3.5 py-1.5 rounded-full text-xs font-mono transition cursor-pointer ${
                     selectedCategory === cat
-                      ? "bg-cyan-400 text-slate-950 font-bold"
+                      ? "bg-cyan-400 text-slate-950 font-bold shadow-[0_0_15px_rgba(34,211,238,0.35)]"
                       : "bg-slate-900 text-slate-300 border border-slate-800 hover:border-slate-700"
                   }`}
                 >
@@ -263,6 +265,31 @@ export function PresentationHub() {
               ))}
             </div>
           </div>
+
+          {/* Empty Search Recovery State */}
+          {filteredDecks.length === 0 && (
+            <div className="rounded-3xl border border-slate-800 bg-[#060918]/80 p-8 sm:p-12 text-center space-y-4 max-w-lg mx-auto">
+              <div className="w-12 h-12 rounded-2xl bg-slate-900 border border-slate-700 flex items-center justify-center text-xl text-cyan-400 mx-auto">
+                🔍
+              </div>
+              <h3 className="font-display text-lg font-bold text-white">
+                No matching cosmic presentations found
+              </h3>
+              <p className="text-xs sm:text-sm text-slate-400 leading-relaxed">
+                We couldn&apos;t find any topics matching &ldquo;<span className="text-cyan-300 font-mono">{searchQuery}</span>&rdquo;. Try searching for &ldquo;paradox&rdquo;, &ldquo;cosmology&rdquo;, or clear the search.
+              </p>
+              <button
+                type="button"
+                onClick={() => {
+                  setSearchQuery("");
+                  setSelectedCategory("All");
+                }}
+                className="px-4 py-2 rounded-xl text-xs font-mono font-bold bg-cyan-400 text-slate-950 hover:bg-cyan-300 transition cursor-pointer"
+              >
+                Reset Search Filter
+              </button>
+            </div>
+          )}
 
           {/* Presentations Grid */}
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
@@ -273,11 +300,13 @@ export function PresentationHub() {
               >
                 <div>
                   {/* Cover Image Header */}
-                  <div
+                  <button
+                    type="button"
                     onClick={() =>
                       setActiveLaunch({ deck, mode: "deck", slideIndex: 0 })
                     }
-                    className="relative h-52 w-full overflow-hidden cursor-pointer"
+                    className="relative h-52 w-full overflow-hidden text-left cursor-pointer group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400"
+                    aria-label={`Start presentation: ${deck.title}`}
                   >
                     <img
                       src={deck.coverImage}
@@ -303,7 +332,7 @@ export function PresentationHub() {
                         {deck.subtitle}
                       </p>
                     </div>
-                  </div>
+                  </button>
 
                   {/* Deck Details & Act Quick-Jump Buttons */}
                   <div className="p-5 space-y-4">
@@ -377,24 +406,34 @@ export function PresentationHub() {
               </div>
             ))}
 
-            {/* Placeholder Card for Future Presentations */}
-            <div className="rounded-3xl border border-dashed border-slate-800 bg-slate-950/40 p-6 flex flex-col items-center justify-center text-center space-y-3 min-h-[340px]">
-              <div className="w-14 h-14 rounded-2xl bg-slate-900 border border-slate-700 flex items-center justify-center text-2xl text-cyan-400">
-                ＋
+              {/* Upcoming Cosmic Explorations Teaser */}
+              <div className="rounded-3xl border border-slate-800/90 bg-[#060918]/60 p-6 flex flex-col justify-between space-y-4 min-h-[340px]">
+                <div>
+                  <div className="flex items-center justify-between gap-2 mb-3">
+                    <span className="text-[11px] font-mono text-cyan-300 bg-cyan-950/80 border border-cyan-500/40 px-2.5 py-0.5 rounded-full uppercase tracking-wider">
+                      ✦ Upcoming Expeditions
+                    </span>
+                    <span className="text-[11px] font-mono text-slate-400">
+                      In Research
+                    </span>
+                  </div>
+                  <h3 className="font-display text-xl font-bold text-white">
+                    The Fermi Paradox &amp; The Great Silence
+                  </h3>
+                  <p className="text-xs sm:text-sm text-slate-300 mt-2 leading-relaxed">
+                    With billions of Earth-like planets in our galaxy, where are all the extraterrestrial civilizations? An upcoming deep-space visual journey investigating planetary evolution, cosmic filters, and Dyson spheres.
+                  </p>
+                </div>
+
+                <div className="pt-4 border-t border-slate-800/80 flex items-center justify-between">
+                  <span className="text-xs font-mono text-slate-400">
+                    Expected Release: Late 2026
+                  </span>
+                  <span className="text-xs font-mono text-cyan-400">
+                    Act Outline Ready ▹
+                  </span>
+                </div>
               </div>
-              <h3 className="font-display text-lg font-bold text-white">
-                Next Presentation Topic
-              </h3>
-              <p className="text-xs sm:text-sm text-slate-400 max-w-sm leading-relaxed">
-                The <code className="text-cyan-300">my-presentation</code> platform is
-                built to be easily extensible. Register new decks in{" "}
-                <code className="text-cyan-300">app/data/presentations.ts</code>,
-                and they will automatically appear here!
-              </p>
-              <span className="text-[11px] font-mono text-slate-500 bg-slate-900/80 border border-slate-800 px-3 py-1 rounded-full">
-                Ready for new topics · /presentations/[slug]
-              </span>
-            </div>
           </div>
         </section>
       </main>

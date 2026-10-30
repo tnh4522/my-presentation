@@ -178,6 +178,8 @@ export function SlideVisual({ slideId }: SlideVisualProps) {
       <img
         src={media.primaryImage}
         alt={altText}
+        loading="lazy"
+        decoding="async"
         className={`absolute inset-0 w-full h-full ${customImgClass} transition-transform duration-700 group-hover:scale-105`}
       />
     );
@@ -677,6 +679,9 @@ export function SlideVisual({ slideId }: SlideVisualProps) {
                 min={-30}
                 max={30}
                 value={sightAngle}
+                aria-label="Sight line angle"
+                onTouchStart={(e) => e.stopPropagation()}
+                onTouchEnd={(e) => e.stopPropagation()}
                 onChange={(e) => setSightAngle(Number(e.target.value))}
                 className="accent-emerald-400 w-24 cursor-pointer"
               />
@@ -804,6 +809,9 @@ export function SlideVisual({ slideId }: SlideVisualProps) {
                 min={10}
                 max={100}
                 value={shellDensity}
+                aria-label="Star shell density"
+                onTouchStart={(e) => e.stopPropagation()}
+                onTouchEnd={(e) => e.stopPropagation()}
                 onChange={(e) => setShellDensity(Number(e.target.value))}
                 className="accent-amber-400 w-24 cursor-pointer"
               />
@@ -842,6 +850,9 @@ export function SlideVisual({ slideId }: SlideVisualProps) {
                 min={15}
                 max={85}
                 value={splitPos}
+                aria-label="Compare theory versus observation split position"
+                onTouchStart={(e) => e.stopPropagation()}
+                onTouchEnd={(e) => e.stopPropagation()}
                 onChange={(e) => setSplitPos(Number(e.target.value))}
                 className="accent-amber-400 w-24 cursor-pointer"
               />

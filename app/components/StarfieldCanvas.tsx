@@ -22,14 +22,45 @@ export function StarfieldCanvas() {
     const ctx = canvas.getContext("2d");
     if (!ctx) return;
 
+    // Check prefers-reduced-motion
+    const mediaQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
+    let prefersReducedMotion = mediaQuery.matches;
+
+    const handleMotionChange = (e: MediaQueryListEvent) => {
+      prefersReducedMotion = e.matches;
+      if (prefersReducedMotion) {
+        cancelAnimationFrame(animationFrameId);
+        renderStatic();
+      } else {
+        render();
+      }
+    };
+    mediaQuery.addEventListener?.("change", handleMotionChange);
+
     let animationFrameId: number;
-    let width = (canvas.width = window.innerWidth);
-    let height = (canvas.height = window.innerHeight);
+    const dpr = Math.min(window.devicePixelRatio || 1, 2);
+    let width = window.innerWidth;
+    let height = window.innerHeight;
+
+    const setupCanvasSize = () => {
+      if (!canvas) return;
+      width = window.innerWidth;
+      height = window.innerHeight;
+      canvas.width = width * dpr;
+      canvas.height = height * dpr;
+      canvas.style.width = `${width}px`;
+      canvas.style.height = `${height}px`;
+      ctx.resetTransform?.();
+      ctx.scale(dpr, dpr);
+    };
+
+    setupCanvasSize();
 
     const handleResize = () => {
-      if (!canvas) return;
-      width = canvas.width = window.innerWidth;
-      height = canvas.height = window.innerHeight;
+      setupCanvasSize();
+      if (prefersReducedMotion) {
+        renderStatic();
+      }
     };
 
     window.addEventListener("resize", handleResize);
@@ -48,9 +79,25 @@ export function StarfieldCanvas() {
       hue: colors[Math.floor(Math.random() * colors.length)],
     }));
 
+    const renderStatic = () => {
+      ctx.clearRect(0, 0, width, height);
+      for (const s of stars) {
+        ctx.beginPath();
+        ctx.arc(s.x, s.y, s.radius, 0, Math.PI * 2);
+        ctx.fillStyle = s.hue;
+        ctx.globalAlpha = s.alpha * 0.75;
+        ctx.fill();
+      }
+      ctx.globalAlpha = 1;
+    };
+
     let tick = 0;
 
     const render = () => {
+      if (prefersReducedMotion) {
+        renderStatic();
+        return;
+      }
       tick += 1;
       ctx.clearRect(0, 0, width, height);
 
@@ -73,11 +120,16 @@ export function StarfieldCanvas() {
       animationFrameId = requestAnimationFrame(render);
     };
 
-    render();
+    if (prefersReducedMotion) {
+      renderStatic();
+    } else {
+      render();
+    }
 
     return () => {
       cancelAnimationFrame(animationFrameId);
       window.removeEventListener("resize", handleResize);
+      mediaQuery.removeEventListener?.("change", handleMotionChange);
     };
   }, []);
 

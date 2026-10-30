@@ -72,25 +72,37 @@ h1, h2, h3, .font-display {
   }
 }
 
-.animate-pulse-glow {
-  animation: pulse-glow 4s ease-in-out infinite;
+@media (prefers-reduced-motion: no-preference) {
+  .animate-pulse-glow {
+    animation: pulse-glow 4s ease-in-out infinite;
+  }
+
+  .animate-float-slow {
+    animation: float-slow 5s ease-in-out infinite;
+  }
+
+  .animate-spin-slow {
+    animation: spin-slow 28s linear infinite;
+  }
+
+  .animate-dash-flow {
+    animation: dash-flow 2.2s linear infinite;
+  }
+
+  .animate-starlight-beam {
+    stroke-dasharray: 12 8;
+    animation: dash-flow 1.8s linear infinite;
+  }
 }
 
-.animate-float-slow {
-  animation: float-slow 5s ease-in-out infinite;
-}
-
-.animate-spin-slow {
-  animation: spin-slow 28s linear infinite;
-}
-
-.animate-dash-flow {
-  animation: dash-flow 2.2s linear infinite;
-}
-
-.animate-starlight-beam {
-  stroke-dasharray: 12 8;
-  animation: dash-flow 1.8s linear infinite;
+@media (prefers-reduced-motion: reduce) {
+  .animate-pulse-glow,
+  .animate-float-slow,
+  .animate-spin-slow,
+  .animate-dash-flow,
+  .animate-starlight-beam {
+    animation: none !important;
+  }
 }
 
 /* Custom sleek dark scrollbar */
