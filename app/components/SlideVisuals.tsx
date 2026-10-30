@@ -130,7 +130,7 @@ export function SlideVisual({ slideId }: SlideVisualProps) {
   const [splitPos, setSplitPos] = useState<number>(50); // Slide 7
   const [dustStep, setDustStep] = useState<number>(3); // Slide 10
   const [showOverlay, setShowOverlay] = useState<boolean>(true);
-  const [useVideo, setUseVideo] = useState<boolean>(true);
+  const [useVideo, setUseVideo] = useState<boolean>(false);
   const [videoError, setVideoError] = useState<boolean>(false);
   const videoRef = useRef<HTMLVideoElement | null>(null);
 

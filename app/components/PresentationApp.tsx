@@ -674,16 +674,16 @@ export function PresentationApp({
                   isDenseSlide ? "px-2.5 py-1 sm:px-3 sm:py-1.5" : "px-3 py-1.5 sm:px-3.5 sm:py-2"
                 } flex items-center justify-between gap-3 ${style.statBorder}`}
               >
-                <div className="min-w-0">
+                <div className="min-w-0 flex-1">
                   <div className="text-[10px] font-mono uppercase tracking-widest text-slate-400">
                     {slide.keyStat.label}
                   </div>
-                  <div className="text-xs text-slate-300 truncate">
+                  <div className="text-xs text-slate-300 line-clamp-2 leading-relaxed">
                     {slide.keyStat.sub}
                   </div>
                 </div>
                 <div
-                  className={`font-display text-sm sm:text-base xl:text-lg font-bold shrink-0 ${style.numberText}`}
+                  className={`font-display text-sm sm:text-base xl:text-lg font-bold shrink-0 whitespace-nowrap ${style.numberText}`}
                 >
                   {slide.keyStat.value}
                 </div>
@@ -704,7 +704,7 @@ export function PresentationApp({
 
             <div className="shrink-0 flex items-center justify-between gap-2 px-2.5 py-1 sm:px-3 sm:py-1 rounded-lg bg-slate-950/85 border border-slate-800/80 text-[11px] text-slate-400">
               <div className="flex items-center gap-2 min-w-0">
-                <span className="font-mono uppercase text-[10px] tracking-wider px-2 py-0.5 rounded bg-slate-800 text-cyan-300 shrink-0">
+                <span className="font-mono uppercase text-[10px] tracking-wider px-2 py-0.5 rounded bg-slate-800 text-cyan-300 shrink-0 max-w-[130px] sm:max-w-none truncate">
                   {mediaInfo.credit}
                 </span>
                 <span className="truncate italic text-slate-300 text-[11px] sm:text-xs">
@@ -810,7 +810,7 @@ export function PresentationApp({
       <header className="shrink-0 sticky top-0 z-30 border-b border-slate-800/80 bg-[#03050c]/85 backdrop-blur-md">
         <div className="w-full max-w-[1760px] mx-auto px-3 sm:px-6 lg:px-12 xl:px-16 h-12 flex items-center justify-between gap-2 sm:gap-3">
           {/* Back to Hub + Presentation Title */}
-          <div className="flex items-center gap-1.5 sm:gap-2.5 min-w-0">
+          <div className="flex items-center gap-1.5 sm:gap-2.5 min-w-0 flex-1">
             {onBackToHub ? (
               <button
                 type="button"
@@ -833,18 +833,18 @@ export function PresentationApp({
               </Link>
             )}
 
-            <div className="flex items-center gap-1.5 truncate">
-              <h1 className="font-display text-xs sm:text-sm font-bold text-white truncate max-w-[130px] xs:max-w-[180px] sm:max-w-[280px] md:max-w-none">
+            <div className="flex items-center gap-1.5 min-w-0 truncate">
+              <h1 className="font-display text-xs sm:text-sm font-bold text-white truncate">
                 {deckTitle}
               </h1>
-              <span className="hidden lg:inline text-[11px] font-mono text-cyan-400">
+              <span className="hidden lg:inline text-[11px] font-mono text-cyan-400 shrink-0">
                 · {slides.length} Slides
               </span>
             </div>
           </div>
 
           {/* Center Act Chapter Dropdown */}
-          <div className="relative">
+          <div className="relative shrink-0">
             <button
               type="button"
               onClick={() => {
@@ -853,10 +853,10 @@ export function PresentationApp({
               }}
               aria-expanded={showActMenu}
               aria-haspopup="true"
-              className="flex items-center gap-1.5 px-2.5 sm:px-3 py-1 rounded-lg text-xs font-mono bg-slate-900/90 border border-slate-800 text-slate-200 hover:border-cyan-500/50 cursor-pointer"
+              className="flex items-center gap-1.5 px-2 sm:px-3 py-1 rounded-lg text-xs font-mono bg-slate-900/90 border border-slate-800 text-slate-200 hover:border-cyan-500/50 cursor-pointer whitespace-nowrap"
               title="Jump to Act chapter"
             >
-              <span className="text-cyan-400 font-bold">Act {currentSlide.actNumber}</span>
+              <span className="text-cyan-400 font-bold whitespace-nowrap">Act {currentSlide.actNumber}</span>
               <span className="text-slate-600 hidden sm:inline">·</span>
               <span className="hidden sm:inline text-slate-300 max-w-[140px] truncate">
                 {acts.find((a) => a.number === currentSlide.actNumber)?.title || `Act ${currentSlide.actNumber}`}
@@ -1061,22 +1061,21 @@ export function PresentationApp({
               )}
             </div>
 
-            {/* Grid button */}
+            {/* Grid button - hidden on small mobile, accessible via bottom bar 1/20 */}
             <button
               type="button"
               onClick={() => setShowOverview((prev) => !prev)}
-              className="px-2.5 py-1 rounded-lg text-[11px] font-mono bg-slate-900 border border-slate-700 text-slate-200 hover:border-cyan-400/50 cursor-pointer"
+              className="hidden sm:inline-flex px-2.5 py-1 rounded-lg text-[11px] font-mono bg-slate-900 border border-slate-700 text-slate-200 hover:border-cyan-400/50 cursor-pointer"
               title="Open Slide Grid (Shortcut: G)"
             >
-              <span className="sm:hidden">Grid</span>
-              <span className="hidden sm:inline">Grid ({slides.length})</span>
+              <span>Grid ({slides.length})</span>
             </button>
 
-            {/* Shortcuts Help button */}
+            {/* Shortcuts Help button - hidden on mobile touch devices */}
             <button
               type="button"
               onClick={() => setShowShortcutsModal(true)}
-              className="px-2 py-1 rounded-lg text-[11px] font-mono bg-slate-900 border border-slate-800 text-slate-400 hover:text-cyan-300 hover:border-cyan-500/50 cursor-pointer"
+              className="hidden md:inline-flex px-2 py-1 rounded-lg text-[11px] font-mono bg-slate-900 border border-slate-800 text-slate-400 hover:text-cyan-300 hover:border-cyan-500/50 cursor-pointer"
               title="Keyboard Shortcuts Cheatsheet (?)"
               aria-label="Keyboard Shortcuts"
             >
