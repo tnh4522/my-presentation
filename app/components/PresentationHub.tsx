@@ -1,11 +1,29 @@
 "use client";
 
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useMemo } from "react";
 import Link from "next/link";
+import dynamic from "next/dynamic";
 import { PRESENTATIONS, PresentationDeck } from "../data/presentations";
 import { SLIDE_MEDIA_MAP } from "./SlideVisuals";
 import { StarfieldCanvas } from "./StarfieldCanvas";
-import { PresentationApp } from "./PresentationApp";
+import { ThemeToggle } from "./ThemeToggle";
+
+const PresentationApp = dynamic(
+  () => import("./PresentationApp").then((mod) => mod.PresentationApp),
+  {
+    ssr: false,
+    loading: () => (
+      <div className="min-h-screen flex items-center justify-center bg-[#f8fafc] text-slate-900 dark:bg-[#03050c] dark:text-slate-100 font-mono text-sm transition-colors duration-200">
+        <div className="flex flex-col items-center gap-3">
+          <div className="w-8 h-8 rounded-full border-2 border-sky-500 dark:border-cyan-400 border-t-transparent animate-spin" />
+          <span className="text-xs tracking-wider text-slate-600 dark:text-cyan-300">
+            Calibrating Celestial Deck...
+          </span>
+        </div>
+      </div>
+    ),
+  }
+);
 
 /* ─── Tailored Deep-Space SVG Icons (Craft Floor: No Raw Unicode Glyphs) ─── */
 
@@ -286,7 +304,7 @@ function IconGitHub({ className = "w-4 h-4" }: { className?: string }) {
   );
 }
 
-/* ─── Spectral Semantic Theme Mapping for Presentation Acts ─── */
+/* ─── Spectral Semantic Theme Mapping for Presentation Acts (Light & Dark) ─── */
 const ACT_SPECTRAL_STYLES: Record<
   number,
   {
@@ -297,34 +315,44 @@ const ACT_SPECTRAL_STYLES: Record<
   }
 > = {
   1: {
-    border: "border-cyan-500/30 hover:border-cyan-400/80",
-    text: "text-cyan-300",
-    bg: "bg-cyan-950/20 hover:bg-cyan-950/40",
-    badge: "text-cyan-400 bg-cyan-950/80 border-cyan-500/40",
+    border:
+      "border-sky-200 dark:border-cyan-500/30 hover:border-sky-500 dark:hover:border-cyan-400/80",
+    text: "text-sky-900 dark:text-cyan-300",
+    bg: "bg-sky-50/80 dark:bg-cyan-950/20 hover:bg-sky-100/90 dark:hover:bg-cyan-950/40",
+    badge:
+      "text-sky-800 dark:text-cyan-400 bg-sky-100 dark:bg-cyan-950/80 border-sky-300 dark:border-cyan-500/40",
   },
   2: {
-    border: "border-indigo-500/30 hover:border-indigo-400/80",
-    text: "text-indigo-300",
-    bg: "bg-indigo-950/20 hover:bg-indigo-950/40",
-    badge: "text-indigo-400 bg-indigo-950/80 border-indigo-500/40",
+    border:
+      "border-indigo-200 dark:border-indigo-500/30 hover:border-indigo-500 dark:hover:border-indigo-400/80",
+    text: "text-indigo-950 dark:text-indigo-300",
+    bg: "bg-indigo-50/80 dark:bg-indigo-950/20 hover:bg-indigo-100/90 dark:hover:bg-indigo-950/40",
+    badge:
+      "text-indigo-800 dark:text-indigo-400 bg-indigo-100 dark:bg-indigo-950/80 border-indigo-300 dark:border-indigo-500/40",
   },
   3: {
-    border: "border-amber-500/30 hover:border-amber-400/80",
-    text: "text-amber-300",
-    bg: "bg-amber-950/20 hover:bg-amber-950/40",
-    badge: "text-amber-400 bg-amber-950/80 border-amber-500/40",
+    border:
+      "border-amber-300 dark:border-amber-500/30 hover:border-amber-500 dark:hover:border-amber-400/80",
+    text: "text-amber-950 dark:text-amber-300",
+    bg: "bg-amber-50/80 dark:bg-amber-950/20 hover:bg-amber-100/90 dark:hover:bg-amber-950/40",
+    badge:
+      "text-amber-800 dark:text-amber-400 bg-amber-100 dark:bg-amber-950/80 border-amber-300 dark:border-amber-500/40",
   },
   4: {
-    border: "border-rose-500/30 hover:border-rose-400/80",
-    text: "text-rose-300",
-    bg: "bg-rose-950/20 hover:bg-rose-950/40",
-    badge: "text-rose-400 bg-rose-950/80 border-rose-500/40",
+    border:
+      "border-rose-200 dark:border-rose-500/30 hover:border-rose-500 dark:hover:border-rose-400/80",
+    text: "text-rose-950 dark:text-rose-300",
+    bg: "bg-rose-50/80 dark:bg-rose-950/20 hover:bg-rose-100/90 dark:hover:bg-rose-950/40",
+    badge:
+      "text-rose-800 dark:text-rose-400 bg-rose-100 dark:bg-rose-950/80 border-rose-300 dark:border-rose-500/40",
   },
   5: {
-    border: "border-emerald-500/30 hover:border-emerald-400/80",
-    text: "text-emerald-300",
-    bg: "bg-emerald-950/20 hover:bg-emerald-950/40",
-    badge: "text-emerald-400 bg-emerald-950/80 border-emerald-500/40",
+    border:
+      "border-emerald-200 dark:border-emerald-500/30 hover:border-emerald-500 dark:hover:border-emerald-400/80",
+    text: "text-emerald-950 dark:text-emerald-300",
+    bg: "bg-emerald-50/80 dark:bg-emerald-950/20 hover:bg-emerald-100/90 dark:hover:bg-emerald-950/40",
+    badge:
+      "text-emerald-800 dark:text-emerald-400 bg-emerald-100 dark:bg-emerald-950/80 border-emerald-300 dark:border-emerald-500/40",
   },
 };
 
@@ -382,27 +410,31 @@ export function PresentationHub() {
     );
   }
 
-  const categories = [
-    "All",
-    ...Array.from(new Set(PRESENTATIONS.map((p) => p.category))),
-  ];
+  const categories = useMemo(
+    () => ["All", ...Array.from(new Set(PRESENTATIONS.map((p) => p.category)))],
+    []
+  );
 
-  const filteredDecks = PRESENTATIONS.filter((deck) => {
-    const matchesCategory =
-      selectedCategory === "All" || deck.category === selectedCategory;
+  const filteredDecks = useMemo(() => {
     const q = searchQuery.trim().toLowerCase();
-    if (!q) return matchesCategory;
-    return (
-      matchesCategory &&
-      (deck.title.toLowerCase().includes(q) ||
-        deck.subtitle.toLowerCase().includes(q) ||
-        deck.description.toLowerCase().includes(q) ||
-        deck.tags.some((t) => t.toLowerCase().includes(q)))
-    );
-  });
+    return PRESENTATIONS.filter((deck) => {
+      const matchesCategory =
+        selectedCategory === "All" || deck.category === selectedCategory;
+      if (!q) return matchesCategory;
+      return (
+        matchesCategory &&
+        (deck.title.toLowerCase().includes(q) ||
+          deck.subtitle.toLowerCase().includes(q) ||
+          deck.description.toLowerCase().includes(q) ||
+          deck.tags.some((t) => t.toLowerCase().includes(q)))
+      );
+    });
+  }, [selectedCategory, searchQuery]);
 
-  const featuredDeck =
-    PRESENTATIONS.find((p) => p.featured) ?? PRESENTATIONS[0];
+  const featuredDeck = useMemo(
+    () => PRESENTATIONS.find((p) => p.featured) ?? PRESENTATIONS[0],
+    []
+  );
 
   const handleCopyShareLink = (deck: PresentationDeck) => {
     if (typeof window !== "undefined") {
@@ -415,28 +447,28 @@ export function PresentationHub() {
   };
 
   return (
-    <div className="relative min-h-screen flex flex-col bg-[#03050c] text-slate-100 selection:bg-cyan-500/25 selection:text-white">
+    <div className="relative min-h-screen flex flex-col bg-[#f8fafc] text-slate-900 dark:bg-[#03050c] dark:text-slate-100 selection:bg-sky-500/25 selection:text-sky-950 dark:selection:bg-cyan-500/25 dark:selection:text-white transition-colors duration-200">
       <StarfieldCanvas />
 
-      {/* Top Navigation Bar with Cosmic Glass Aesthetics */}
-      <header className="sticky top-0 z-30 border-b border-slate-800/80 bg-[#03050c]/85 backdrop-blur-md">
+      {/* Top Navigation Bar with Dual-Theme Glass Aesthetics */}
+      <header className="sticky top-0 z-30 border-b border-slate-200/90 dark:border-slate-800/80 bg-white/85 dark:bg-[#03050c]/85 backdrop-blur-md transition-colors duration-200">
         <div className="w-full max-w-[1760px] mx-auto px-3 sm:px-6 lg:px-12 xl:px-16 h-14 sm:h-16 flex items-center justify-between gap-3">
           {/* Logo & Platform Identity */}
           <div className="flex items-center gap-2.5 sm:gap-3.5 min-w-0">
-            <div className="relative w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-gradient-to-br from-cyan-400 via-sky-500 to-indigo-600 flex items-center justify-center text-slate-950 font-bold shadow-[0_0_20px_rgba(34,211,238,0.4)] shrink-0 group">
+            <div className="relative w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-gradient-to-br from-sky-400 via-cyan-500 to-indigo-600 flex items-center justify-center text-slate-950 font-bold shadow-[0_0_20px_rgba(14,165,233,0.35)] dark:shadow-[0_0_20px_rgba(34,211,238,0.4)] shrink-0 group">
               <IconAperture className="w-5 h-5 text-slate-950 transition-transform duration-700 group-hover:rotate-90" />
               <span className="absolute -top-1 -right-1 w-2.5 h-2.5 rounded-full bg-emerald-400 shadow-[0_0_8px_#34d399] animate-pulse" />
             </div>
             <div className="min-w-0">
               <div className="flex items-center gap-2">
-                <h1 className="font-display text-sm sm:text-lg font-bold tracking-tight text-white whitespace-nowrap">
+                <h1 className="font-display text-sm sm:text-lg font-bold tracking-tight text-slate-900 dark:text-white whitespace-nowrap">
                   My Presentation
                 </h1>
-                <span className="hidden sm:inline-flex text-[10px] font-mono uppercase tracking-widest px-2 py-0.5 rounded-full bg-cyan-500/15 text-cyan-300 border border-cyan-500/30 shrink-0">
+                <span className="hidden sm:inline-flex text-[10px] font-mono uppercase tracking-widest px-2 py-0.5 rounded-full bg-sky-50 dark:bg-cyan-500/15 text-sky-800 dark:text-cyan-300 border border-sky-200 dark:border-cyan-500/30 shrink-0 font-medium">
                   Planetarium Hub
                 </span>
               </div>
-              <p className="text-xs text-slate-400 hidden sm:block truncate">
+              <p className="text-xs text-slate-500 dark:text-slate-400 hidden sm:block truncate">
                 Interactive Celestial Decks &amp; Deep-Space Storytelling
               </p>
             </div>
@@ -456,7 +488,7 @@ export function PresentationHub() {
                 onChange={(e) => setSearchQuery(e.target.value)}
                 placeholder="Search topics, paradoxes, acts... (Press / to search)"
                 aria-label="Search presentation topics"
-                className="w-full rounded-xl bg-slate-900/90 border border-slate-800 pl-10 pr-16 py-2 text-base sm:text-sm text-slate-100 placeholder:text-slate-400 focus:outline-none focus:border-cyan-400 focus:shadow-[0_0_15px_rgba(34,211,238,0.25)] transition duration-200"
+                className="w-full rounded-xl bg-white dark:bg-slate-900/90 border border-slate-200 dark:border-slate-800 pl-10 pr-16 py-2 text-base sm:text-sm text-slate-900 dark:text-slate-100 placeholder:text-slate-400 focus:outline-none focus:border-sky-500 dark:focus:border-cyan-400 focus:shadow-[0_0_15px_rgba(2,132,199,0.2)] dark:focus:shadow-[0_0_15px_rgba(34,211,238,0.25)] transition duration-200 shadow-sm dark:shadow-none"
               />
               <div className="absolute right-3 flex items-center gap-1.5">
                 {searchQuery ? (
@@ -464,12 +496,12 @@ export function PresentationHub() {
                     type="button"
                     onClick={() => setSearchQuery("")}
                     aria-label="Clear search query"
-                    className="p-1 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800 transition cursor-pointer"
+                    className="p-1 rounded-lg text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800 transition cursor-pointer"
                   >
                     <IconClose className="w-3.5 h-3.5" />
                   </button>
                 ) : (
-                  <kbd className="hidden lg:inline-flex items-center px-1.5 py-0.5 rounded text-[10px] font-mono text-slate-400 bg-slate-950 border border-slate-800 select-none">
+                  <kbd className="hidden lg:inline-flex items-center px-1.5 py-0.5 rounded text-[10px] font-mono text-slate-500 dark:text-slate-400 bg-slate-100 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 select-none">
                     /
                   </kbd>
                 )}
@@ -477,24 +509,27 @@ export function PresentationHub() {
             </div>
           </div>
 
-          {/* Telemetry Stats Pill */}
+          {/* Telemetry Stats Pill & Theme Toggle */}
           <div className="flex items-center gap-2 shrink-0">
-            <div className="px-3 py-1.5 rounded-xl bg-slate-900/90 border border-slate-800 text-[11px] sm:text-xs font-mono text-slate-300 whitespace-nowrap flex items-center gap-2">
-              <span className="w-2 h-2 rounded-full bg-emerald-400 shadow-[0_0_6px_#34d399] animate-pulse" />
+            <div className="px-3 py-1.5 rounded-xl bg-white dark:bg-slate-900/90 border border-slate-200 dark:border-slate-800 text-[11px] sm:text-xs font-mono text-slate-700 dark:text-slate-300 whitespace-nowrap flex items-center gap-2 shadow-sm dark:shadow-none">
+              <span className="w-2 h-2 rounded-full bg-emerald-500 dark:bg-emerald-400 shadow-[0_0_6px_#34d399] animate-pulse" />
               <span>
-                <strong className="text-cyan-400 font-bold">
+                <strong className="text-sky-700 dark:text-cyan-400 font-bold">
                   {PRESENTATIONS.length}
                 </strong>{" "}
                 Exhibit{PRESENTATIONS.length > 1 ? "s" : ""}
               </span>
-              <span className="text-slate-600">·</span>
+              <span className="text-slate-300 dark:text-slate-600">·</span>
               <span>
-                <strong className="text-amber-300 font-bold">
+                <strong className="text-amber-800 dark:text-amber-300 font-bold">
                   {PRESENTATIONS.reduce((acc, p) => acc + p.slideCount, 0)}
                 </strong>{" "}
                 Slides
               </span>
             </div>
+
+            {/* Theme Toggle Button */}
+            <ThemeToggle />
           </div>
         </div>
       </header>
@@ -504,7 +539,7 @@ export function PresentationHub() {
         {featuredDeck && (
           <section
             aria-labelledby="featured-deck-title"
-            className="relative rounded-2xl sm:rounded-3xl border border-cyan-500/35 bg-[#060a1c]/92 overflow-hidden shadow-[0_25px_80px_-20px_rgba(34,211,238,0.25)]"
+            className="relative rounded-2xl sm:rounded-3xl border border-sky-300/70 dark:border-cyan-500/35 bg-white/95 dark:bg-[#060a1c]/92 overflow-hidden shadow-[0_20px_60px_-15px_rgba(15,23,42,0.12)] dark:shadow-[0_25px_80px_-20px_rgba(34,211,238,0.25)] transition-all duration-300"
           >
             <img
               src={featuredDeck.coverImage}
@@ -514,22 +549,22 @@ export function PresentationHub() {
               onError={(e) => {
                 e.currentTarget.src = "/images/night-sky-dark/images (9).jpg";
               }}
-              className="pointer-events-none absolute inset-0 w-full h-full object-cover opacity-30 scale-105"
+              className="pointer-events-none absolute inset-0 w-full h-full object-cover opacity-20 dark:opacity-30 scale-105"
             />
-            <div className="pointer-events-none absolute inset-0 bg-gradient-to-r from-[#040714] via-[#040714]/92 to-transparent" />
+            <div className="pointer-events-none absolute inset-0 bg-gradient-to-r from-white via-white/95 to-white/40 dark:from-[#040714] dark:via-[#040714]/92 dark:to-transparent" />
 
             <div className="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-6 sm:gap-8 p-4 sm:p-8 lg:p-10 items-center">
               <div className="lg:col-span-7 space-y-4 sm:space-y-5">
                 {/* Meta Badge Cluster */}
                 <div className="flex flex-wrap items-center gap-2">
-                  <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[11px] sm:text-xs font-mono font-bold bg-cyan-400 text-slate-950 shadow-[0_0_12px_rgba(34,211,238,0.5)] whitespace-nowrap">
+                  <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[11px] sm:text-xs font-mono font-bold bg-sky-500 text-white dark:bg-cyan-400 dark:text-slate-950 shadow-[0_0_12px_rgba(14,165,233,0.35)] dark:shadow-[0_0_12px_rgba(34,211,238,0.5)] whitespace-nowrap">
                     <IconStar className="w-3 h-3 fill-current" />
                     <span>FEATURED EXHIBIT</span>
                   </span>
-                  <span className="px-3 py-1 rounded-full text-[11px] sm:text-xs font-mono bg-slate-900/90 border border-cyan-500/40 text-cyan-300 whitespace-nowrap">
+                  <span className="px-3 py-1 rounded-full text-[11px] sm:text-xs font-mono bg-sky-50 dark:bg-slate-900/90 border border-sky-200 dark:border-cyan-500/40 text-sky-800 dark:text-cyan-300 whitespace-nowrap font-medium">
                     {featuredDeck.category}
                   </span>
-                  <span className="px-3 py-1 rounded-full text-[11px] sm:text-xs font-mono bg-slate-900/90 border border-slate-700 text-amber-300 whitespace-nowrap">
+                  <span className="px-3 py-1 rounded-full text-[11px] sm:text-xs font-mono bg-amber-50 dark:bg-slate-900/90 border border-amber-200 dark:border-slate-700 text-amber-900 dark:text-amber-300 whitespace-nowrap font-medium">
                     {featuredDeck.slideCount} Slides · ~{featuredDeck.estimatedMinutes} Min Experience
                   </span>
                 </div>
@@ -537,16 +572,16 @@ export function PresentationHub() {
                 <div>
                   <h2
                     id="featured-deck-title"
-                    className="font-display text-2xl sm:text-4xl lg:text-5xl font-bold text-white tracking-tight leading-tight"
+                    className="font-display text-2xl sm:text-4xl lg:text-5xl font-bold text-slate-900 dark:text-white tracking-tight leading-tight"
                   >
                     {featuredDeck.title}
                   </h2>
-                  <p className="text-sm sm:text-lg lg:text-xl text-cyan-300 font-medium mt-1.5">
+                  <p className="text-sm sm:text-lg lg:text-xl text-sky-700 dark:text-cyan-300 font-semibold mt-1.5">
                     {featuredDeck.subtitle}
                   </p>
                 </div>
 
-                <p className="text-xs sm:text-base text-slate-300 leading-relaxed max-w-2xl">
+                <p className="text-xs sm:text-base text-slate-600 dark:text-slate-300 leading-relaxed max-w-2xl">
                   {featuredDeck.description}
                 </p>
 
@@ -561,7 +596,7 @@ export function PresentationHub() {
                         slideIndex: 0,
                       })
                     }
-                    className="inline-flex items-center justify-center gap-2.5 px-5 py-3 rounded-xl sm:rounded-2xl text-xs sm:text-sm font-mono font-bold bg-cyan-400 text-slate-950 hover:bg-cyan-300 shadow-[0_0_25px_rgba(34,211,238,0.45)] hover:scale-[1.02] active:scale-[0.99] transition duration-200 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-300"
+                    className="inline-flex items-center justify-center gap-2.5 px-5 py-3 rounded-xl sm:rounded-2xl text-xs sm:text-sm font-mono font-bold bg-sky-500 hover:bg-sky-600 text-white dark:bg-cyan-400 dark:text-slate-950 dark:hover:bg-cyan-300 shadow-[0_0_20px_rgba(14,165,233,0.35)] dark:shadow-[0_0_25px_rgba(34,211,238,0.45)] hover:scale-[1.02] active:scale-[0.99] transition duration-200 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sky-400 dark:focus-visible:ring-cyan-300"
                   >
                     <IconPlay className="w-3.5 h-3.5 fill-current" />
                     <span>Launch Slide Deck</span>
@@ -576,18 +611,18 @@ export function PresentationHub() {
                         slideIndex: 0,
                       })
                     }
-                    className="inline-flex items-center justify-center gap-2.5 px-4 py-3 rounded-xl sm:rounded-2xl text-xs sm:text-sm font-mono font-semibold bg-slate-900/90 border border-slate-700 text-slate-200 hover:border-cyan-400 hover:text-white transition duration-200 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400"
+                    className="inline-flex items-center justify-center gap-2.5 px-4 py-3 rounded-xl sm:rounded-2xl text-xs sm:text-sm font-mono font-semibold bg-white dark:bg-slate-900/90 border border-slate-300 dark:border-slate-700 text-slate-800 dark:text-slate-200 hover:border-sky-500 dark:hover:border-cyan-400 hover:text-slate-950 dark:hover:text-white shadow-sm dark:shadow-none transition duration-200 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sky-400 dark:focus-visible:ring-cyan-400"
                   >
-                    <IconScroll className="w-4 h-4 text-cyan-400" />
+                    <IconScroll className="w-4 h-4 text-sky-600 dark:text-cyan-400" />
                     <span>Continuous Reading Mode</span>
                   </button>
 
                   <Link
                     href={`/presentations/${featuredDeck.slug}`}
-                    className="inline-flex items-center justify-center gap-2 px-3.5 py-3 rounded-xl sm:rounded-2xl text-xs font-mono bg-slate-950/80 border border-slate-800 text-slate-400 hover:text-cyan-300 hover:border-slate-700 transition duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400"
+                    className="inline-flex items-center justify-center gap-2 px-3.5 py-3 rounded-xl sm:rounded-2xl text-xs font-mono bg-slate-100 dark:bg-slate-950/80 border border-slate-200 dark:border-slate-800 text-slate-600 dark:text-slate-400 hover:text-sky-800 dark:hover:text-cyan-300 hover:border-slate-300 dark:hover:border-slate-700 transition duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sky-400 dark:focus-visible:ring-cyan-400"
                     title="Open dedicated presentation permalink"
                   >
-                    <IconLink className="w-3.5 h-3.5 text-slate-400" />
+                    <IconLink className="w-3.5 h-3.5 text-slate-500 dark:text-slate-400" />
                     <span>Permalink</span>
                   </Link>
                 </div>
@@ -617,7 +652,7 @@ export function PresentationHub() {
                           slideIndex: slideNum - 1,
                         })
                       }
-                      className="group relative h-28 sm:h-32 rounded-2xl overflow-hidden border border-slate-700/80 hover:border-cyan-400 hover:shadow-[0_0_20px_rgba(34,211,238,0.3)] transition-all duration-300 text-left cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400"
+                      className="group relative h-28 sm:h-32 rounded-2xl overflow-hidden border border-slate-200 dark:border-slate-700/80 hover:border-sky-500 dark:hover:border-cyan-400 hover:shadow-[0_0_20px_rgba(14,165,233,0.25)] dark:hover:shadow-[0_0_20px_rgba(34,211,238,0.3)] transition-all duration-300 text-left cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sky-400 dark:focus-visible:ring-cyan-400"
                       title={`Jump directly to Slide ${slideNum}: ${slideObj.title}`}
                     >
                       <img
@@ -642,7 +677,7 @@ export function PresentationHub() {
                             {slideObj.title}
                           </div>
                         </div>
-                        <div className="w-6 h-6 rounded-full bg-cyan-400 text-slate-950 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300 shrink-0 shadow-[0_0_10px_#22d3ee] scale-90 group-hover:scale-100">
+                        <div className="w-6 h-6 rounded-full bg-sky-500 dark:bg-cyan-400 text-white dark:text-slate-950 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300 shrink-0 shadow-[0_0_10px_#0284c7] dark:shadow-[0_0_10px_#22d3ee] scale-90 group-hover:scale-100">
                           <IconPlay className="w-2.5 h-2.5 translate-x-0.5 fill-current" />
                         </div>
                       </div>
@@ -659,43 +694,43 @@ export function PresentationHub() {
           aria-label="Platform Architecture Capabilities"
           className="grid grid-cols-1 md:grid-cols-3 gap-3.5 sm:gap-4"
         >
-          <div className="rounded-2xl border border-slate-800/80 bg-[#060919]/75 backdrop-blur-xl p-4 sm:p-5 flex items-start gap-3.5 group hover:border-cyan-500/40 transition duration-300">
-            <div className="w-10 h-10 rounded-xl bg-cyan-950/60 border border-cyan-500/30 flex items-center justify-center text-cyan-300 shrink-0 group-hover:shadow-[0_0_15px_rgba(34,211,238,0.35)] transition">
+          <div className="rounded-2xl border border-slate-200 dark:border-slate-800/80 bg-white/85 dark:bg-[#060919]/75 backdrop-blur-xl p-4 sm:p-5 flex items-start gap-3.5 group hover:border-sky-400 dark:hover:border-cyan-500/40 shadow-sm dark:shadow-none transition duration-300">
+            <div className="w-10 h-10 rounded-xl bg-sky-50 dark:bg-cyan-950/60 border border-sky-200 dark:border-cyan-500/30 flex items-center justify-center text-sky-700 dark:text-cyan-300 shrink-0 group-hover:shadow-[0_0_15px_rgba(14,165,233,0.3)] dark:group-hover:shadow-[0_0_15px_rgba(34,211,238,0.35)] transition">
               <IconTopology className="w-5 h-5" />
             </div>
             <div className="space-y-1 min-w-0">
-              <h3 className="font-display text-sm font-bold text-white">
+              <h3 className="font-display text-sm font-bold text-slate-900 dark:text-white">
                 Dual Presentation Topology
               </h3>
-              <p className="text-xs text-slate-400 leading-relaxed">
+              <p className="text-xs text-slate-600 dark:text-slate-400 leading-relaxed">
                 Effortlessly toggle between a full-screen cinema slide deck (100dvh) and a vertical continuous reading document (Gamma mode).
               </p>
             </div>
           </div>
 
-          <div className="rounded-2xl border border-slate-800/80 bg-[#060919]/75 backdrop-blur-xl p-4 sm:p-5 flex items-start gap-3.5 group hover:border-indigo-500/40 transition duration-300">
-            <div className="w-10 h-10 rounded-xl bg-indigo-950/60 border border-indigo-500/30 flex items-center justify-center text-indigo-300 shrink-0 group-hover:shadow-[0_0_15px_rgba(129,140,248,0.35)] transition">
+          <div className="rounded-2xl border border-slate-200 dark:border-slate-800/80 bg-white/85 dark:bg-[#060919]/75 backdrop-blur-xl p-4 sm:p-5 flex items-start gap-3.5 group hover:border-indigo-400 dark:hover:border-indigo-500/40 shadow-sm dark:shadow-none transition duration-300">
+            <div className="w-10 h-10 rounded-xl bg-indigo-50 dark:bg-indigo-950/60 border border-indigo-200 dark:border-indigo-500/30 flex items-center justify-center text-indigo-700 dark:text-indigo-300 shrink-0 group-hover:shadow-[0_0_15px_rgba(99,102,241,0.3)] dark:group-hover:shadow-[0_0_15px_rgba(129,140,248,0.35)] transition">
               <IconMedia className="w-5 h-5" />
             </div>
             <div className="space-y-1 min-w-0">
-              <h3 className="font-display text-sm font-bold text-white">
+              <h3 className="font-display text-sm font-bold text-slate-900 dark:text-white">
                 Deep-Space Media &amp; Audio
               </h3>
-              <p className="text-xs text-slate-400 leading-relaxed">
+              <p className="text-xs text-slate-600 dark:text-slate-400 leading-relaxed">
                 Authentic NASA &amp; ESA astrophotography, 4K looped cosmic video backgrounds, and ambient Interstellar soundtrack with volume control.
               </p>
             </div>
           </div>
 
-          <div className="rounded-2xl border border-slate-800/80 bg-[#060919]/75 backdrop-blur-xl p-4 sm:p-5 flex items-start gap-3.5 group hover:border-amber-500/40 transition duration-300">
-            <div className="w-10 h-10 rounded-xl bg-amber-950/60 border border-amber-500/30 flex items-center justify-center text-amber-300 shrink-0 group-hover:shadow-[0_0_15px_rgba(251,191,36,0.35)] transition">
+          <div className="rounded-2xl border border-slate-200 dark:border-slate-800/80 bg-white/85 dark:bg-[#060919]/75 backdrop-blur-xl p-4 sm:p-5 flex items-start gap-3.5 group hover:border-amber-400 dark:hover:border-amber-500/40 shadow-sm dark:shadow-none transition duration-300">
+            <div className="w-10 h-10 rounded-xl bg-amber-50 dark:bg-amber-950/60 border border-amber-200 dark:border-amber-500/30 flex items-center justify-center text-amber-800 dark:text-amber-300 shrink-0 group-hover:shadow-[0_0_15px_rgba(245,158,11,0.3)] dark:group-hover:shadow-[0_0_15px_rgba(251,191,36,0.35)] transition">
               <IconInteract className="w-5 h-5" />
             </div>
             <div className="space-y-1 min-w-0">
-              <h3 className="font-display text-sm font-bold text-white">
+              <h3 className="font-display text-sm font-bold text-slate-900 dark:text-white">
                 Interactive Celestial Models
               </h3>
-              <p className="text-xs text-slate-400 leading-relaxed">
+              <p className="text-xs text-slate-600 dark:text-slate-400 leading-relaxed">
                 Manipulate real-time SVG geometric shell layers, light ray-tracing simulations, and expanding universe redshift horizons.
               </p>
             </div>
@@ -718,14 +753,14 @@ export function PresentationHub() {
                 onChange={(e) => setSearchQuery(e.target.value)}
                 placeholder="Search topics, paradoxes, acts..."
                 aria-label="Search presentation topics"
-                className="w-full rounded-xl bg-slate-900/90 border border-slate-800 pl-10 pr-10 py-2.5 text-base sm:text-sm text-slate-100 placeholder:text-slate-400 focus:outline-none focus:border-cyan-400 focus:shadow-[0_0_15px_rgba(34,211,238,0.25)] transition duration-200"
+                className="w-full rounded-xl bg-white dark:bg-slate-900/90 border border-slate-200 dark:border-slate-800 pl-10 pr-10 py-2.5 text-base sm:text-sm text-slate-900 dark:text-slate-100 placeholder:text-slate-400 focus:outline-none focus:border-sky-500 dark:focus:border-cyan-400 focus:shadow-[0_0_15px_rgba(2,132,199,0.2)] dark:focus:shadow-[0_0_15px_rgba(34,211,238,0.25)] transition duration-200 shadow-sm dark:shadow-none"
               />
               {searchQuery && (
                 <button
                   type="button"
                   onClick={() => setSearchQuery("")}
                   aria-label="Clear search query"
-                  className="absolute right-3 top-1/2 -translate-y-1/2 min-w-[32px] min-h-[32px] flex items-center justify-center text-slate-400 hover:text-white cursor-pointer"
+                  className="absolute right-3 top-1/2 -translate-y-1/2 min-w-[32px] min-h-[32px] flex items-center justify-center text-slate-400 hover:text-slate-900 dark:hover:text-white cursor-pointer"
                 >
                   <IconClose className="w-3.5 h-3.5" />
                 </button>
@@ -733,15 +768,15 @@ export function PresentationHub() {
             </div>
           </div>
 
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-slate-800/80 pb-4">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-slate-200/90 dark:border-slate-800/80 pb-4">
             <div>
               <h2
                 id="catalog-heading"
-                className="font-display text-xl sm:text-2xl font-bold text-white"
+                className="font-display text-xl sm:text-2xl font-bold text-slate-900 dark:text-white"
               >
                 Observatory Catalog
               </h2>
-              <p className="text-xs sm:text-sm text-slate-400 mt-0.5">
+              <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-400 mt-0.5">
                 Select an exhibit to present live, jump into an act, or explore continuous reading mode.
               </p>
             </div>
@@ -758,18 +793,18 @@ export function PresentationHub() {
                     key={cat}
                     type="button"
                     onClick={() => setSelectedCategory(cat)}
-                    className={`px-3.5 py-1.5 rounded-full text-xs font-mono transition cursor-pointer whitespace-nowrap shrink-0 flex items-center gap-1.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400 ${
+                    className={`px-3.5 py-1.5 rounded-full text-xs font-mono transition cursor-pointer whitespace-nowrap shrink-0 flex items-center gap-1.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sky-400 dark:focus-visible:ring-cyan-400 ${
                       selectedCategory === cat
-                        ? "bg-cyan-400 text-slate-950 font-bold shadow-[0_0_15px_rgba(34,211,238,0.35)]"
-                        : "bg-slate-900 text-slate-300 border border-slate-800 hover:border-slate-700"
+                        ? "bg-sky-500 text-white dark:bg-cyan-400 dark:text-slate-950 font-bold shadow-[0_0_15px_rgba(14,165,233,0.3)] dark:shadow-[0_0_15px_rgba(34,211,238,0.35)]"
+                        : "bg-white dark:bg-slate-900 text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-800 hover:border-slate-300 dark:hover:border-slate-700 hover:text-slate-900 dark:hover:text-white shadow-sm dark:shadow-none"
                     }`}
                   >
                     <span>{cat}</span>
                     <span
                       className={`text-[10px] px-1.5 py-0.2 rounded-full ${
                         selectedCategory === cat
-                          ? "bg-slate-950 text-cyan-300 font-bold"
-                          : "bg-slate-950 text-slate-400"
+                          ? "bg-sky-600 text-white dark:bg-slate-950 dark:text-cyan-300 font-bold"
+                          : "bg-slate-100 dark:bg-slate-950 text-slate-500 dark:text-slate-400"
                       }`}
                     >
                       {count}
@@ -782,15 +817,15 @@ export function PresentationHub() {
 
           {/* Empty Search Recovery State with Radar Telemetry & Suggestion Pills */}
           {filteredDecks.length === 0 && (
-            <div className="rounded-3xl border border-slate-800 bg-[#060918]/85 p-8 sm:p-12 text-center space-y-4 max-w-lg mx-auto shadow-2xl">
-              <div className="w-14 h-14 rounded-2xl bg-slate-900 border border-slate-700 flex items-center justify-center text-cyan-400 mx-auto shadow-[0_0_20px_rgba(34,211,238,0.2)]">
-                <IconRadar className="w-8 h-8 text-cyan-400 animate-spin-slow" />
+            <div className="rounded-3xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-[#060918]/85 p-8 sm:p-12 text-center space-y-4 max-w-lg mx-auto shadow-xl dark:shadow-2xl">
+              <div className="w-14 h-14 rounded-2xl bg-slate-100 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 flex items-center justify-center text-sky-600 dark:text-cyan-400 mx-auto shadow-[0_0_20px_rgba(14,165,233,0.2)] dark:shadow-[0_0_20px_rgba(34,211,238,0.2)]">
+                <IconRadar className="w-8 h-8 text-sky-600 dark:text-cyan-400 animate-spin-slow" />
               </div>
-              <h3 className="font-display text-lg font-bold text-white">
+              <h3 className="font-display text-lg font-bold text-slate-900 dark:text-white">
                 Coordinates Not Found in Observable Space
               </h3>
-              <p className="text-xs sm:text-sm text-slate-400 leading-relaxed">
-                No exhibits matched &ldquo;<span className="text-cyan-300 font-mono">{searchQuery}</span>&rdquo;. Try searching for one of the cosmic queries below:
+              <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
+                No exhibits matched &ldquo;<span className="text-sky-700 dark:text-cyan-300 font-mono font-medium">{searchQuery}</span>&rdquo;. Try searching for one of the cosmic queries below:
               </p>
               <div className="flex flex-wrap items-center justify-center gap-2 pt-1">
                 {["Olbers' Paradox", "Cosmology", "Big Bang", "Infinity"].map(
@@ -802,7 +837,7 @@ export function PresentationHub() {
                         setSearchQuery(term);
                         setSelectedCategory("All");
                       }}
-                      className="px-2.5 py-1 rounded-lg text-xs font-mono bg-slate-900 border border-slate-700 text-cyan-300 hover:border-cyan-400 transition cursor-pointer"
+                      className="px-2.5 py-1 rounded-lg text-xs font-mono bg-slate-100 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-sky-800 dark:text-cyan-300 hover:border-sky-400 dark:hover:border-cyan-400 transition cursor-pointer"
                     >
                       {term}
                     </button>
@@ -815,7 +850,7 @@ export function PresentationHub() {
                   setSearchQuery("");
                   setSelectedCategory("All");
                 }}
-                className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl text-xs font-mono font-bold bg-cyan-400 text-slate-950 hover:bg-cyan-300 transition cursor-pointer shadow-[0_0_15px_rgba(34,211,238,0.35)]"
+                className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl text-xs font-mono font-bold bg-sky-500 hover:bg-sky-600 text-white dark:bg-cyan-400 dark:text-slate-950 dark:hover:bg-cyan-300 transition cursor-pointer shadow-[0_0_15px_rgba(14,165,233,0.3)] dark:shadow-[0_0_15px_rgba(34,211,238,0.35)]"
               >
                 <IconReset className="w-3.5 h-3.5" />
                 <span>Reset Search Filter</span>
@@ -828,7 +863,7 @@ export function PresentationHub() {
             {filteredDecks.map((deck) => (
               <div
                 key={deck.slug}
-                className="rounded-2xl sm:rounded-3xl border border-slate-800 bg-[#060918]/92 hover:border-cyan-500/50 hover:shadow-[0_20px_60px_-15px_rgba(0,0,0,0.85)] transition-all duration-300 overflow-hidden flex flex-col justify-between group"
+                className="rounded-2xl sm:rounded-3xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-[#060918]/92 hover:border-sky-400 dark:hover:border-cyan-500/50 hover:shadow-xl dark:hover:shadow-[0_20px_60px_-15px_rgba(0,0,0,0.85)] shadow-md transition-all duration-300 overflow-hidden flex flex-col justify-between group"
               >
                 <div>
                   {/* Cover Image Header with Hover Play Halo */}
@@ -837,7 +872,7 @@ export function PresentationHub() {
                     onClick={() =>
                       setActiveLaunch({ deck, mode: "deck", slideIndex: 0 })
                     }
-                    className="relative h-48 sm:h-52 w-full overflow-hidden text-left cursor-pointer group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400"
+                    className="relative h-48 sm:h-52 w-full overflow-hidden text-left cursor-pointer group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sky-400 dark:focus-visible:ring-cyan-400"
                     aria-label={`Start presentation: ${deck.title}`}
                   >
                     <img
@@ -851,11 +886,11 @@ export function PresentationHub() {
                       }}
                       className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
                     />
-                    <div className="absolute inset-0 bg-gradient-to-t from-[#060918] via-[#060918]/30 to-transparent" />
+                    <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/40 to-transparent" />
 
                     {/* Top Badges */}
                     <div className="absolute top-3 left-3 right-3 sm:top-3.5 sm:left-4 sm:right-4 flex items-center justify-between gap-2">
-                      <span className="px-2.5 py-0.5 sm:px-3 sm:py-1 rounded-full text-[11px] sm:text-xs font-mono bg-slate-950/85 border border-cyan-500/40 text-cyan-300 backdrop-blur-md whitespace-nowrap">
+                      <span className="px-2.5 py-0.5 sm:px-3 sm:py-1 rounded-full text-[11px] sm:text-xs font-mono bg-slate-950/85 border border-sky-400/40 dark:border-cyan-500/40 text-cyan-300 backdrop-blur-md whitespace-nowrap font-medium">
                         {deck.category}
                       </span>
                       <span className="px-2.5 py-0.5 sm:px-3 sm:py-1 rounded-full text-[11px] sm:text-xs font-mono font-bold bg-slate-950/85 border border-slate-700 text-amber-300 backdrop-blur-md whitespace-nowrap">
@@ -865,17 +900,17 @@ export function PresentationHub() {
 
                     {/* Center Hover Play Aura */}
                     <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                      <div className="w-12 h-12 rounded-full bg-cyan-400 text-slate-950 flex items-center justify-center shadow-[0_0_25px_#22d3ee] scale-90 group-hover:scale-100 transition-transform duration-300">
+                      <div className="w-12 h-12 rounded-full bg-sky-500 dark:bg-cyan-400 text-white dark:text-slate-950 flex items-center justify-center shadow-[0_0_20px_#0284c7] dark:shadow-[0_0_25px_#22d3ee] scale-90 group-hover:scale-100 transition-transform duration-300">
                         <IconPlay className="w-5 h-5 translate-x-0.5 fill-current" />
                       </div>
                     </div>
 
                     {/* Title Overlay */}
                     <div className="absolute bottom-3 left-4 right-4 sm:left-5 sm:right-5">
-                      <h3 className="font-display text-xl sm:text-2xl font-bold text-white group-hover:text-cyan-300 transition leading-snug">
+                      <h3 className="font-display text-xl sm:text-2xl font-bold text-white group-hover:text-cyan-200 transition leading-snug">
                         {deck.title}
                       </h3>
-                      <p className="text-xs sm:text-sm text-cyan-200/90 font-medium line-clamp-1 mt-0.5">
+                      <p className="text-xs sm:text-sm text-cyan-100/90 font-medium line-clamp-1 mt-0.5">
                         {deck.subtitle}
                       </p>
                     </div>
@@ -883,7 +918,7 @@ export function PresentationHub() {
 
                   {/* Deck Description & Act Quick-Jump Grid */}
                   <div className="p-4 sm:p-5 space-y-4">
-                    <p className="text-xs sm:text-sm text-slate-300 leading-relaxed">
+                    <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
                       {deck.description}
                     </p>
 
@@ -892,7 +927,7 @@ export function PresentationHub() {
                       {deck.tags.map((tag) => (
                         <span
                           key={tag}
-                          className="text-[11px] font-mono px-2.5 py-0.5 rounded-md bg-slate-900 border border-slate-800 text-slate-300 whitespace-nowrap"
+                          className="text-[11px] font-mono px-2.5 py-0.5 rounded-md bg-slate-100 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-600 dark:text-slate-300 whitespace-nowrap font-medium"
                         >
                           #{tag}
                         </span>
@@ -900,8 +935,8 @@ export function PresentationHub() {
                     </div>
 
                     {/* Jump to Specific Act with Spectral Role Color Harmony */}
-                    <div className="pt-2.5 border-t border-slate-800/80">
-                      <div className="text-[11px] font-mono uppercase tracking-wider text-slate-400 mb-2">
+                    <div className="pt-2.5 border-t border-slate-200 dark:border-slate-800/80">
+                      <div className="text-[11px] font-mono uppercase tracking-wider text-slate-500 dark:text-slate-400 mb-2">
                         Jump to Act:
                       </div>
                       <div className="grid grid-cols-1 sm:grid-cols-2 gap-1.5">
@@ -918,12 +953,12 @@ export function PresentationHub() {
                                   deck,
                                   mode: "deck",
                                   slideIndex: act.slides[0] - 1,
-                                })
+                                  })
                               }
-                              className={`text-left px-3 py-2 rounded-xl border ${spectral.border} ${spectral.bg} text-xs font-mono text-slate-200 flex items-center justify-between transition cursor-pointer focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-cyan-400`}
+                              className={`text-left px-3 py-2 rounded-xl border ${spectral.border} ${spectral.bg} text-xs font-mono ${spectral.text} flex items-center justify-between transition cursor-pointer focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-sky-400 dark:focus-visible:ring-cyan-400`}
                               title={`Jump directly to ${act.title}`}
                             >
-                              <span className="truncate mr-2">{act.title}</span>
+                              <span className="truncate mr-2 font-medium">{act.title}</span>
                               <span
                                 className={`text-[10px] font-bold shrink-0 px-1.5 py-0.5 rounded border ${spectral.badge}`}
                               >
@@ -941,13 +976,13 @@ export function PresentationHub() {
                 </div>
 
                 {/* Card Footer Actions with Direct Link Copy Toast */}
-                <div className="p-3 sm:p-4 bg-slate-950/70 border-t border-slate-800/80 flex flex-col sm:flex-row items-stretch sm:items-center gap-2">
+                <div className="p-3 sm:p-4 bg-slate-50 dark:bg-slate-950/70 border-t border-slate-200 dark:border-slate-800/80 flex flex-col sm:flex-row items-stretch sm:items-center gap-2">
                   <button
                     type="button"
                     onClick={() =>
                       setActiveLaunch({ deck, mode: "deck", slideIndex: 0 })
                     }
-                    className="flex-1 py-2.5 px-4 rounded-xl text-xs sm:text-sm font-mono font-bold bg-cyan-400 text-slate-950 hover:bg-cyan-300 text-center transition cursor-pointer shadow-[0_0_20px_rgba(34,211,238,0.3)] flex items-center justify-center gap-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-300"
+                    className="flex-1 py-2.5 px-4 rounded-xl text-xs sm:text-sm font-mono font-bold bg-sky-500 hover:bg-sky-600 text-white dark:bg-cyan-400 dark:text-slate-950 dark:hover:bg-cyan-300 text-center transition cursor-pointer shadow-[0_0_15px_rgba(14,165,233,0.3)] dark:shadow-[0_0_20px_rgba(34,211,238,0.3)] flex items-center justify-center gap-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sky-400 dark:focus-visible:ring-cyan-300"
                   >
                     <IconPlay className="w-3.5 h-3.5 fill-current" />
                     <span>Start Presentation (Slide Deck)</span>
@@ -957,21 +992,21 @@ export function PresentationHub() {
                     onClick={() =>
                       setActiveLaunch({ deck, mode: "gamma", slideIndex: 0 })
                     }
-                    className="py-2.5 px-3.5 rounded-xl text-xs sm:text-sm font-mono bg-slate-900 border border-slate-700 text-slate-200 hover:border-cyan-400 text-center transition cursor-pointer flex items-center justify-center gap-2 shrink-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400"
+                    className="py-2.5 px-3.5 rounded-xl text-xs sm:text-sm font-mono bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 text-slate-800 dark:text-slate-200 hover:border-sky-500 dark:hover:border-cyan-400 text-center transition cursor-pointer flex items-center justify-center gap-2 shrink-0 shadow-sm dark:shadow-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sky-400 dark:focus-visible:ring-cyan-400"
                   >
-                    <IconScroll className="w-3.5 h-3.5 text-cyan-400" />
+                    <IconScroll className="w-3.5 h-3.5 text-sky-600 dark:text-cyan-400" />
                     <span>Continuous Read ({deck.slideCount} Cards)</span>
                   </button>
                   <button
                     type="button"
                     onClick={() => handleCopyShareLink(deck)}
-                    className="py-2.5 px-3 rounded-xl text-xs font-mono bg-slate-900/90 border border-slate-800 text-slate-400 hover:text-cyan-300 hover:border-slate-700 transition cursor-pointer flex items-center justify-center gap-1.5 shrink-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400"
+                    className="py-2.5 px-3 rounded-xl text-xs font-mono bg-white dark:bg-slate-900/90 border border-slate-200 dark:border-slate-800 text-slate-600 dark:text-slate-400 hover:text-sky-800 dark:hover:text-cyan-300 hover:border-slate-300 dark:hover:border-slate-700 transition cursor-pointer flex items-center justify-center gap-1.5 shrink-0 shadow-sm dark:shadow-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sky-400 dark:focus-visible:ring-cyan-400"
                     title="Copy direct presentation link"
                   >
                     {copiedSlug === deck.slug ? (
                       <>
-                        <IconCheck className="w-3.5 h-3.5 text-emerald-400" />
-                        <span className="text-emerald-400 font-bold">
+                        <IconCheck className="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400" />
+                        <span className="text-emerald-600 dark:text-emerald-400 font-bold">
                           Copied!
                         </span>
                       </>
@@ -987,21 +1022,21 @@ export function PresentationHub() {
             ))}
 
             {/* Upcoming Cosmic Explorations Teaser Card */}
-            <div className="rounded-2xl sm:rounded-3xl border border-slate-800/90 bg-[#060918]/65 p-5 sm:p-6 flex flex-col justify-between space-y-4 shadow-lg group hover:border-cyan-500/30 transition">
+            <div className="rounded-2xl sm:rounded-3xl border border-slate-200 dark:border-slate-800/90 bg-white/85 dark:bg-[#060918]/65 p-5 sm:p-6 flex flex-col justify-between space-y-4 shadow-md dark:shadow-lg group hover:border-sky-400 dark:hover:border-cyan-500/30 transition">
               <div className="space-y-3">
                 <div className="flex items-center justify-between gap-2">
-                  <span className="inline-flex items-center gap-1.5 text-[11px] font-mono text-cyan-300 bg-cyan-950/80 border border-cyan-500/40 px-2.5 py-0.5 rounded-full uppercase tracking-wider whitespace-nowrap">
-                    <IconRadioDish className="w-3 h-3 text-cyan-400" />
+                  <span className="inline-flex items-center gap-1.5 text-[11px] font-mono text-sky-800 dark:text-cyan-300 bg-sky-50 dark:bg-cyan-950/80 border border-sky-200 dark:border-cyan-500/40 px-2.5 py-0.5 rounded-full uppercase tracking-wider whitespace-nowrap font-medium">
+                    <IconRadioDish className="w-3 h-3 text-sky-600 dark:text-cyan-400" />
                     <span>Upcoming Expedition</span>
                   </span>
-                  <span className="text-[11px] font-mono text-slate-400 whitespace-nowrap">
+                  <span className="text-[11px] font-mono text-slate-500 dark:text-slate-400 whitespace-nowrap">
                     In Research &amp; Blueprint
                   </span>
                 </div>
-                <h3 className="font-display text-lg sm:text-xl font-bold text-white leading-snug group-hover:text-cyan-200 transition">
+                <h3 className="font-display text-lg sm:text-xl font-bold text-slate-900 dark:text-white leading-snug group-hover:text-sky-700 dark:group-hover:text-cyan-200 transition">
                   The Fermi Paradox &amp; The Great Silence
                 </h3>
-                <p className="text-xs sm:text-sm text-slate-300 leading-relaxed">
+                <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
                   With billions of Earth-like planets across our Milky Way, where are all the extraterrestrial civilizations? An upcoming deep-space visual journey investigating planetary evolution, cosmic filters, and Dyson spheres.
                 </p>
                 <div className="flex flex-wrap gap-1.5 pt-1">
@@ -1009,7 +1044,7 @@ export function PresentationHub() {
                     (tag) => (
                       <span
                         key={tag}
-                        className="text-[11px] font-mono px-2 py-0.5 rounded-md bg-slate-900 border border-slate-800/80 text-slate-400"
+                        className="text-[11px] font-mono px-2 py-0.5 rounded-md bg-slate-100 dark:bg-slate-900 border border-slate-200 dark:border-slate-800/80 text-slate-600 dark:text-slate-400"
                       >
                         #{tag}
                       </span>
@@ -1018,13 +1053,13 @@ export function PresentationHub() {
                 </div>
               </div>
 
-              <div className="pt-3.5 border-t border-slate-800/80 flex items-center justify-between gap-2 text-[11px] sm:text-xs font-mono">
-                <span className="text-slate-400 whitespace-nowrap">
+              <div className="pt-3.5 border-t border-slate-200 dark:border-slate-800/80 flex items-center justify-between gap-2 text-[11px] sm:text-xs font-mono">
+                <span className="text-slate-500 dark:text-slate-400 whitespace-nowrap">
                   Release: Late 2026
                 </span>
-                <span className="text-cyan-400 whitespace-nowrap font-medium flex items-center gap-1">
+                <span className="text-sky-700 dark:text-cyan-400 whitespace-nowrap font-medium flex items-center gap-1">
                   <span>Concept Blueprint Ready</span>
-                  <span className="text-cyan-400">→</span>
+                  <span>→</span>
                 </span>
               </div>
             </div>
@@ -1032,56 +1067,63 @@ export function PresentationHub() {
         </section>
       </main>
 
-      {/* Observatory Deep-Space Footer */}
-      <footer className="relative z-10 border-t border-slate-800/80 bg-[#03050c]/95 backdrop-blur-md mt-12 py-8 sm:py-10">
+      {/* Observatory Footer */}
+      <footer className="relative z-10 border-t border-slate-200 dark:border-slate-800/80 bg-white/95 dark:bg-[#03050c]/95 backdrop-blur-md mt-12 py-8 sm:py-10 transition-colors duration-200">
         <div className="w-full max-w-[1760px] mx-auto px-3 sm:px-6 lg:px-12 xl:px-16 flex flex-col md:flex-row items-center justify-between gap-6">
           {/* Brand & Observatory Coordinates */}
           <div className="flex items-center gap-3 text-left">
-            <div className="w-9 h-9 rounded-xl bg-cyan-950/80 border border-cyan-500/30 flex items-center justify-center text-cyan-400 shrink-0 shadow-[0_0_15px_rgba(34,211,238,0.25)]">
+            <div className="w-9 h-9 rounded-xl bg-sky-50 dark:bg-cyan-950/80 border border-sky-200 dark:border-cyan-500/30 flex items-center justify-center text-sky-700 dark:text-cyan-400 shrink-0 shadow-sm dark:shadow-[0_0_15px_rgba(34,211,238,0.25)]">
               <IconAperture className="w-4.5 h-4.5" />
             </div>
             <div>
-              <div className="text-xs font-mono font-bold text-white flex items-center gap-2">
+              <div className="text-xs font-mono font-bold text-slate-900 dark:text-white flex items-center gap-2">
                 <span>THE DEEP-SPACE PLANETARIUM</span>
-                <span className="text-[10px] text-cyan-400 bg-cyan-950/80 border border-cyan-500/30 px-1.5 py-0.2 rounded">
+                <span className="text-[10px] text-sky-800 dark:text-cyan-400 bg-sky-100 dark:bg-cyan-950/80 border border-sky-200 dark:border-cyan-500/30 px-1.5 py-0.2 rounded font-medium">
                   v1.0
                 </span>
               </div>
-              <p className="text-[11px] text-slate-400 mt-0.5">
+              <p className="text-[11px] text-slate-500 dark:text-slate-400 mt-0.5">
                 Astronomy &amp; Cosmology web presentation catalog · Built with Next.js &amp; Tailwind CSS
               </p>
             </div>
           </div>
 
           {/* Keyboard Shortcut Hint Capsule */}
-          <div className="hidden lg:flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-slate-900/90 border border-slate-800 text-[11px] font-mono text-slate-400 shadow-inner">
-            <span className="text-cyan-400 font-bold">HOTKEYS:</span>
+          <div className="hidden lg:flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-slate-100 dark:bg-slate-900/90 border border-slate-200 dark:border-slate-800 text-[11px] font-mono text-slate-600 dark:text-slate-400 shadow-inner">
+            <span className="text-sky-700 dark:text-cyan-400 font-bold">HOTKEYS:</span>
             <span>
-              <kbd className="px-1.5 py-0.5 rounded bg-slate-950 border border-slate-700 text-slate-300">
+              <kbd className="px-1.5 py-0.5 rounded bg-white dark:bg-slate-950 border border-slate-300 dark:border-slate-700 text-slate-800 dark:text-slate-300">
                 ←
               </kbd>{" "}
-              <kbd className="px-1.5 py-0.5 rounded bg-slate-950 border border-slate-700 text-slate-300">
+              <kbd className="px-1.5 py-0.5 rounded bg-white dark:bg-slate-950 border border-slate-300 dark:border-slate-700 text-slate-800 dark:text-slate-300">
                 →
               </kbd>{" "}
               Navigate
             </span>
-            <span className="text-slate-600">·</span>
+            <span className="text-slate-300 dark:text-slate-600">·</span>
             <span>
-              <kbd className="px-1.5 py-0.5 rounded bg-slate-950 border border-slate-700 text-slate-300">
+              <kbd className="px-1.5 py-0.5 rounded bg-white dark:bg-slate-950 border border-slate-300 dark:border-slate-700 text-slate-800 dark:text-slate-300">
                 F
               </kbd>{" "}
               Fullscreen
             </span>
-            <span className="text-slate-600">·</span>
+            <span className="text-slate-300 dark:text-slate-600">·</span>
             <span>
-              <kbd className="px-1.5 py-0.5 rounded bg-slate-950 border border-slate-700 text-slate-300">
+              <kbd className="px-1.5 py-0.5 rounded bg-white dark:bg-slate-950 border border-slate-300 dark:border-slate-700 text-slate-800 dark:text-slate-300">
                 G
               </kbd>{" "}
-              Dual Mode
+              Grid
             </span>
-            <span className="text-slate-600">·</span>
+            <span className="text-slate-300 dark:text-slate-600">·</span>
             <span>
-              <kbd className="px-1.5 py-0.5 rounded bg-slate-950 border border-slate-700 text-slate-300">
+              <kbd className="px-1.5 py-0.5 rounded bg-white dark:bg-slate-950 border border-slate-300 dark:border-slate-700 text-slate-800 dark:text-slate-300">
+                T
+              </kbd>{" "}
+              Theme
+            </span>
+            <span className="text-slate-300 dark:text-slate-600">·</span>
+            <span>
+              <kbd className="px-1.5 py-0.5 rounded bg-white dark:bg-slate-950 border border-slate-300 dark:border-slate-700 text-slate-800 dark:text-slate-300">
                 /
               </kbd>{" "}
               Search
@@ -1089,7 +1131,7 @@ export function PresentationHub() {
           </div>
 
           {/* Attribution Citations & GitHub Repository Link */}
-          <div className="flex flex-wrap items-center justify-center md:justify-end gap-3.5 sm:gap-4 text-xs font-mono text-slate-400">
+          <div className="flex flex-wrap items-center justify-center md:justify-end gap-3.5 sm:gap-4 text-xs font-mono text-slate-500 dark:text-slate-400">
             <span className="text-[11px]">
               Imagery: NASA / ESA / Hubble Heritage
             </span>
@@ -1097,7 +1139,7 @@ export function PresentationHub() {
               href="https://github.com/tnh4522/my-presentation"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-slate-900 border border-slate-800 text-slate-300 hover:text-cyan-300 hover:border-cyan-500/40 transition duration-200"
+              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-300 hover:text-sky-800 dark:hover:text-cyan-300 hover:border-sky-400 dark:hover:border-cyan-500/40 shadow-sm dark:shadow-none transition duration-200"
               aria-label="View source repository on GitHub"
             >
               <IconGitHub className="w-3.5 h-3.5" />

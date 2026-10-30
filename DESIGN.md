@@ -1,7 +1,8 @@
 ---
 name: my-presentation
-description: Personal interactive web presentation hub featuring cinematic slide decks and deep-space storytelling
+description: Personal interactive web presentation hub featuring cinematic slide decks, deep-space storytelling, and dual-theme celestial cartography
 colors:
+  # Dark Theme ("The Deep-Space Planetarium")
   obsidian-void: "#03050c"
   slate-glass: "#060919"
   starlight-white: "#f1f5f9"
@@ -13,6 +14,16 @@ colors:
   deep-nebula: "#818cf8"
   solar-flare: "#fbbf24"
   aurora-emerald: "#34d399"
+  # Light Theme ("The Solar Celestial Atlas")
+  solar-canvas: "#f8fafc"
+  solar-card: "#ffffff"
+  solar-ink: "#0f172a"
+  solar-muted: "#475569"
+  solar-border: "#cbd5e1"
+  solar-cyan: "#0284c7"
+  solar-indigo: "#4f46e5"
+  solar-amber: "#b45309"
+  solar-emerald: "#059669"
 typography:
   display:
     fontFamily: "Space Grotesk, system-ui, sans-serif"
@@ -94,62 +105,70 @@ components:
     textColor: "{colors.cerenkov-cyan}"
     rounded: "{rounded.full}"
     padding: "4px 10px"
+  theme-toggle:
+    rounded: "{rounded.xl}"
+    padding: "8px 12px"
+    fontFamily: "JetBrains Mono, monospace"
 ---
 
 # Design System: my-presentation
 
 ## Overview
 
-**Creative North Star: "The Deep-Space Planetarium"**
+**Creative North Star: "The Deep-Space Planetarium & The Solar Celestial Atlas"**
 
-The design language of `my-presentation` evokes the hushed, reverent atmosphere of an optical planetarium or astronomical observatory at midnight. The interface recedes into an obsidian cosmic void (`#03050c`), punctuated only by a living canvas of twinkling starlight, rich photographic windows into deep space, and razor-sharp spectral telemetry lines. Rather than viewing slides as corporate office documents, the user steps into an expansive cosmic exhibition where every slide is an illuminated artifact floating in space.
+`my-presentation` operates on a dual-aesthetic celestial paradigm:
 
-Surfaces are crafted as dark semi-translucent glass slabs (`#060919` at 92% opacity with `backdrop-blur-xl`) bound by delicate 1px luminescent frontiers (`border-cyan-500/30`). High-chroma color is treated with absolute discipline: hue is never applied as arbitrary surface fill, but exclusively as emitted starlight—phosphorescent cyan, nebula indigo, and solar amber glows that indicate active states, telemetry measurements, and conceptual discoveries.
+1. **The Deep-Space Planetarium (Dark Mode):** Evoking the hushed, reverent atmosphere of an optical planetarium or astronomical observatory at midnight. The interface recedes into an obsidian cosmic void (`#03050c`), punctuated only by a living canvas of twinkling starlight, rich photographic windows into deep space, and razor-sharp spectral telemetry lines. Surfaces are dark semi-translucent glass slabs (`#060919` at 92% opacity with `backdrop-blur-xl`) bound by delicate 1px luminescent frontiers (`border-cyan-500/30`).
+2. **The Solar Celestial Atlas (Light Mode):** Inspired by historical astronomical cartography and modern solar observatory sunrooms. The canvas adopts a warm celestial alabaster tone (`#f8fafc`), layered with pristine white translucent glass cards (`#ffffff/95` with `backdrop-blur-xl`), razor-sharp slate borders (`border-slate-200/80` and `border-sky-300`), deep ink typography (`#0f172a`), and rich cerulean (`#0284c7`), sapphire (`#4f46e5`), and warm amber (`#b45309`) telemetry accents. The starfield dynamically transforms into floating celestial chart coordinate particles.
 
-Visual density balances widescreen cinematic drama with technical rigor. Space Grotesk commands display titles with modern architectural geometry, Plus Jakarta Sans delivers warm, crystalline readability for explanations, and JetBrains Mono anchors timestamps, act numbers, and scientific readouts like instrument markings on an observatory console.
+Surfaces in both themes are crafted with glassmorphism and subtle structural hairlines rather than heavy drop shadows. High-chroma color is treated with absolute discipline: hue is never applied as arbitrary surface fill, but exclusively as emitted starlight or cartographic telemetry markers.
 
-**Key Characteristics:**
-- **Obsidian Abyssal Void:** The true black base (`#03050c`) absorbs the canvas and isolates content with zero visual noise.
-- **Translucent Cosmic Glass:** Heavy backdrop blurs and subtle 1px luminous borders create weightless floating hierarchy.
-- **Spectral Emission Accents:** Vibrant colors (cyan, indigo, amber, emerald) appear strictly as emitted photon energy on interactive nodes and badges.
-- **Dual Presentation Topology:** Equal visual dignity between the cinematic single-slide stage (deck view) and the continuous long-form scroll (reading view).
-- **Instrument Precision Typography:** Clear tripartite separation between architectural headings, warm reading prose, and monospaced telemetry.
+### Dual-Theme Architecture
+- **Tailwind CSS v4 Integration:** Driven via class-based `.dark` variant configured through `@custom-variant dark (&:where(.dark, .dark *));` in `app/globals.css`.
+- **Zero-FOUC Pre-Hydration:** An inline script in `<head>` executes synchronously prior to first paint, reading `localStorage['my-presentation-theme']` or falling back to `prefers-color-scheme: dark`.
+- **Global Theme Context:** Managed via `ThemeProvider` (`app/components/ThemeProvider.tsx`), supporting `light`, `dark`, and `system` modes with seamless persistence and live OS media query synchronization.
+- **Dedicated Theme Toggle:** Rendered via `ThemeToggle` (`app/components/ThemeToggle.tsx`), featuring custom SVG solar rays and lunar crescent icons, accessible `aria-label`, and global `[T]` keyboard hotkey trigger.
+- **System Browser Integration:** Viewport metadata provides light (`#f8fafc`) and dark (`#03050c`) theme colors for mobile address bars; selection highlights and custom scrollbars adapt dynamically to active themes.
 
 ## Colors
 
-The palette is rooted in deep astrophysical darkness, contrasted against sharp stellar spectral emissions and crisp starlight neutrals.
+The palette delivers equal aesthetic rigor and full WCAG AA/AAA contrast compliance across both themes.
 
-### Primary
-- **Cerenkov Cyan** (`#22d3ee` / `rgb(34, 211, 238)`): The primary energetic accent of the system. Used for primary CTA buttons, active slide number highlights, active tab chips, focus borders, and interactive SVG ray-tracing lines.
-- **Cyan Glow** (`#67e8f9`): High-intensity photon emission used on button hover states, interactive node flares, and active drop-glows.
-- **Cyan Void Tint** (`#082f49`): Deep translucent cyan background tint (`rgba(8, 47, 73, 0.45)`) used for telemetry badge backgrounds and highlighted key insight containers.
+### Dark Theme ("The Deep-Space Planetarium")
+- **Obsidian Void** (`#03050c`): Base canvas and background environment.
+- **Cosmic Glass** (`#060919`): Semi-transparent dark slab surface background (`bg-[#060919]/92` or `bg-slate-900/60`).
+- **Cerenkov Cyan** (`#22d3ee` / `#38bdf8`): Primary energetic accent for CTAs, active slide badges, and interactive diagram lines.
+- **Deep Nebula Indigo** (`#818cf8`): Secondary accent representing cosmological depth and mathematical proofs.
+- **Solar Flare Amber** (`#fbbf24`): Warning and critical paradox accent.
+- **Aurora Emerald** (`#34d399`): Resolution and observational proof accent.
+- **Starlight White** (`#f1f5f9`): Primary high-contrast foreground text.
+- **Muted Nebula Slate** (`#94a3b8` / `#64748b`): Secondary descriptive text and speaker notes.
+- **Instrument Border** (`#1e293b`): Subtle 1px structural framing for cards and dividers.
 
-### Secondary
-- **Deep Nebula Indigo** (`#818cf8`): Secondary accent representing cosmological depth. Used for secondary act badges, mathematics/paradox slide accents, and subtle secondary button borders.
-
-### Tertiary
-- **Solar Flare Amber** (`#fbbf24`): Warning and critical insight accent. Used for historical misconception callouts, paradox highlights, slide duration stats, and star luminosity badges.
-- **Aurora Emerald** (`#34d399`): Resolution and scientific confirmation accent. Used for cosmological proofs, expanding universe resolutions, and positive status indicators.
-
-### Neutral
-- **Obsidian Void** (`#03050c`): Base canvas and background environment. Represents deep infinite space; applied to root `<body>` and header backing.
-- **Cosmic Glass** (`#060919`): Semi-transparent dark slab surface background (`bg-[#060919]/92` or `bg-slate-900/60`). Houses slide cards, featured hero banners, modal sheets, and drawer panels.
-- **Starlight White** (`#f1f5f9`): Primary high-contrast foreground text for titles, headings, and primary bullet labels.
-- **Muted Nebula Slate** (`#94a3b8` / `#64748b`): Secondary descriptive text, speaker note metadata, unselected category tabs, and secondary body copy.
-- **Instrument Border** (`#1e293b`): Subtle 1px structural framing for cards, table dividers, and inactive button boundaries.
+### Light Theme ("The Solar Celestial Atlas")
+- **Solar Alabaster Canvas** (`#f8fafc`): Base celestial paper/sunroom canvas.
+- **Pristine Solar Glass** (`#ffffff` at 92–96% with `backdrop-blur-xl`): Slide cards, hero banners, and floating panels.
+- **Cerulean Atlas** (`#0284c7`): Primary energetic accent for CTAs, active badges, and focus rings (high contrast on white).
+- **Royal Sapphire** (`#4f46e5`): Secondary accent for Act badges and mathematical paradoxes.
+- **Solar Amber** (`#b45309`): High-contrast paradox and warning indicator (WCAG compliant on light surfaces).
+- **Observatory Emerald** (`#059669`): Scientific confirmation and positive status indicator.
+- **Atlas Ink Slate** (`#0f172a`): Primary high-contrast foreground text (contrast ratio >14:1 on white).
+- **Muted Cartography Slate** (`#475569`): Secondary descriptive copy and telemetry annotations (contrast ratio >5.5:1).
+- **Hairline Meridian Border** (`#e2e8f0` / `#cbd5e1`): Fine 1px architectural dividers and card boundaries.
 
 ### Named Rules
-**The Emission-Only Rule.** The pitch-black void (`#03050c`) consumes ≥85% of any viewport. High-chroma accents (cyan, amber, emerald) exist exclusively as luminous emitters on interactive controls, active indicators, and spectral data points (<15% total screen weight). Rarity preserves celestial awe.
+**The Dual-Dignity Rule.** Light Mode and Dark Mode are treated with equal visual dignity. Dark Mode must never feel like an unreadable muddy gray, and Light Mode must never feel like an unstyled blinding white document—it must embody an authoritative solar observatory atlas.
 
-**The Spectral Role Rule.** Colors carry semantic physical meaning: Cyan denotes active exploration and current truth; Amber denotes astronomical paradoxes, traps, and historical queries; Indigo denotes mathematical models; Emerald denotes confirmed cosmological resolutions. Colors must not be randomly swapped across acts.
+**The Emission & Cartography Rule.** In Dark Mode, vivid colors exist exclusively as emitted starlight against the dark void. In Light Mode, vivid colors act as precision cartographic inks and astronomical instruments. Rarity preserves visual authority.
+
+**The Spectral Role Rule.** Colors carry semantic physical meaning: Cyan/Cerulean denotes active exploration and current truth; Amber denotes astronomical paradoxes and historical queries; Indigo/Sapphire denotes mathematical models; Emerald denotes confirmed cosmological resolutions.
 
 ## Typography
 
-**Display Font:** Space Grotesk (with `system-ui, -apple-system, sans-serif` fallback)
-**Body Font:** Plus Jakarta Sans (with `system-ui, sans-serif` fallback)
+**Display Font:** Space Grotesk (with `system-ui, -apple-system, sans-serif` fallback)  
+**Body Font:** Plus Jakarta Sans (with `system-ui, sans-serif` fallback)  
 **Label/Mono Font:** JetBrains Mono (with `ui-monospace, monospace` fallback)
-
-**Character:** Space Grotesk brings geometric, wide-aperture architectural authority to titles and cosmic questions. Plus Jakarta Sans maintains neutral, warm legibility across long scientific descriptions and speaker notes. JetBrains Mono provides crisp, unvarnished instrument telemetry for coordinates, slide counters, act tags, and durations.
 
 ### Hierarchy
 - **Display** (Bold 700, `2.25rem` / `36px` to `2.75rem` / `44px`, line-height `1.15`, tracking `-0.02em`): Deck titles on hero banners, presentation covers, and fullscreen slide deck titles.
@@ -163,93 +182,73 @@ The palette is rooted in deep astrophysical darkness, contrasted against sharp s
 ### Named Rules
 **The Telemetry Contrast Rule.** Display headings always command bold presence in Space Grotesk, body explanations remain in highly legible Plus Jakarta Sans, and all numbers, slide indexes, durations, and metadata are strictly set in JetBrains Mono. Numbers are instruments, not prose.
 
-**The Subtitle Resonance Rule.** Slide subtitles must never repeat the heading color in neutral white. Subtitles take the act's active spectral accent color (e.g. `text-cyan-400` or `text-amber-400`), immediately establishing the thematic tone before the bullet points begin.
+**The Subtitle Resonance Rule.** Slide subtitles must never repeat the heading color in plain text. Subtitles take the act's active spectral accent color (e.g. `text-sky-700 dark:text-cyan-400` or `text-amber-800 dark:text-amber-400`), immediately establishing the thematic tone.
 
 ## Layout
 
 The presentation layout adapts dynamically between two viewing modes across screen sizes, anchored within a maximum widescreen container width (`max-w-[1760px]`).
 
-- **Presentation Stage (Deck Mode):** Optimized for zero-scroll viewport containment (`h-screen` or `100dvh`). The layout divides into a fixed top telemetry bar (48px–64px), a central stage housing the primary interactive slide card, and a bottom control dock with keyboard guides, slide thumbnails, and audio/voiceover triggers. The slide card itself divides into a 5-column textual/concept column and a 7-column interactive visual/media viewport on desktop (`lg:grid-cols-12`), collapsing into a stacked column on mobile.
+- **Presentation Stage (Deck Mode):** Optimized for zero-scroll viewport containment (`h-screen` or `100dvh`). The layout divides into a fixed top telemetry bar (48px–64px), a central stage housing the primary interactive slide card, and a bottom control dock with keyboard guides, slide thumbnails, and audio/voiceover triggers.
 - **Continuous Reading (Scroll Mode / Gamma View):** Optimized for editorial reading flow. Slide cards stack vertically with generous breathing space (`space-y-12 sm:space-y-16`) and comfortable min-height (`min-h-[82vh]`), allowing seamless mouse-wheel exploration through all 20 slides.
 - **Home Hub Layout:** Features a high-impact widescreen featured presentation banner with split preview collage, followed by a responsive grid (`grid-cols-1 lg:grid-cols-2`) of presentation deck cards with direct act navigation jump links.
 - **Spacing Scale:** Standard 4px grid multiplied across semantic steps: `xs: 6px`, `sm: 10px`, `md: 16px`, `lg: 24px`, `xl: 32px`, `2xl: 48px`.
 
-### Named Rules
-**The Horizon-Anchored Frame Rule.** In presentation view, slide cards adapt to viewport constraints with sticky navigation, keeping the interactive slide canvas and primary media centered without window scroll.
-
-**The Dual-Mode Parity Rule.** Every slide component must render with equal structural fidelity in both single-slide stage mode and continuous vertical scroll mode. No feature or interactive diagram may be omitted in either view.
-
 ## Elevation & Depth
 
-Depth in `my-presentation` is created through optical glassmorphism and colored photon emissions rather than muddy drop shadows. The deep black void is infinite and flat; objects achieve z-depth through translucency, backdrop blur filters, fine luminous rims, and atmospheric glows.
+Depth in `my-presentation` is created through optical glassmorphism and colored photon emissions rather than muddy drop shadows.
 
-### Shadow Vocabulary
-- **Spectral Button Glow** (`box-shadow: 0 0 25px rgba(34, 211, 238, 0.45)`): Radiant photon aura on primary CTA buttons (`▶ Present Now`), indicating live energy and immediate interactivity.
-- **Subtle Surface Rim Glow** (`box-shadow: 0 0 15px rgba(34, 211, 238, 0.2)`): Used on hovered presentation cards, active act chips, and focused search inputs.
-- **Cosmic Card Isolation** (`box-shadow: 0 20px 70px -20px rgba(0, 0, 0, 0.85)`): Deep black ambient shadow that visually lifts glass slide cards above the animated starfield canvas.
-- **Hero Starlight Flare** (`box-shadow: 0 25px 80px -20px rgba(34, 211, 238, 0.25)`): Wide diffuse aura anchoring the featured presentation hero banner.
-
-### Named Rules
-**The Spectral Aura Rule.** Surfaces never cast murky black physical drop-shadows onto the cosmos. Depth is communicated through glass translucency (`backdrop-blur-xl`), thin boundary lines, and chromatic aura glows (cyan glow on active/hover states).
-
-**The Z-Plane Integrity Rule.** The visual stack maintains strict layer separation: Starfield canvas (`z-0`), Background video loops (`z-5`), Glass card stage (`z-10`), Header and control bars (`z-30`), Modal drawers and video player dialogs (`z-50`).
-
-## Shapes
-
-The form language combines celestial curves with precision instrumentation geometry.
-
-- **Large Radii (24px to 32px / `rounded-2xl` to `rounded-3xl`):** Applied to primary slide cards, hero banners, and presentation deck overview cards, reflecting the gentle curvature of celestial horizons.
-- **Medium Radii (12px to 16px / `rounded-xl` to `rounded-2xl`):** Applied to interactive buttons, visual media containers, input bars, and stat callout blocks.
-- **Compact Radii (6px to 8px / `rounded-md` to `rounded-lg`):** Applied to slide number tags, sub-item bullets, and hotkey keyboard caps.
-- **Full Pill Radii (`rounded-full` / `9999px`):** Applied strictly to category filters, act indicators, telemetry status chips, and circular playback buttons.
-- **Borders & Rims:** 1px hairline boundaries (`border border-slate-800/80` transitioning to `border-cyan-500/40` on active states). Solid heavy borders are strictly prohibited.
-
-### Named Rules
-**The Planetary Arc Rule.** Major visual enclosures (cards, media viewports, banners) must use generous curvature (≥16px) echoing planetary bodies. Sharp 0px corners are reserved exclusively for code blocks and raw SVG diagram vectors.
+### Shadow & Aura Vocabulary
+- **Spectral Button Glow:** Radiant photon aura on primary CTA buttons (`box-shadow: 0 0 25px rgba(34, 211, 238, 0.45)` in Dark Mode, `box-shadow: 0 4px 16px rgba(2, 132, 199, 0.25)` in Light Mode).
+- **Subtle Surface Rim Glow:** Used on hovered presentation cards, active act chips, and focused search inputs.
+- **Cosmic Card Isolation:** Deep ambient shadow that visually lifts glass slide cards above the animated starfield canvas.
+- **Hero Starlight Flare:** Wide diffuse aura anchoring the featured presentation hero banner.
 
 ## Components
 
+### Theme Toggle (`ThemeToggle.tsx`)
+- Sleek, accessible pill button supporting light, dark, and system modes.
+- Visual icon state renders custom SVG Sun (`IconSun`) with radiant solar rays and Moon (`IconMoon`) with crater detailing.
+- Keyboard indicator displays `[T]` shortcut label.
+- Placed prominently in the Hub header, the Deck presentation HUD, and 404 error views.
+
 ### Buttons
 - **Shape:** Softly curved corners (12px to 16px radius, `rounded-xl` to `rounded-2xl`).
-- **Primary Action (`button-primary`):** Solid Cerenkov Cyan background (`#22d3ee`), obsidian text (`#03050c`), bold mono typography (`font-mono text-xs sm:text-sm font-bold`), padding (`10px 20px`), with active cyan aura glow (`box-shadow: 0 0 25px rgba(34, 211, 238, 0.45)`).
-- **Primary Hover:** Vibrant Cyan Glow (`#67e8f9`), scale lift (`scale-[1.02]`), expanded shadow intensity.
-- **Secondary / Glass (`button-secondary`):** Translucent cosmic glass (`bg-slate-900/90`), hairline instrument border (`border border-slate-700`), starlight text (`#f1f5f9`), with hover transition to cyan rim border (`hover:border-cyan-400`).
-- **Ghost / Icon Buttons:** Unpadded or tight circular buttons (`p-2 rounded-xl text-slate-400 hover:text-cyan-300 hover:bg-slate-800/60`).
+- **Primary Action (`button-primary`):** Solid Cerulean/Cyan background (`bg-sky-600 dark:bg-cyan-400`), contrasting text (`text-white dark:text-slate-950`), bold mono typography, with active aura glow.
+- **Secondary / Glass (`button-secondary`):** Translucent glass (`bg-white/90 dark:bg-slate-900/90`), hairline instrument border (`border-slate-300 dark:border-slate-700`), crisp text with hover transitions.
 
-### Chips
-- **Category Filter Chips:** Rounded pill (`rounded-full`), mono font (`text-xs font-mono`), padding (`6px 14px`). Unselected state features dark glass (`bg-slate-900 border-slate-800 text-slate-300 hover:border-slate-700`); selected state ignites with solid Cerenkov Cyan (`bg-cyan-400 text-slate-950 font-bold`).
-- **Telemetry & Act Chips:** Compact pill badges (`px-2.5 py-0.5 rounded-full text-[11px] font-mono border border-cyan-500/40 bg-cyan-950/80 text-cyan-300`).
+### Category Filter Chips
+- Rounded pill (`rounded-full`), mono font (`text-xs font-mono`), padding (`6px 14px`).
+- In Light Mode: Unselected state is white glass with slate borders (`bg-white border-slate-300 text-slate-700 hover:border-sky-400`); selected state is solid cerulean (`bg-sky-500 text-white font-bold`).
+- In Dark Mode: Unselected state is dark glass (`bg-slate-900 border-slate-800 text-slate-300 hover:border-slate-700`); selected state is solid cyan (`bg-cyan-400 text-slate-950 font-bold`).
 
 ### Cards / Containers
-- **Corner Style:** Curvature radius of 24px (`rounded-3xl`) for top-level deck cards, 16px (`rounded-2xl`) for internal slide sub-cards.
-- **Background:** High-density cosmic glass (`#060919` at 92% opacity with `backdrop-blur-xl`).
-- **Border:** 1px hairline border with contextual spectral accent tint (`border-cyan-500/30`, `border-amber-500/30`, or `border-slate-800/80`).
-- **Internal Padding:** `16px 20px` on mobile, scaling to `24px 32px` on desktop.
+- Curvature radius of 24px (`rounded-3xl`) for top-level deck cards, 16px (`rounded-2xl`) for internal slide sub-cards.
+- Background: High-density solar glass in Light Mode (`bg-white/95 backdrop-blur-xl`), cosmic glass in Dark Mode (`bg-[#060919]/92 backdrop-blur-xl`).
+- Border: 1px hairline border with contextual spectral accent tint.
 
-### Inputs / Fields
-- **Search Field:** High-density slate container (`bg-slate-900/90`), 12px radius (`rounded-xl`), 1px border (`border-slate-800`), crisp placeholder text (`text-slate-500`), and instant cyan glow transition on focus (`focus:border-cyan-400 focus:outline-none`). Includes inline clear button (`✕`).
+### Inputs / Search Field
+- Container: `bg-white/90 dark:bg-slate-900/90`, 12px radius (`rounded-xl`), 1px border (`border-slate-300 dark:border-slate-800`), crisp placeholder text (`text-slate-500`), and instant glow transition on focus. Includes inline clear button (`✕`).
 
-### Navigation
-- **Hub Header:** Sticky 64px (`h-16`) navigation bar with glass backdrop blur (`bg-[#03050c]/85 backdrop-blur-md`), hairline bottom border (`border-b border-slate-800/80`), brand logo glowing badge with gradient cyan/indigo flare, search bar, and live slide counter badge.
+### Navigation & Telemetry
+- **Hub Header:** Sticky navigation bar with glass backdrop blur (`bg-white/80 dark:bg-[#03050c]/85 backdrop-blur-md`), hairline bottom border (`border-b border-slate-200 dark:border-slate-800/80`), search input, telemetry statistics, and `ThemeToggle`.
 - **Slide Stage Controller:** Docked lower controller housing act progress step-dots, slide scrubber, voiceover audio toggle, full-screen trigger, and view-mode switch (`Deck` vs `Scroll`).
 
-### Signature Component: The Cosmic Media Stage & Ambient Player
-- **Visual Media Canvas:** Embedded 16:9 or auto-flex widescreen viewport capable of seamlessly swapping between high-resolution astrophotography, continuous loop 4K cosmic video backgrounds, and interactive SVG diagrams with ray-tracing animations.
-- **Speaker Teleprompter Drawer:** Collapsible bottom drawer rendered in high-contrast cosmic glass (`bg-[#030612]/95 border-cyan-500/25`) featuring word-count estimation, speech synthesis audio playback (`SpeechSynthesisUtterance`), and copyable transcript notes.
+### Cosmic Media Stage & Viewport
+- Space photography, nebulae, galaxies, and interactive SVG diagrams are hosted within dedicated dark celestial viewports to ensure scientific authenticity and astronomical contrast across both light and dark site themes.
 
 ## Do's and Don'ts
 
 ### Do:
-- **Do** anchor every interface surface against the deep obsidian void (`#03050c`) with animated or static starfield texture.
-- **Do** use Space Grotesk exclusively for major headings, Plus Jakarta Sans for body prose, and JetBrains Mono for all numbers, metrics, and labels.
-- **Do** limit vivid chromatic accents (cyan, amber, emerald) to active controls, key insight badges, and interactive diagram vectors (<15% screen space).
-- **Do** use rounded glass containers (`backdrop-blur-xl`, `border-slate-800/80`, 16px–24px radius) for all elevated UI elements.
-- **Do** provide smooth transitions (`transition-all duration-300 ease-out`) on card hover states and view-mode toggles.
+- **Do** support both Dark Mode ("The Deep-Space Planetarium") and Light Mode ("The Solar Celestial Atlas") with equal aesthetic dignity and craft.
+- **Do** use Space Grotesk for major headings, Plus Jakarta Sans for body prose, and JetBrains Mono for all numbers, metrics, hotkey caps, and labels.
+- **Do** maintain >=4.5:1 contrast ratio for all body copy and >=3:1 for large display elements across both themes.
+- **Do** provide instant theme switching via `ThemeToggle` and global `T` hotkey without any flash of unstyled content (FOUC).
+- **Do** use rounded glass containers (`backdrop-blur-xl`, 16px–24px radius) for all elevated UI elements.
 - **Do** ensure all audio and video interactions respect browser autoplay restrictions and offer instant mute controls.
 
 ### Don't:
-- **Don't** introduce light-mode themes or white page backgrounds; the presentation identity is strictly nocturnal.
-- **Don't** use opaque muddy drop shadows (`rgba(0,0,0,0.2)`) on dark surfaces; convey depth through glass opacity steps and colored luminescent glows.
+- **Don't** hardcode raw single-theme dark styles or raw `#03050c` on page surfaces without theme-adaptive classes (`bg-slate-50 dark:bg-[#03050c]`).
+- **Don't** use opaque muddy drop shadows on surfaces; convey depth through glass opacity steps, fine borders, and luminescent glows.
 - **Don't** mix random rainbow colors on a single slide; respect the semantic spectral accent assigned to the slide's Act.
 - **Don't** use standard sans-serif fonts for slide numbers, timers, or technical metrics; always use JetBrains Mono.
 - **Don't** create sharp 0px rectangular cards or thick clunky borders (>1px) that break the weightless celestial aesthetic.

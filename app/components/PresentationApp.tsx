@@ -6,6 +6,7 @@ import { SLIDES, ACTS, SlideData, SlideAccent } from "../data/slides";
 import { PresentationDeck } from "../data/presentations";
 import { SlideVisual, SLIDE_MEDIA_MAP } from "./SlideVisuals";
 import { StarfieldCanvas } from "./StarfieldCanvas";
+import { ThemeToggle } from "./ThemeToggle";
 
 /* ─── Tailored Deep-Space SVG Icons (Craft Floor: No Raw Unicode / Emojis) ─── */
 
@@ -408,67 +409,95 @@ const ACCENT_STYLES: Record<
   }
 > = {
   cyan: {
-    border: "border-cyan-500/30",
-    glow: "from-cyan-500/15 via-sky-500/5 to-transparent",
-    badge: "bg-cyan-950/80 text-cyan-300 border-cyan-500/40",
-    numberText: "text-cyan-400",
-    bulletDot: "bg-cyan-400 shadow-[0_0_10px_#22d3ee]",
-    highlightBox: "bg-cyan-950/45 border-cyan-400/50 text-cyan-100",
-    statBorder: "border-cyan-500/30 bg-cyan-950/25",
+    border: "border-sky-300 dark:border-cyan-500/30",
+    glow: "from-sky-500/10 via-sky-500/5 to-transparent dark:from-cyan-500/15 dark:via-sky-500/5 dark:to-transparent",
+    badge:
+      "bg-sky-50 dark:bg-cyan-950/80 text-sky-800 dark:text-cyan-300 border-sky-300 dark:border-cyan-500/40",
+    numberText: "text-sky-700 dark:text-cyan-400",
+    bulletDot:
+      "bg-sky-500 shadow-[0_0_8px_#0284c7] dark:bg-cyan-400 dark:shadow-[0_0_10px_#22d3ee]",
+    highlightBox:
+      "bg-sky-50/90 dark:bg-cyan-950/45 border-sky-300 dark:border-cyan-400/50 text-sky-950 dark:text-cyan-100",
+    statBorder:
+      "border-sky-200 dark:border-cyan-500/30 bg-sky-50/50 dark:bg-cyan-950/25",
   },
   indigo: {
-    border: "border-indigo-500/30",
-    glow: "from-indigo-500/15 via-blue-500/5 to-transparent",
-    badge: "bg-indigo-950/80 text-indigo-300 border-indigo-500/40",
-    numberText: "text-indigo-400",
-    bulletDot: "bg-indigo-400 shadow-[0_0_10px_#818cf8]",
-    highlightBox: "bg-indigo-950/45 border-indigo-400/50 text-indigo-100",
-    statBorder: "border-indigo-500/30 bg-indigo-950/25",
+    border: "border-indigo-200 dark:border-indigo-500/30",
+    glow: "from-indigo-500/10 via-indigo-500/5 to-transparent dark:from-indigo-500/15 dark:via-blue-500/5 dark:to-transparent",
+    badge:
+      "bg-indigo-50 dark:bg-indigo-950/80 text-indigo-800 dark:text-indigo-300 border-indigo-200 dark:border-indigo-500/40",
+    numberText: "text-indigo-700 dark:text-indigo-400",
+    bulletDot:
+      "bg-indigo-500 shadow-[0_0_8px_#4f46e5] dark:bg-indigo-400 dark:shadow-[0_0_10px_#818cf8]",
+    highlightBox:
+      "bg-indigo-50/90 dark:bg-indigo-950/45 border-indigo-300 dark:border-indigo-400/50 text-indigo-950 dark:text-indigo-100",
+    statBorder:
+      "border-indigo-200 dark:border-indigo-500/30 bg-indigo-50/50 dark:bg-indigo-950/25",
   },
   amber: {
-    border: "border-amber-500/30",
-    glow: "from-amber-500/15 via-orange-500/5 to-transparent",
-    badge: "bg-amber-950/80 text-amber-300 border-amber-500/40",
-    numberText: "text-amber-400",
-    bulletDot: "bg-amber-400 shadow-[0_0_10px_#fbbf24]",
-    highlightBox: "bg-amber-950/45 border-amber-400/50 text-amber-100",
-    statBorder: "border-amber-500/30 bg-amber-950/25",
+    border: "border-amber-300 dark:border-amber-500/30",
+    glow: "from-amber-500/10 via-amber-500/5 to-transparent dark:from-amber-500/15 dark:via-orange-500/5 dark:to-transparent",
+    badge:
+      "bg-amber-50 dark:bg-amber-950/80 text-amber-900 dark:text-amber-300 border-amber-300 dark:border-amber-500/40",
+    numberText: "text-amber-800 dark:text-amber-400",
+    bulletDot:
+      "bg-amber-500 shadow-[0_0_8px_#d97706] dark:bg-amber-400 dark:shadow-[0_0_10px_#fbbf24]",
+    highlightBox:
+      "bg-amber-50/90 dark:bg-amber-950/45 border-amber-300 dark:border-amber-400/50 text-amber-950 dark:text-amber-100",
+    statBorder:
+      "border-amber-200 dark:border-amber-500/30 bg-amber-50/50 dark:bg-amber-950/25",
   },
   emerald: {
-    border: "border-emerald-500/30",
-    glow: "from-emerald-500/15 via-teal-500/5 to-transparent",
-    badge: "bg-emerald-950/80 text-emerald-300 border-emerald-500/40",
-    numberText: "text-emerald-400",
-    bulletDot: "bg-emerald-400 shadow-[0_0_10px_#34d399]",
-    highlightBox: "bg-emerald-950/45 border-emerald-400/50 text-emerald-100",
-    statBorder: "border-emerald-500/30 bg-emerald-950/25",
+    border: "border-emerald-200 dark:border-emerald-500/30",
+    glow: "from-emerald-500/10 via-emerald-500/5 to-transparent dark:from-emerald-500/15 dark:via-teal-500/5 dark:to-transparent",
+    badge:
+      "bg-emerald-50 dark:bg-emerald-950/80 text-emerald-800 dark:text-emerald-300 border-emerald-200 dark:border-emerald-500/40",
+    numberText: "text-emerald-700 dark:text-emerald-400",
+    bulletDot:
+      "bg-emerald-500 shadow-[0_0_8px_#059669] dark:bg-emerald-400 dark:shadow-[0_0_10px_#34d399]",
+    highlightBox:
+      "bg-emerald-50/90 dark:bg-emerald-950/45 border-emerald-300 dark:border-emerald-400/50 text-emerald-950 dark:text-emerald-100",
+    statBorder:
+      "border-emerald-200 dark:border-emerald-500/30 bg-emerald-50/50 dark:bg-emerald-950/25",
   },
   gold: {
-    border: "border-yellow-400/35",
-    glow: "from-yellow-400/15 via-amber-500/5 to-transparent",
-    badge: "bg-yellow-950/80 text-yellow-200 border-yellow-400/40",
-    numberText: "text-yellow-300",
-    bulletDot: "bg-yellow-300 shadow-[0_0_10px_#fde047]",
-    highlightBox: "bg-yellow-950/45 border-yellow-400/50 text-yellow-100",
-    statBorder: "border-yellow-400/30 bg-yellow-950/25",
+    border: "border-amber-300 dark:border-yellow-400/35",
+    glow: "from-amber-400/10 via-amber-400/5 to-transparent dark:from-yellow-400/15 dark:via-amber-500/5 dark:to-transparent",
+    badge:
+      "bg-amber-50 dark:bg-yellow-950/80 text-amber-900 dark:text-yellow-200 border-amber-300 dark:border-yellow-400/40",
+    numberText: "text-amber-800 dark:text-yellow-300",
+    bulletDot:
+      "bg-amber-500 shadow-[0_0_8px_#d97706] dark:bg-yellow-300 dark:shadow-[0_0_10px_#fde047]",
+    highlightBox:
+      "bg-amber-50/90 dark:bg-yellow-950/45 border-amber-300 dark:border-yellow-400/50 text-amber-950 dark:text-yellow-100",
+    statBorder:
+      "border-amber-200 dark:border-yellow-400/30 bg-amber-50/50 dark:bg-yellow-950/25",
   },
   violet: {
-    border: "border-violet-500/30",
-    glow: "from-violet-500/15 via-purple-500/5 to-transparent",
-    badge: "bg-violet-950/80 text-violet-300 border-violet-500/40",
-    numberText: "text-violet-400",
-    bulletDot: "bg-violet-400 shadow-[0_0_10px_#a78bfa]",
-    highlightBox: "bg-violet-950/45 border-violet-400/50 text-violet-100",
-    statBorder: "border-violet-500/30 bg-violet-950/25",
+    border: "border-purple-200 dark:border-violet-500/30",
+    glow: "from-purple-500/10 via-purple-500/5 to-transparent dark:from-violet-500/15 dark:via-purple-500/5 dark:to-transparent",
+    badge:
+      "bg-purple-50 dark:bg-violet-950/80 text-purple-800 dark:text-violet-300 border-purple-200 dark:border-violet-500/40",
+    numberText: "text-purple-700 dark:text-violet-400",
+    bulletDot:
+      "bg-purple-500 shadow-[0_0_8px_#7c3aed] dark:bg-violet-400 dark:shadow-[0_0_10px_#a78bfa]",
+    highlightBox:
+      "bg-purple-50/90 dark:bg-violet-950/45 border-purple-300 dark:border-violet-400/50 text-purple-950 dark:text-violet-100",
+    statBorder:
+      "border-purple-200 dark:border-violet-500/30 bg-purple-50/50 dark:bg-violet-950/25",
   },
   rose: {
-    border: "border-rose-500/35",
-    glow: "from-rose-500/15 via-pink-500/5 to-transparent",
-    badge: "bg-rose-950/80 text-rose-300 border-rose-500/40",
-    numberText: "text-rose-400",
-    bulletDot: "bg-rose-400 shadow-[0_0_10px_#fb7185]",
-    highlightBox: "bg-rose-950/45 border-rose-400/50 text-rose-100",
-    statBorder: "border-rose-500/30 bg-rose-950/25",
+    border: "border-rose-200 dark:border-rose-500/35",
+    glow: "from-rose-500/10 via-rose-500/5 to-transparent dark:from-rose-500/15 dark:via-pink-500/5 dark:to-transparent",
+    badge:
+      "bg-rose-50 dark:bg-rose-950/80 text-rose-800 dark:text-rose-300 border-rose-200 dark:border-rose-500/40",
+    numberText: "text-rose-700 dark:text-rose-400",
+    bulletDot:
+      "bg-rose-500 shadow-[0_0_8px_#e11d48] dark:bg-rose-400 dark:shadow-[0_0_10px_#fb7185]",
+    highlightBox:
+      "bg-rose-50/90 dark:bg-rose-950/45 border-rose-300 dark:border-rose-400/50 text-rose-950 dark:text-rose-100",
+    statBorder:
+      "border-rose-200 dark:border-rose-500/30 bg-rose-50/50 dark:bg-rose-950/25",
   },
 };
 
@@ -907,9 +936,9 @@ export function PresentationApp({
         id={`slide-card-${slide.id}`}
         className={`relative w-full ${
           isScrollMode
-            ? "rounded-2xl sm:rounded-3xl min-h-[82vh] flex flex-col justify-between"
+            ? "rounded-2xl sm:rounded-3xl min-h-[82vh] flex flex-col justify-between content-visibility-auto"
             : "flex-1 lg:min-h-0 flex flex-col justify-between rounded-2xl sm:rounded-3xl"
-        } border ${style.border} bg-[#060919]/92 backdrop-blur-xl shadow-[0_20px_70px_-20px_rgba(0,0,0,0.85)] overflow-hidden transition-all duration-300`}
+        } border ${style.border} bg-white/95 dark:bg-[#060919]/92 backdrop-blur-xl shadow-[0_15px_50px_-15px_rgba(15,23,42,0.1)] dark:shadow-[0_20px_70px_-20px_rgba(0,0,0,0.85)] overflow-hidden transition-all duration-300`}
       >
         <img
           src={mediaInfo.primaryImage}
@@ -920,22 +949,22 @@ export function PresentationApp({
           onError={(e) => {
             e.currentTarget.src = "/images/night-sky-dark/images (9).jpg";
           }}
-          className="pointer-events-none absolute inset-0 w-full h-full object-cover opacity-[0.07] blur-2xl scale-110"
+          className="pointer-events-none absolute inset-0 w-full h-full object-cover opacity-[0.04] dark:opacity-[0.07] blur-2xl scale-110"
         />
 
         <div
           className={`pointer-events-none absolute inset-0 bg-gradient-to-br ${style.glow}`}
         />
 
-        <div className="relative z-10 shrink-0 flex flex-wrap items-center justify-between gap-2 px-4 sm:px-8 py-2.5 sm:py-3 border-b border-slate-800/80">
+        <div className="relative z-10 shrink-0 flex flex-wrap items-center justify-between gap-2 px-4 sm:px-8 py-2.5 sm:py-3 border-b border-slate-200/90 dark:border-slate-800/80">
           <div className="flex items-center gap-2 sm:gap-2.5">
             <span
-              className={`font-mono text-xs sm:text-sm font-bold tracking-wider ${style.numberText} bg-slate-950/90 border border-slate-800 px-2 sm:px-2.5 py-0.5 rounded-lg`}
+              className={`font-mono text-xs sm:text-sm font-bold tracking-wider ${style.numberText} bg-slate-100 dark:bg-slate-950/90 border border-slate-200 dark:border-slate-800 px-2 sm:px-2.5 py-0.5 rounded-lg`}
             >
               SLIDE {String(slide.id).padStart(2, "0")} /{" "}
               {String(slides.length).padStart(2, "0")}
             </span>
-            <span className="text-xs font-mono uppercase tracking-widest text-slate-400 hidden sm:inline">
+            <span className="text-xs font-mono uppercase tracking-widest text-slate-500 dark:text-slate-400 hidden sm:inline">
               {slide.act}
             </span>
           </div>
@@ -966,7 +995,7 @@ export function PresentationApp({
             <div className={isDenseSlide ? "space-y-2" : "space-y-3 sm:space-y-3.5"}>
               <div>
                 <h2
-                  className={`font-display font-bold tracking-tight text-white leading-tight ${
+                  className={`font-display font-bold tracking-tight text-slate-900 dark:text-white leading-tight ${
                     isDenseSlide
                       ? "text-lg sm:text-xl xl:text-2xl"
                       : "text-xl sm:text-2xl xl:text-3xl"
@@ -976,7 +1005,7 @@ export function PresentationApp({
                 </h2>
                 {slide.subtitle && (
                   <p
-                    className={`mt-0.5 text-xs sm:text-sm font-medium ${style.numberText}`}
+                    className={`mt-0.5 text-xs sm:text-sm font-semibold ${style.numberText}`}
                   >
                     {slide.subtitle}
                   </p>
@@ -991,8 +1020,8 @@ export function PresentationApp({
                       isDenseSlide ? "px-3 py-1.5 sm:px-3.5 sm:py-2" : "px-3.5 py-2 sm:px-4 sm:py-2.5"
                     } ${
                       b.highlight
-                        ? `border ${style.highlightBox} shadow-md`
-                        : "bg-slate-900/60 border border-slate-800/80"
+                        ? `border ${style.highlightBox} shadow-sm`
+                        : "bg-slate-50/80 dark:bg-slate-900/60 border border-slate-200/90 dark:border-slate-800/80"
                     }`}
                   >
                     <div className="flex items-start gap-2">
@@ -1008,15 +1037,15 @@ export function PresentationApp({
                       >
                         <div>
                           {b.label && (
-                            <span className="font-bold text-white mr-1.5">
+                            <span className="font-bold text-slate-900 dark:text-white mr-1.5">
                               {b.label}
                             </span>
                           )}
                           <span
                             className={
                               b.highlight
-                                ? "font-semibold text-white"
-                                : "text-slate-200"
+                                ? "font-semibold text-slate-950 dark:text-white"
+                                : "text-slate-700 dark:text-slate-200"
                             }
                           >
                             {b.text}
@@ -1024,13 +1053,13 @@ export function PresentationApp({
                         </div>
 
                         {b.subItems && b.subItems.length > 0 && (
-                          <ul className="mt-1 space-y-0.5 pl-2.5 border-l-2 border-slate-700/80">
+                          <ul className="mt-1 space-y-0.5 pl-2.5 border-l-2 border-slate-300 dark:border-slate-700/80">
                             {b.subItems.map((sub, sIdx) => (
                               <li
                                 key={sIdx}
-                                className="text-xs font-mono text-slate-300 flex items-center gap-2"
+                                className="text-xs font-mono text-slate-600 dark:text-slate-300 flex items-center gap-2"
                               >
-                                <span className="w-1.5 h-1.5 rounded-full bg-cyan-400/80 shrink-0" />
+                                <span className="w-1.5 h-1.5 rounded-full bg-sky-500/80 dark:bg-cyan-400/80 shrink-0" />
                                 <span>{sub}</span>
                               </li>
                             ))}
@@ -1043,7 +1072,7 @@ export function PresentationApp({
               </ul>
 
               {slide.id === 1 && (
-                <div className="flex items-center gap-3 p-2.5 sm:p-3 rounded-xl bg-cyan-950/40 border border-cyan-500/30 backdrop-blur-sm">
+                <div className="flex items-center gap-3 p-2.5 sm:p-3 rounded-xl bg-sky-50/80 dark:bg-cyan-950/40 border border-sky-200 dark:border-cyan-500/30 backdrop-blur-sm">
                   <img
                     src="/images/night-sky-dark/23825795249_3b22921aef_o.webp"
                     alt="Milky Way over clouds"
@@ -1052,13 +1081,13 @@ export function PresentationApp({
                     onError={(e) => {
                       e.currentTarget.src = "/images/night-sky-dark/images (9).jpg";
                     }}
-                    className="w-14 h-10 sm:w-16 sm:h-12 object-cover rounded-lg border border-cyan-400/40 shadow-lg shrink-0"
+                    className="w-14 h-10 sm:w-16 sm:h-12 object-cover rounded-lg border border-sky-300 dark:border-cyan-400/40 shadow-sm shrink-0"
                   />
                   <div>
-                    <div className="text-[10px] font-mono uppercase tracking-widest text-cyan-400 font-bold">
+                    <div className="text-[10px] font-mono uppercase tracking-widest text-sky-700 dark:text-cyan-400 font-bold">
                       The 100-Year Mystery
                     </div>
-                    <div className="text-xs sm:text-sm font-semibold text-white mt-0.5 leading-snug">
+                    <div className="text-xs sm:text-sm font-semibold text-slate-900 dark:text-white mt-0.5 leading-snug">
                       Billions of stars shine in space — yet the night sky above Earth remains dark.
                     </div>
                   </div>
@@ -1073,10 +1102,10 @@ export function PresentationApp({
                 } flex items-center justify-between gap-3 ${style.statBorder}`}
               >
                 <div className="min-w-0 flex-1">
-                  <div className="text-[10px] font-mono uppercase tracking-widest text-slate-400">
+                  <div className="text-[10px] font-mono uppercase tracking-widest text-slate-500 dark:text-slate-400">
                     {slide.keyStat.label}
                   </div>
-                  <div className="text-xs text-slate-300 line-clamp-2 leading-relaxed">
+                  <div className="text-xs text-slate-600 dark:text-slate-300 line-clamp-2 leading-relaxed">
                     {slide.keyStat.sub}
                   </div>
                 </div>
@@ -1100,12 +1129,12 @@ export function PresentationApp({
               <SlideVisual slideId={slide.id} />
             </div>
 
-            <div className="shrink-0 flex items-center justify-between gap-2 px-2.5 py-1 sm:px-3 sm:py-1 rounded-lg bg-slate-950/85 border border-slate-800/80 text-[11px] text-slate-400">
+            <div className="shrink-0 flex items-center justify-between gap-2 px-2.5 py-1 sm:px-3 sm:py-1 rounded-lg bg-slate-100/90 dark:bg-slate-950/85 border border-slate-200 dark:border-slate-800/80 text-[11px] text-slate-500 dark:text-slate-400">
               <div className="flex items-center gap-2 min-w-0">
-                <span className="font-mono uppercase text-[10px] tracking-wider px-2 py-0.5 rounded bg-slate-800 text-cyan-300 shrink-0 max-w-[130px] sm:max-w-none truncate">
+                <span className="font-mono uppercase text-[10px] tracking-wider px-2 py-0.5 rounded bg-white dark:bg-slate-800 text-sky-800 dark:text-cyan-300 border border-slate-200 dark:border-slate-700 shrink-0 max-w-[130px] sm:max-w-none truncate font-medium">
                   {mediaInfo.credit}
                 </span>
-                <span className="truncate italic text-slate-300 text-[11px] sm:text-xs">
+                <span className="truncate italic text-slate-600 dark:text-slate-300 text-[11px] sm:text-xs">
                   {slide.visualPrompt}
                 </span>
               </div>
@@ -1114,14 +1143,14 @@ export function PresentationApp({
         </div>
 
         {isScrollMode && (
-          <footer className="relative z-10 shrink-0 mx-3.5 sm:mx-7 mb-3 rounded-xl border border-cyan-500/25 bg-[#030612]/95 px-3.5 sm:px-4 py-2.5 shadow-inner">
-            <div className="flex flex-wrap items-center justify-between gap-2 pb-1.5 mb-1.5 border-b border-slate-800/90">
+          <footer className="relative z-10 shrink-0 mx-3.5 sm:mx-7 mb-3 rounded-xl border border-sky-300/60 dark:border-cyan-500/25 bg-slate-50/95 dark:bg-[#030612]/95 px-3.5 sm:px-4 py-2.5 shadow-inner">
+            <div className="flex flex-wrap items-center justify-between gap-2 pb-1.5 mb-1.5 border-b border-slate-200 dark:border-slate-800/90">
               <div className="flex items-center gap-2">
-                <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded text-[11px] font-mono font-semibold bg-cyan-500/15 text-cyan-300 border border-cyan-500/30">
-                  <IconMic className="w-3.5 h-3.5 text-cyan-400" />
+                <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded text-[11px] font-mono font-semibold bg-sky-100 dark:bg-cyan-500/15 text-sky-800 dark:text-cyan-300 border border-sky-200 dark:border-cyan-500/30">
+                  <IconMic className="w-3.5 h-3.5 text-sky-600 dark:text-cyan-400" />
                   <span>SPEAKER NOTES / VOICEOVER</span>
                 </span>
-                <span className="text-[11px] font-mono text-slate-400 hidden sm:inline">
+                <span className="text-[11px] font-mono text-slate-500 dark:text-slate-400 hidden sm:inline">
                   {wordCount} words · ~{estSeconds}s
                 </span>
               </div>
@@ -1132,8 +1161,8 @@ export function PresentationApp({
                   onClick={() => speakSlide(slide, false)}
                   className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md text-[11px] font-mono font-medium transition cursor-pointer ${
                     isSpeakingThis
-                      ? "bg-cyan-400 text-slate-950 font-bold shadow-[0_0_14px_rgba(34,211,238,0.5)] border border-cyan-300"
-                      : "bg-cyan-500/20 text-cyan-200 border border-cyan-500/40 hover:bg-cyan-500/30"
+                      ? "bg-sky-500 text-white dark:bg-cyan-400 dark:text-slate-950 font-bold shadow-md border border-sky-400 dark:border-cyan-300"
+                      : "bg-sky-50 dark:bg-cyan-500/20 text-sky-800 dark:text-cyan-200 border border-sky-200 dark:border-cyan-500/40 hover:bg-sky-100 dark:hover:bg-cyan-500/30"
                   }`}
                 >
                   {isSpeakingThis ? (
@@ -1152,22 +1181,22 @@ export function PresentationApp({
                 <button
                   type="button"
                   onClick={() => setLargeTeleprompter((prev) => !prev)}
-                  className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md text-[11px] font-mono text-slate-300 bg-slate-900 border border-slate-700 hover:border-slate-500 cursor-pointer"
+                  className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md text-[11px] font-mono text-slate-700 dark:text-slate-300 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 hover:border-slate-400 cursor-pointer"
                   title="Toggle Teleprompter Text Size"
                 >
-                  <IconType className="w-3 h-3 text-cyan-400" />
+                  <IconType className="w-3 h-3 text-sky-600 dark:text-cyan-400" />
                   <span>{largeTeleprompter ? "Normal" : "Large"}</span>
                 </button>
 
                 <button
                   type="button"
                   onClick={() => handleCopyVoiceover(slide)}
-                  className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md text-[11px] font-mono text-slate-300 bg-slate-900 border border-slate-700 hover:border-slate-500 cursor-pointer"
+                  className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md text-[11px] font-mono text-slate-700 dark:text-slate-300 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 hover:border-slate-400 cursor-pointer"
                 >
                   {copiedId === slide.id ? (
                     <>
-                      <IconCheck className="w-3 h-3 text-emerald-400" />
-                      <span className="text-emerald-400 font-bold">Copied</span>
+                      <IconCheck className="w-3 h-3 text-emerald-600 dark:text-emerald-400" />
+                      <span className="text-emerald-600 dark:text-emerald-400 font-bold">Copied</span>
                     </>
                   ) : (
                     <>
@@ -1180,7 +1209,7 @@ export function PresentationApp({
             </div>
 
             <blockquote
-              className={`text-slate-200 leading-snug font-normal ${
+              className={`text-slate-800 dark:text-slate-200 leading-snug font-normal ${
                 largeTeleprompter
                   ? "text-base sm:text-lg max-h-24 overflow-y-auto"
                   : "text-xs sm:text-sm"
@@ -1199,24 +1228,24 @@ export function PresentationApp({
       onTouchStart={handleTouchStart}
       onTouchEnd={handleTouchEnd}
       onTouchCancel={handleTouchCancel}
-      className={`relative flex flex-col bg-[#03050c] text-slate-100 ${
+      className={`relative flex flex-col bg-[#f8fafc] text-slate-900 dark:bg-[#03050c] dark:text-slate-100 ${
         viewMode === "deck"
           ? "min-h-dvh lg:h-dvh lg:max-h-dvh w-full overflow-x-hidden lg:overflow-hidden"
           : "min-h-screen w-full overflow-x-hidden"
-      }`}
+      } transition-colors duration-200`}
     >
       <audio
         ref={bgAudioRef}
         src={BACKGROUND_MUSIC_URL}
         loop
-        preload="auto"
+        preload="none"
         onPlay={() => setIsBgmPlaying(true)}
         onPause={() => setIsBgmPlaying(false)}
         onError={() => setIsBgmPlaying(false)}
       />
       <StarfieldCanvas />
 
-      <header className="shrink-0 sticky top-0 z-30 border-b border-slate-800/80 bg-[#03050c]/85 backdrop-blur-md">
+      <header className="shrink-0 sticky top-0 z-30 border-b border-slate-200/90 dark:border-slate-800/80 bg-white/85 dark:bg-[#03050c]/85 backdrop-blur-md transition-colors duration-200">
         <div className="w-full max-w-[1760px] mx-auto px-3 sm:px-6 lg:px-12 xl:px-16 h-14 sm:h-16 flex items-center justify-between gap-2 sm:gap-4">
           {/* Back to Hub + Presentation Title */}
           <div className="flex items-center gap-2 sm:gap-3 min-w-0 flex-1">
@@ -1224,7 +1253,7 @@ export function PresentationApp({
               <button
                 type="button"
                 onClick={handleExitToHub}
-                className="inline-flex items-center gap-1.5 px-2.5 sm:px-3 py-1.5 rounded-xl text-xs sm:text-sm font-mono bg-slate-900 border border-slate-700 text-cyan-300 hover:border-cyan-400 hover:bg-slate-800 transition shrink-0 cursor-pointer"
+                className="inline-flex items-center gap-1.5 px-2.5 sm:px-3 py-1.5 rounded-xl text-xs sm:text-sm font-mono bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-sky-800 dark:text-cyan-300 hover:border-sky-400 dark:hover:border-cyan-400 hover:bg-sky-50/50 dark:hover:bg-slate-800 transition shrink-0 cursor-pointer shadow-sm dark:shadow-none"
                 title="Return to My Presentations Hub"
               >
                 <IconArrowLeft className="w-3.5 h-3.5" />
@@ -1234,7 +1263,7 @@ export function PresentationApp({
               <Link
                 href="/"
                 onClick={handleExitToHub}
-                className="inline-flex items-center gap-1.5 px-2.5 sm:px-3 py-1.5 rounded-xl text-xs sm:text-sm font-mono bg-slate-900 border border-slate-700 text-cyan-300 hover:border-cyan-400 hover:bg-slate-800 transition shrink-0"
+                className="inline-flex items-center gap-1.5 px-2.5 sm:px-3 py-1.5 rounded-xl text-xs sm:text-sm font-mono bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-sky-800 dark:text-cyan-300 hover:border-sky-400 dark:hover:border-cyan-400 hover:bg-sky-50/50 dark:hover:bg-slate-800 transition shrink-0 shadow-sm dark:shadow-none"
                 title="Return to My Presentations Hub"
               >
                 <IconArrowLeft className="w-3.5 h-3.5" />
@@ -1243,10 +1272,10 @@ export function PresentationApp({
             )}
 
             <div className="flex items-center gap-2 min-w-0 truncate">
-              <h1 className="font-display text-sm sm:text-base lg:text-lg font-bold text-white tracking-tight truncate">
+              <h1 className="font-display text-sm sm:text-base lg:text-lg font-bold text-slate-900 dark:text-white tracking-tight truncate">
                 {deckTitle}
               </h1>
-              <span className="hidden sm:inline text-xs sm:text-sm font-mono text-cyan-400 shrink-0">
+              <span className="hidden sm:inline text-xs sm:text-sm font-mono text-sky-700 dark:text-cyan-400 shrink-0 font-medium">
                 · {slides.length} Slides
               </span>
             </div>
@@ -1262,24 +1291,27 @@ export function PresentationApp({
               }}
               aria-expanded={showActMenu}
               aria-haspopup="true"
-              className="flex items-center gap-1.5 sm:gap-2 px-2.5 sm:px-3.5 py-1.5 rounded-xl text-xs sm:text-sm font-mono bg-slate-900/90 border border-slate-800 text-slate-200 hover:border-cyan-500/50 hover:bg-slate-800/80 transition cursor-pointer whitespace-nowrap"
+              className="flex items-center gap-1.5 sm:gap-2 px-2.5 sm:px-3.5 py-1.5 rounded-xl text-xs sm:text-sm font-mono bg-white dark:bg-slate-900/90 border border-slate-200 dark:border-slate-800 text-slate-800 dark:text-slate-200 hover:border-sky-400 dark:hover:border-cyan-500/50 hover:bg-sky-50/50 dark:hover:bg-slate-800/80 transition cursor-pointer whitespace-nowrap shadow-sm dark:shadow-none"
               title="Jump to Act chapter"
             >
-              <span className="text-cyan-400 font-bold whitespace-nowrap">Act {currentSlide.actNumber}</span>
-              <span className="text-slate-600 hidden sm:inline">·</span>
-              <span className="hidden sm:inline text-slate-300 max-w-[140px] md:max-w-[220px] lg:max-w-[320px] truncate">
-                {acts.find((a) => a.number === currentSlide.actNumber)?.title || `Act ${currentSlide.actNumber}`}
+              <span className="text-sky-700 dark:text-cyan-400 font-bold whitespace-nowrap">
+                Act {currentSlide.actNumber}
+              </span>
+              <span className="text-slate-300 dark:text-slate-600 hidden sm:inline">·</span>
+              <span className="hidden sm:inline text-slate-700 dark:text-slate-300 max-w-[140px] md:max-w-[220px] lg:max-w-[320px] truncate font-medium">
+                {acts.find((a) => a.number === currentSlide.actNumber)?.title ||
+                  `Act ${currentSlide.actNumber}`}
               </span>
               <IconChevronDown
-                className={`w-3.5 h-3.5 text-cyan-400 transition-transform duration-200 ${
+                className={`w-3.5 h-3.5 text-sky-600 dark:text-cyan-400 transition-transform duration-200 ${
                   showActMenu ? "rotate-180" : ""
                 }`}
               />
             </button>
 
             {showActMenu && (
-              <div className="absolute top-full left-1/2 -translate-x-1/2 mt-1.5 w-64 max-w-[calc(100vw-24px)] bg-[#070b1c] border border-cyan-500/40 rounded-xl shadow-2xl p-1.5 z-40 backdrop-blur-xl animate-in fade-in duration-150">
-                <div className="text-[10px] font-mono uppercase tracking-wider text-slate-400 px-2 py-1 border-b border-slate-800/80 mb-1">
+              <div className="absolute top-full left-1/2 -translate-x-1/2 mt-1.5 w-64 max-w-[calc(100vw-24px)] bg-white dark:bg-[#070b1c] border border-slate-200 dark:border-cyan-500/40 rounded-xl shadow-2xl p-1.5 z-40 backdrop-blur-xl animate-in fade-in duration-150">
+                <div className="text-[10px] font-mono uppercase tracking-wider text-slate-500 dark:text-slate-400 px-2 py-1 border-b border-slate-100 dark:border-slate-800/80 mb-1 font-semibold">
                   Cosmic Chapters
                 </div>
                 {acts.map((act) => {
@@ -1301,16 +1333,18 @@ export function PresentationApp({
                       }}
                       className={`w-full text-left px-2.5 py-1.5 rounded-lg text-xs font-mono transition flex items-center justify-between cursor-pointer ${
                         isCurrentAct
-                          ? "bg-cyan-500/20 text-cyan-300 border border-cyan-500/40 font-bold"
-                          : "text-slate-300 hover:bg-slate-800/80"
+                          ? "bg-sky-50 dark:bg-cyan-500/20 text-sky-900 dark:text-cyan-300 border border-sky-200 dark:border-cyan-500/40 font-bold"
+                          : "text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800/80"
                       }`}
                     >
-                      <span className="truncate">Act {act.number}: {act.title}</span>
+                      <span className="truncate">
+                        Act {act.number}: {act.title}
+                      </span>
                       <span
                         className={`text-[10px] font-normal shrink-0 ml-1 px-1.5 py-0.2 rounded border ${
                           isCurrentAct
-                            ? "bg-cyan-950 text-cyan-300 border-cyan-500/40"
-                            : "bg-slate-950 text-slate-500 border-slate-800"
+                            ? "bg-sky-100 dark:bg-cyan-950 text-sky-800 dark:text-cyan-300 border-sky-200 dark:border-cyan-500/40 font-medium"
+                            : "bg-slate-100 dark:bg-slate-950 text-slate-500 border-slate-200 dark:border-slate-800"
                         }`}
                       >
                         S{String(act.slides[0]).padStart(2, "0")}–
@@ -1329,14 +1363,14 @@ export function PresentationApp({
           {/* Right Mode & Action Controls */}
           <div className="flex items-center gap-1.5 sm:gap-2 shrink-0">
             {/* View Mode Toggle: Deck vs Continuous Read */}
-            <div className="flex items-center bg-slate-900 border border-slate-800 rounded-xl p-0.5 sm:p-1">
+            <div className="flex items-center bg-slate-100 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl p-0.5 sm:p-1">
               <button
                 type="button"
                 onClick={() => setViewMode("deck")}
                 className={`px-2.5 sm:px-3 py-1 rounded-lg text-xs sm:text-sm font-mono transition cursor-pointer ${
                   viewMode === "deck"
-                    ? "bg-cyan-400 text-slate-950 font-bold"
-                    : "text-slate-400 hover:text-white"
+                    ? "bg-sky-500 text-white dark:bg-cyan-400 dark:text-slate-950 font-bold shadow-sm"
+                    : "text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white"
                 }`}
                 title="Slide-by-slide Deck Mode"
               >
@@ -1347,8 +1381,8 @@ export function PresentationApp({
                 onClick={() => setViewMode("gamma")}
                 className={`px-2.5 sm:px-3 py-1 rounded-lg text-xs sm:text-sm font-mono transition cursor-pointer ${
                   viewMode === "gamma"
-                    ? "bg-cyan-400 text-slate-950 font-bold"
-                    : "text-slate-400 hover:text-white"
+                    ? "bg-sky-500 text-white dark:bg-cyan-400 dark:text-slate-950 font-bold shadow-sm"
+                    : "text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white"
                 }`}
                 title="Continuous Document Read Mode"
               >
@@ -1360,6 +1394,16 @@ export function PresentationApp({
             <div className="relative">
               <button
                 type="button"
+                onMouseEnter={() => {
+                  if (bgAudioRef.current && bgAudioRef.current.preload !== "auto") {
+                    bgAudioRef.current.preload = "auto";
+                  }
+                }}
+                onFocus={() => {
+                  if (bgAudioRef.current && bgAudioRef.current.preload !== "auto") {
+                    bgAudioRef.current.preload = "auto";
+                  }
+                }}
                 onClick={() => {
                   setShowMediaMenu((prev) => !prev);
                   setShowActMenu(false);
@@ -1368,71 +1412,75 @@ export function PresentationApp({
                 aria-haspopup="true"
                 className={`inline-flex items-center gap-1.5 sm:gap-2 px-2.5 sm:px-3.5 py-1.5 rounded-xl text-xs sm:text-sm font-mono border transition cursor-pointer ${
                   isBgmPlaying || speakingSlideId !== null || autoPlayDeck
-                    ? "bg-cyan-950/80 border-cyan-500/50 text-cyan-300 shadow-[0_0_12px_rgba(34,211,238,0.3)]"
-                    : "bg-slate-900 border-slate-800 text-slate-300 hover:border-slate-700 hover:bg-slate-800/80"
+                    ? "bg-sky-50 dark:bg-cyan-950/80 border-sky-300 dark:border-cyan-500/50 text-sky-800 dark:text-cyan-300 shadow-[0_0_12px_rgba(14,165,233,0.2)] dark:shadow-[0_0_12px_rgba(34,211,238,0.3)]"
+                    : "bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-300 hover:border-slate-300 dark:hover:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-800/80 shadow-sm dark:shadow-none"
                 }`}
                 title="Audio, Voiceover & Video controls"
               >
                 <span className="flex items-center gap-0.5">
                   <span
-                    className={`w-1 h-3.5 rounded-full bg-cyan-400 ${
+                    className={`w-1 h-3.5 rounded-full bg-sky-600 dark:bg-cyan-400 ${
                       isBgmPlaying ? "animate-pulse" : "opacity-60"
                     }`}
                   />
                   <span
-                    className={`w-1 h-2.5 rounded-full bg-cyan-300 ${
+                    className={`w-1 h-2.5 rounded-full bg-sky-500 dark:bg-cyan-300 ${
                       isBgmPlaying ? "animate-pulse" : "opacity-40"
                     }`}
                   />
                   <span
-                    className={`w-1 h-4 rounded-full bg-cyan-400 ${
+                    className={`w-1 h-4 rounded-full bg-sky-600 dark:bg-cyan-400 ${
                       isBgmPlaying ? "animate-pulse" : "opacity-60"
                     }`}
                   />
                 </span>
                 <span className="hidden sm:inline">Media</span>
                 <IconChevronDown
-                  className={`w-3.5 h-3.5 text-cyan-400 transition-transform duration-200 ${
+                  className={`w-3.5 h-3.5 text-sky-600 dark:text-cyan-400 transition-transform duration-200 ${
                     showMediaMenu ? "rotate-180" : ""
                   }`}
                 />
               </button>
 
               {showMediaMenu && (
-                <div className="absolute top-full right-0 mt-1.5 w-72 max-w-[calc(100vw-24px)] bg-[#070b1c] border border-cyan-500/35 rounded-2xl shadow-2xl p-3 z-40 backdrop-blur-xl space-y-3 animate-in fade-in duration-150">
-                  <div className="text-[10px] font-mono uppercase tracking-wider text-slate-400 border-b border-slate-800 pb-1.5 flex items-center justify-between">
+                <div className="absolute top-full right-0 mt-1.5 w-72 max-w-[calc(100vw-24px)] bg-white dark:bg-[#070b1c] border border-slate-200 dark:border-cyan-500/35 rounded-2xl shadow-2xl p-3 z-40 backdrop-blur-xl space-y-3 animate-in fade-in duration-150">
+                  <div className="text-[10px] font-mono uppercase tracking-wider text-slate-500 dark:text-slate-400 border-b border-slate-100 dark:border-slate-800 pb-1.5 flex items-center justify-between font-semibold">
                     <span>Cosmic Media Studio</span>
-                    <span className="w-1.5 h-1.5 rounded-full bg-cyan-400 animate-ping" />
+                    <span className="w-1.5 h-1.5 rounded-full bg-sky-500 dark:bg-cyan-400 animate-ping" />
                   </div>
 
                   {/* BGM Row */}
                   <div className="space-y-1.5">
                     <div className="flex items-center justify-between text-xs font-mono">
-                      <span className="text-slate-200">Interstellar Piano</span>
+                      <span className="text-slate-800 dark:text-slate-200 font-medium">
+                        Interstellar Piano
+                      </span>
                       <button
                         type="button"
                         onClick={toggleBgm}
                         className={`inline-flex items-center gap-1 px-2 py-0.5 rounded text-[10px] font-bold cursor-pointer transition ${
                           isBgmPlaying
-                            ? "bg-cyan-500/20 text-cyan-300 border border-cyan-500/50"
-                            : "bg-slate-800 text-slate-400 hover:text-white"
+                            ? "bg-sky-50 dark:bg-cyan-500/20 text-sky-800 dark:text-cyan-300 border border-sky-300 dark:border-cyan-500/50"
+                            : "bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white"
                         }`}
                       >
                         {isBgmPlaying ? (
                           <>
-                            <IconVolume className="w-3 h-3 text-cyan-400" />
+                            <IconVolume className="w-3 h-3 text-sky-600 dark:text-cyan-400" />
                             <span>ON</span>
                           </>
                         ) : (
                           <>
-                            <IconVolumeMute className="w-3 h-3 text-slate-400" />
+                            <IconVolumeMute className="w-3 h-3 text-slate-500 dark:text-slate-400" />
                             <span>OFF</span>
                           </>
                         )}
                       </button>
                     </div>
                     <div className="flex items-center gap-2">
-                      <span className="text-[10px] font-mono text-slate-500">Vol</span>
+                      <span className="text-[10px] font-mono text-slate-400 dark:text-slate-500">
+                        Vol
+                      </span>
                       <input
                         type="range"
                         min="0.01"
@@ -1447,20 +1495,24 @@ export function PresentationApp({
                             bgAudioRef.current.volume = vol;
                           }
                         }}
-                        className="w-full h-1 bg-slate-700 accent-cyan-400 rounded-lg cursor-pointer"
+                        className="w-full h-1 bg-slate-200 dark:bg-slate-700 accent-sky-500 dark:accent-cyan-400 rounded-lg cursor-pointer"
                         title={`Background music volume: ${Math.round(bgmVolume * 100)}%`}
                       />
-                      <span className="text-[10px] font-mono text-cyan-300 w-7 text-right">
+                      <span className="text-[10px] font-mono text-sky-700 dark:text-cyan-300 w-7 text-right font-medium">
                         {Math.round(bgmVolume * 100)}%
                       </span>
                     </div>
                   </div>
 
                   {/* Auto Voice Narration Row */}
-                  <div className="pt-2 border-t border-slate-800 flex items-center justify-between">
+                  <div className="pt-2 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between">
                     <div>
-                      <div className="text-xs font-mono text-slate-200">Voiceover</div>
-                      <div className="text-[10px] text-slate-400">Auto-read slides</div>
+                      <div className="text-xs font-mono text-slate-800 dark:text-slate-200 font-medium">
+                        Voiceover
+                      </div>
+                      <div className="text-[10px] text-slate-500 dark:text-slate-400">
+                        Auto-read slides
+                      </div>
                     </div>
                     <button
                       type="button"
@@ -1475,8 +1527,8 @@ export function PresentationApp({
                       }}
                       className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-[11px] font-mono border transition cursor-pointer ${
                         autoPlayDeck || speakingSlideId !== null
-                          ? "bg-cyan-400 text-slate-950 font-bold shadow-[0_0_12px_#22d3ee] border-cyan-300"
-                          : "bg-slate-900 border-slate-700 text-cyan-300 hover:border-cyan-400/50"
+                          ? "bg-sky-500 hover:bg-sky-600 text-white dark:bg-cyan-400 dark:text-slate-950 font-bold shadow-md dark:shadow-[0_0_12px_#22d3ee] border-sky-400 dark:border-cyan-300"
+                          : "bg-slate-100 dark:bg-slate-900 border-slate-200 dark:border-slate-700 text-sky-800 dark:text-cyan-300 hover:border-sky-400 dark:hover:border-cyan-400/50"
                       }`}
                     >
                       {autoPlayDeck || speakingSlideId !== null ? (
@@ -1494,16 +1546,16 @@ export function PresentationApp({
                   </div>
 
                   {/* Video Modal Trigger */}
-                  <div className="pt-2 border-t border-slate-800">
+                  <div className="pt-2 border-t border-slate-100 dark:border-slate-800">
                     <button
                       type="button"
                       onClick={() => {
                         setShowMediaMenu(false);
                         setShowVideoModal(true);
                       }}
-                      className="w-full py-1.5 px-2.5 rounded-lg text-xs font-mono bg-indigo-950/80 border border-indigo-500/40 text-indigo-200 hover:border-indigo-400 flex items-center justify-center gap-1.5 cursor-pointer transition"
+                      className="w-full py-1.5 px-2.5 rounded-lg text-xs font-mono bg-indigo-50 dark:bg-indigo-950/80 border border-indigo-200 dark:border-indigo-500/40 text-indigo-900 dark:text-indigo-200 hover:border-indigo-400 flex items-center justify-center gap-1.5 cursor-pointer transition font-medium"
                     >
-                      <IconFilm className="w-3.5 h-3.5 text-indigo-400 mr-1" />
+                      <IconFilm className="w-3.5 h-3.5 text-indigo-600 dark:text-indigo-400 mr-1" />
                       <span>Cosmic Video Library ({COSMIC_VIDEOS.length})</span>
                     </button>
                   </div>
@@ -1511,22 +1563,25 @@ export function PresentationApp({
               )}
             </div>
 
-            {/* Grid button - hidden on small mobile, accessible via bottom bar */}
+            {/* Grid button */}
             <button
               type="button"
               onClick={() => setShowOverview((prev) => !prev)}
-              className="hidden sm:inline-flex items-center gap-1.5 px-3 sm:px-3.5 py-1.5 rounded-xl text-xs sm:text-sm font-mono bg-slate-900 border border-slate-700 text-slate-200 hover:border-cyan-400/50 hover:bg-slate-800/80 hover:text-white transition cursor-pointer"
+              className="hidden sm:inline-flex items-center gap-1.5 px-3 sm:px-3.5 py-1.5 rounded-xl text-xs sm:text-sm font-mono bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-200 hover:border-sky-400 dark:hover:border-cyan-400/50 hover:bg-sky-50/50 dark:hover:bg-slate-800/80 hover:text-sky-900 dark:hover:text-white transition cursor-pointer shadow-sm dark:shadow-none"
               title="Open Slide Grid (Shortcut: G)"
             >
-              <IconGrid className="w-3.5 h-3.5 text-cyan-400" />
+              <IconGrid className="w-3.5 h-3.5 text-sky-600 dark:text-cyan-400" />
               <span>Grid ({slides.length})</span>
             </button>
 
-            {/* Shortcuts Help button - hidden on mobile touch devices */}
+            {/* Theme Toggle Button */}
+            <ThemeToggle />
+
+            {/* Shortcuts Help button */}
             <button
               type="button"
               onClick={() => setShowShortcutsModal(true)}
-              className="hidden md:inline-flex items-center justify-center w-8 h-8 rounded-xl text-xs sm:text-sm font-mono bg-slate-900 border border-slate-800 text-slate-400 hover:text-cyan-300 hover:border-cyan-500/50 hover:bg-slate-800/80 transition cursor-pointer"
+              className="hidden md:inline-flex items-center justify-center w-8 h-8 rounded-xl text-xs sm:text-sm font-mono bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-500 dark:text-slate-400 hover:text-sky-800 dark:hover:text-cyan-300 hover:border-sky-300 dark:hover:border-cyan-500/50 hover:bg-sky-50/50 dark:hover:bg-slate-800/80 transition cursor-pointer shadow-sm dark:shadow-none"
               title="Keyboard Shortcuts Cheatsheet (?)"
               aria-label="Keyboard Shortcuts"
             >
@@ -1537,12 +1592,12 @@ export function PresentationApp({
             <button
               type="button"
               onClick={toggleFullscreen}
-              className="hidden sm:inline-flex items-center justify-center w-8 h-8 rounded-xl text-xs sm:text-sm font-mono bg-slate-900 border border-slate-700 text-slate-300 hover:border-cyan-400/50 hover:bg-slate-800/80 hover:text-white transition cursor-pointer"
+              className="hidden sm:inline-flex items-center justify-center w-8 h-8 rounded-xl text-xs sm:text-sm font-mono bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300 hover:border-sky-400 dark:hover:border-cyan-400/50 hover:bg-sky-50/50 dark:hover:bg-slate-800/80 hover:text-sky-900 dark:hover:text-white transition cursor-pointer shadow-sm dark:shadow-none"
               title={isFullscreen ? "Exit Fullscreen (F)" : "Enter Fullscreen (F)"}
               aria-label={isFullscreen ? "Exit Fullscreen" : "Enter Fullscreen"}
             >
               {isFullscreen ? (
-                <IconFullscreenExit className="w-4 h-4 text-cyan-400" />
+                <IconFullscreenExit className="w-4 h-4 text-sky-600 dark:text-cyan-400" />
               ) : (
                 <IconFullscreen className="w-4 h-4" />
               )}
@@ -1561,9 +1616,9 @@ export function PresentationApp({
           />
         )}
 
-        <div className="w-full h-0.5 bg-slate-900">
+        <div className="w-full h-0.5 bg-slate-200 dark:bg-slate-900">
           <div
-            className="h-full bg-gradient-to-r from-cyan-400 via-indigo-400 to-amber-400 transition-all duration-300"
+            className="h-full bg-gradient-to-r from-sky-500 via-indigo-500 to-amber-500 dark:from-cyan-400 dark:via-indigo-400 dark:to-amber-400 transition-all duration-300"
             style={{ width: `${((currentIndex + 1) / slides.length) * 100}%` }}
           />
         </div>
@@ -1589,15 +1644,15 @@ export function PresentationApp({
                   teleprompterDock === "bottom"
                     ? "fixed bottom-16 sm:bottom-18 left-1/2 -translate-x-1/2 w-[94vw] max-w-3xl z-40 rounded-2xl p-3 sm:p-4 animate-in fade-in slide-in-from-bottom-2"
                     : "fixed top-14 bottom-16 right-3 w-[92vw] sm:w-[390px] z-40 rounded-2xl p-3.5 sm:p-4.5 flex flex-col justify-between animate-in fade-in slide-in-from-right-2"
-                } border border-cyan-500/40 bg-[#040816]/96 backdrop-blur-2xl shadow-[0_12px_45px_rgba(0,0,0,0.85)] duration-200`}
+                } border border-slate-200 dark:border-cyan-500/40 bg-white/98 dark:bg-[#040816]/96 backdrop-blur-2xl shadow-[0_12px_45px_rgba(15,23,42,0.15)] dark:shadow-[0_12px_45px_rgba(0,0,0,0.85)] duration-200`}
               >
-                <div className="flex items-center justify-between gap-2 pb-2 mb-2 border-b border-slate-800/90">
+                <div className="flex items-center justify-between gap-2 pb-2 mb-2 border-b border-slate-200 dark:border-slate-800/90">
                   <div className="flex items-center gap-2 min-w-0">
-                    <span className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded text-[11px] font-mono font-bold bg-cyan-500/20 text-cyan-300 border border-cyan-500/40 truncate">
-                      <IconMic className="w-3.5 h-3.5 text-cyan-400" />
+                    <span className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded text-[11px] font-mono font-bold bg-sky-50 dark:bg-cyan-500/20 text-sky-800 dark:text-cyan-300 border border-sky-200 dark:border-cyan-500/40 truncate">
+                      <IconMic className="w-3.5 h-3.5 text-sky-600 dark:text-cyan-400" />
                       <span>NOTES · S{String(currentSlide.id).padStart(2, "0")}</span>
                     </span>
-                    <span className="text-[11px] font-mono text-slate-400 hidden sm:inline">
+                    <span className="text-[11px] font-mono text-slate-500 dark:text-slate-400 hidden sm:inline">
                       {currentSlide.voiceover.split(/\s+/).length} words · ~{Math.max(10, Math.round((currentSlide.voiceover.split(/\s+/).length / 130) * 60))}s
                     </span>
                   </div>
@@ -1607,8 +1662,8 @@ export function PresentationApp({
                       onClick={() => speakSlide(currentSlide, false)}
                       className={`inline-flex items-center gap-1 px-2.5 py-1 rounded-md text-[11px] font-mono font-medium transition cursor-pointer ${
                         speakingSlideId === currentSlide.id
-                          ? "bg-cyan-400 text-slate-950 font-bold shadow-[0_0_14px_rgba(34,211,238,0.5)] border border-cyan-300"
-                          : "bg-cyan-500/20 text-cyan-200 border border-cyan-500/40 hover:bg-cyan-500/30"
+                          ? "bg-sky-500 text-white dark:bg-cyan-400 dark:text-slate-950 font-bold shadow-md border border-sky-400 dark:border-cyan-300"
+                          : "bg-sky-50 dark:bg-cyan-500/20 text-sky-800 dark:text-cyan-200 border border-sky-200 dark:border-cyan-500/40 hover:bg-sky-100 dark:hover:bg-cyan-500/30"
                       }`}
                     >
                       {speakingSlideId === currentSlide.id ? (
@@ -1630,17 +1685,17 @@ export function PresentationApp({
                           prev === "bottom" ? "side" : "bottom"
                         )
                       }
-                      className="hidden sm:inline-flex items-center gap-1 px-2 py-1 rounded-md text-[11px] font-mono text-slate-300 bg-slate-900 border border-slate-700 hover:border-slate-500 cursor-pointer"
+                      className="hidden sm:inline-flex items-center gap-1 px-2 py-1 rounded-md text-[11px] font-mono text-slate-700 dark:text-slate-300 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 hover:border-slate-400 cursor-pointer"
                       title="Dock notes to side or bottom so slide visuals stay visible"
                     >
                       {teleprompterDock === "bottom" ? (
                         <>
-                          <IconDockSide className="w-3.5 h-3.5 text-cyan-400" />
+                          <IconDockSide className="w-3.5 h-3.5 text-sky-600 dark:text-cyan-400" />
                           <span>Dock: Side</span>
                         </>
                       ) : (
                         <>
-                          <IconDockBottom className="w-3.5 h-3.5 text-cyan-400" />
+                          <IconDockBottom className="w-3.5 h-3.5 text-sky-600 dark:text-cyan-400" />
                           <span>Dock: Bottom</span>
                         </>
                       )}
@@ -1648,21 +1703,21 @@ export function PresentationApp({
                     <button
                       type="button"
                       onClick={() => setLargeTeleprompter((prev) => !prev)}
-                      className="inline-flex items-center gap-1 px-2 py-1 rounded-md text-[11px] font-mono text-slate-300 bg-slate-900 border border-slate-700 hover:border-slate-500 cursor-pointer"
+                      className="inline-flex items-center gap-1 px-2 py-1 rounded-md text-[11px] font-mono text-slate-700 dark:text-slate-300 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 hover:border-slate-400 cursor-pointer"
                       title="Toggle text size"
                     >
-                      <IconType className="w-3 h-3 text-cyan-400" />
+                      <IconType className="w-3 h-3 text-sky-600 dark:text-cyan-400" />
                       <span>{largeTeleprompter ? "Normal" : "Large"}</span>
                     </button>
                     <button
                       type="button"
                       onClick={() => handleCopyVoiceover(currentSlide)}
-                      className="inline-flex items-center gap-1 px-2 py-1 rounded-md text-[11px] font-mono text-slate-300 bg-slate-900 border border-slate-700 hover:border-slate-500 cursor-pointer"
+                      className="inline-flex items-center gap-1 px-2 py-1 rounded-md text-[11px] font-mono text-slate-700 dark:text-slate-300 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 hover:border-slate-400 cursor-pointer"
                     >
                       {copiedId === currentSlide.id ? (
                         <>
-                          <IconCheck className="w-3 h-3 text-emerald-400" />
-                          <span className="text-emerald-400 font-bold">Copied</span>
+                          <IconCheck className="w-3 h-3 text-emerald-600 dark:text-emerald-400" />
+                          <span className="text-emerald-600 dark:text-emerald-400 font-bold">Copied</span>
                         </>
                       ) : (
                         <>
@@ -1674,7 +1729,7 @@ export function PresentationApp({
                     <button
                       type="button"
                       onClick={() => setShowNotes(false)}
-                      className="p-1 rounded-md text-[11px] font-mono text-slate-400 hover:text-white bg-slate-900 border border-slate-800 cursor-pointer"
+                      className="p-1 rounded-md text-[11px] font-mono text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white bg-slate-100 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 cursor-pointer"
                       aria-label="Close speaker notes"
                     >
                       <IconClose className="w-3.5 h-3.5" />
@@ -1682,7 +1737,7 @@ export function PresentationApp({
                   </div>
                 </div>
                 <blockquote
-                  className={`text-slate-100 font-sans leading-relaxed ${
+                  className={`text-slate-800 dark:text-slate-100 font-sans leading-relaxed ${
                     teleprompterDock === "side"
                       ? largeTeleprompter
                         ? "text-base sm:text-lg flex-1 overflow-y-auto my-2 pr-1"
@@ -1697,27 +1752,27 @@ export function PresentationApp({
               </div>
             )}
 
-            <div className="shrink-0 sticky bottom-2 lg:static z-20 flex items-center justify-between sm:justify-center gap-2 sm:gap-4 md:gap-5 bg-slate-950/90 border border-slate-800/80 rounded-2xl px-2.5 sm:px-4 py-1 sm:py-1.5 backdrop-blur-xl shadow-xl w-full sm:w-auto sm:max-w-fit mx-auto">
+            <div className="shrink-0 sticky bottom-2 lg:static z-20 flex items-center justify-between sm:justify-center gap-2 sm:gap-4 md:gap-5 bg-white/95 dark:bg-slate-950/90 border border-slate-200 dark:border-slate-800/80 rounded-2xl px-2.5 sm:px-4 py-1 sm:py-1.5 backdrop-blur-xl shadow-xl dark:shadow-2xl w-full sm:w-auto sm:max-w-fit mx-auto">
               <div className="flex items-center gap-1.5 sm:gap-2">
                 <button
                   type="button"
                   onClick={goPrev}
                   disabled={currentIndex === 0}
-                  className="h-8 sm:h-8.5 px-2.5 sm:px-3 rounded-lg text-xs font-mono font-medium bg-slate-900 border border-slate-700/80 text-slate-300 hover:border-cyan-400 hover:bg-slate-800 disabled:opacity-30 disabled:pointer-events-none inline-flex items-center justify-center cursor-pointer transition gap-1.5 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-cyan-400"
+                  className="h-8 sm:h-8.5 px-2.5 sm:px-3 rounded-lg text-xs font-mono font-medium bg-slate-100 dark:bg-slate-900 border border-slate-200 dark:border-slate-700/80 text-slate-700 dark:text-slate-300 hover:border-sky-400 dark:hover:border-cyan-400 hover:bg-slate-200 dark:hover:bg-slate-800 disabled:opacity-30 disabled:pointer-events-none inline-flex items-center justify-center cursor-pointer transition gap-1.5 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-sky-400 dark:focus-visible:ring-cyan-400"
                 >
                   <IconArrowLeft className="w-3.5 h-3.5" />
                   <span>Prev</span>
-                  <kbd className="hidden lg:inline text-[10px] px-1 rounded bg-slate-950 border border-slate-700 text-slate-400">←</kbd>
+                  <kbd className="hidden lg:inline text-[10px] px-1 rounded bg-white dark:bg-slate-950 border border-slate-300 dark:border-slate-700 text-slate-600 dark:text-slate-400">←</kbd>
                 </button>
                 <button
                   type="button"
                   onClick={goNext}
                   disabled={currentIndex === slides.length - 1}
-                  className="h-8 sm:h-8.5 px-3 sm:px-3.5 rounded-lg text-xs font-mono font-bold bg-cyan-400 text-slate-950 hover:bg-cyan-300 disabled:opacity-30 disabled:pointer-events-none shadow-[0_0_10px_rgba(34,211,238,0.3)] inline-flex items-center justify-center cursor-pointer transition gap-1.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-300"
+                  className="h-8 sm:h-8.5 px-3 sm:px-3.5 rounded-lg text-xs font-mono font-bold bg-sky-500 hover:bg-sky-600 text-white dark:bg-cyan-400 dark:text-slate-950 dark:hover:bg-cyan-300 disabled:opacity-30 disabled:pointer-events-none shadow-md inline-flex items-center justify-center cursor-pointer transition gap-1.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sky-400 dark:focus-visible:ring-cyan-300"
                 >
                   <span>Next</span>
                   <IconArrowRight className="w-3.5 h-3.5" />
-                  <kbd className="hidden lg:inline text-[10px] px-1 rounded bg-cyan-950 border border-cyan-500/40 text-cyan-300 font-normal">→</kbd>
+                  <kbd className="hidden lg:inline text-[10px] px-1 rounded bg-sky-600 dark:bg-cyan-950 border border-sky-400 dark:border-cyan-500/40 text-white dark:text-cyan-300 font-normal">→</kbd>
                 </button>
               </div>
 
@@ -1725,17 +1780,17 @@ export function PresentationApp({
                 <button
                   type="button"
                   onClick={() => setShowOverview(true)}
-                  className="sm:hidden h-8 inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-slate-900/90 border border-slate-800 font-mono text-xs text-slate-300 hover:border-cyan-500/50 cursor-pointer"
+                  className="sm:hidden h-8 inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-slate-100 dark:bg-slate-900/90 border border-slate-200 dark:border-slate-800 font-mono text-xs text-slate-700 dark:text-slate-300 hover:border-sky-400 dark:hover:border-cyan-500/50 cursor-pointer"
                   title="Tap to see all slides"
                 >
-                  <IconGrid className="w-3 h-3 text-cyan-400" />
-                  <span className="text-cyan-400 font-bold">{currentIndex + 1}</span>
-                  <span className="text-slate-500">/</span>
-                  <span className="text-slate-400">{slides.length}</span>
-                  <IconChevronDown className="w-3 h-3 text-cyan-400 ml-0.5" />
+                  <IconGrid className="w-3 h-3 text-sky-600 dark:text-cyan-400" />
+                  <span className="text-sky-700 dark:text-cyan-400 font-bold">{currentIndex + 1}</span>
+                  <span className="text-slate-400 dark:text-slate-500">/</span>
+                  <span className="text-slate-600 dark:text-slate-400">{slides.length}</span>
+                  <IconChevronDown className="w-3 h-3 text-sky-600 dark:text-cyan-400 ml-0.5" />
                 </button>
 
-                <div className="hidden sm:flex items-center gap-0.5 md:gap-1 overflow-x-auto py-0.5 px-2 sm:px-3 border-x border-slate-800/80 max-w-full">
+                <div className="hidden sm:flex items-center gap-0.5 md:gap-1 overflow-x-auto py-0.5 px-2 sm:px-3 border-x border-slate-200 dark:border-slate-800/80 max-w-full">
                   {slides.map((s, idx) => {
                     const active = idx === currentIndex;
                     return (
@@ -1748,13 +1803,13 @@ export function PresentationApp({
                         }}
                         title={`Slide ${s.id}: ${s.title}`}
                         aria-label={`Go to slide ${s.id}: ${s.title}`}
-                        className="min-w-[18px] min-h-[22px] p-0.5 flex items-center justify-center cursor-pointer group focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-cyan-400 rounded-full"
+                        className="min-w-[18px] min-h-[22px] p-0.5 flex items-center justify-center cursor-pointer group focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-sky-400 dark:focus-visible:ring-cyan-400 rounded-full"
                       >
                         <span
                           className={`h-1.5 rounded-full transition-all ${
                             active
-                              ? "w-5 bg-cyan-400 shadow-[0_0_8px_#22d3ee]"
-                              : "w-1.5 bg-slate-700 group-hover:bg-slate-500"
+                              ? "w-5 bg-sky-500 dark:bg-cyan-400 shadow-[0_0_8px_#0284c7] dark:shadow-[0_0_8px_#22d3ee]"
+                              : "w-1.5 bg-slate-300 dark:bg-slate-700 group-hover:bg-slate-400 dark:group-hover:bg-slate-500"
                           }`}
                         />
                       </button>
@@ -1767,32 +1822,32 @@ export function PresentationApp({
                 <button
                   type="button"
                   onClick={() => setShowNotes((prev) => !prev)}
-                  className={`h-8 sm:h-8.5 px-2.5 sm:px-3 rounded-lg text-xs font-mono border transition inline-flex items-center justify-center gap-1.5 cursor-pointer focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-cyan-400 ${
+                  className={`h-8 sm:h-8.5 px-2.5 sm:px-3 rounded-lg text-xs font-mono border transition inline-flex items-center justify-center gap-1.5 cursor-pointer focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-sky-400 dark:focus-visible:ring-cyan-400 ${
                     showNotes
-                      ? "bg-cyan-950/80 border-cyan-500/40 text-cyan-300 shadow-[0_0_8px_rgba(34,211,238,0.2)]"
-                      : "bg-slate-900 border-slate-800 text-slate-400 hover:text-white hover:bg-slate-800"
+                      ? "bg-sky-50 dark:bg-cyan-950/80 border-sky-300 dark:border-cyan-500/40 text-sky-800 dark:text-cyan-300 shadow-sm"
+                      : "bg-slate-100 dark:bg-slate-900 border-slate-200 dark:border-slate-800 text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-200 dark:hover:bg-slate-800"
                   }`}
                   title="Speaker notes (Shortcut: N)"
                 >
-                  <IconMic className="w-3.5 h-3.5 text-cyan-400" />
+                  <IconMic className="w-3.5 h-3.5 text-sky-600 dark:text-cyan-400" />
                   <span className="sm:hidden">{showNotes ? "Hide" : "Notes"}</span>
                   <span className="hidden sm:inline">
                     {showNotes ? "Hide Notes" : "Speaker Notes"}
                   </span>
-                  <kbd className="hidden lg:inline text-[10px] px-1 rounded bg-slate-950 border border-slate-700 text-slate-400">N</kbd>
+                  <kbd className="hidden lg:inline text-[10px] px-1 rounded bg-white dark:bg-slate-950 border border-slate-300 dark:border-slate-700 text-slate-600 dark:text-slate-400">N</kbd>
                 </button>
               </div>
             </div>
           </>
         ) : (
           <div className="space-y-8 pb-16">
-            <div className="rounded-2xl border border-cyan-500/30 bg-cyan-950/20 p-4 flex flex-wrap items-center justify-between gap-4">
+            <div className="rounded-2xl border border-sky-300/60 dark:border-cyan-500/30 bg-sky-50/70 dark:bg-cyan-950/20 p-4 flex flex-wrap items-center justify-between gap-4">
               <div>
-                <h2 className="text-sm font-mono uppercase tracking-wider text-cyan-300 font-bold">
+                <h2 className="text-sm font-mono uppercase tracking-wider text-sky-900 dark:text-cyan-300 font-bold">
                   Gamma Card Scroll Mode · All {slides.length} Slides &amp;
                   Speaker Notes
                 </h2>
-                <p className="text-xs text-slate-300 mt-0.5">
+                <p className="text-xs text-slate-600 dark:text-slate-300 mt-0.5">
                   Scroll through all {slides.length} cards continuously,
                   interact with every cosmic diagram &amp; photograph, or play
                   any card&apos;s voiceover note.
@@ -1801,7 +1856,7 @@ export function PresentationApp({
               <button
                 type="button"
                 onClick={() => setViewMode("deck")}
-                className="px-3.5 py-1.5 rounded-xl text-xs font-mono font-bold bg-cyan-400 text-slate-950 cursor-pointer"
+                className="px-3.5 py-1.5 rounded-xl text-xs font-mono font-bold bg-sky-500 hover:bg-sky-600 text-white dark:bg-cyan-400 dark:text-slate-950 cursor-pointer shadow-sm"
               >
                 Switch to Cinema Slide Deck
               </button>
@@ -1819,7 +1874,7 @@ export function PresentationApp({
           aria-labelledby="video-modal-title"
           className="fixed inset-0 z-50 bg-black/90 backdrop-blur-lg flex items-center justify-center p-3 sm:p-6 overflow-y-auto"
         >
-          <div className="bg-[#060a18] border border-cyan-500/40 rounded-3xl max-w-5xl w-full overflow-hidden shadow-2xl my-auto">
+          <div className="bg-[#060a18] border border-sky-400/40 dark:border-cyan-500/40 rounded-3xl max-w-5xl w-full overflow-hidden shadow-2xl my-auto">
             <div className="px-5 py-3.5 border-b border-slate-800 flex flex-wrap items-center justify-between gap-3 bg-[#03050c]/90">
               <div>
                 <div className="flex items-center gap-2">
@@ -1911,18 +1966,18 @@ export function PresentationApp({
           role="dialog"
           aria-modal="true"
           aria-labelledby="overview-modal-title"
-          className="fixed inset-0 z-50 bg-black/85 backdrop-blur-xl flex items-center justify-center p-2.5 sm:p-6 overflow-y-auto"
+          className="fixed inset-0 z-50 bg-slate-900/60 dark:bg-black/85 backdrop-blur-xl flex items-center justify-center p-2.5 sm:p-6 overflow-y-auto"
         >
-          <div className="bg-[#050816] border border-cyan-500/40 rounded-3xl max-w-7xl w-full max-h-[94vh] flex flex-col overflow-hidden shadow-[0_0_80px_-20px_rgba(34,211,238,0.35)]">
+          <div className="bg-[#f8fafc] dark:bg-[#050816] border border-slate-200 dark:border-cyan-500/40 rounded-3xl max-w-7xl w-full max-h-[94vh] flex flex-col overflow-hidden shadow-2xl dark:shadow-[0_0_80px_-20px_rgba(34,211,238,0.35)]">
             {/* Modal Header */}
-            <div className="px-4 sm:px-6 py-3 sm:py-4 border-b border-slate-800/90 flex flex-wrap items-center justify-between gap-2.5 bg-[#03050c]/90">
+            <div className="px-4 sm:px-6 py-3 sm:py-4 border-b border-slate-200 dark:border-slate-800/90 flex flex-wrap items-center justify-between gap-2.5 bg-white/90 dark:bg-[#03050c]/90">
               <div className="flex flex-wrap items-center gap-2 sm:gap-3 min-w-0">
                 <div className="flex items-center gap-2">
-                  <IconGrid className="w-4 h-4 text-cyan-400 shrink-0" />
-                  <h2 id="overview-modal-title" className="font-display text-sm sm:text-lg font-bold text-white truncate">
+                  <IconGrid className="w-4 h-4 text-sky-600 dark:text-cyan-400 shrink-0" />
+                  <h2 id="overview-modal-title" className="font-display text-sm sm:text-lg font-bold text-slate-900 dark:text-white truncate">
                     All {slides.length} Slides
                   </h2>
-                  <span className="px-2 py-0.5 rounded-full text-[11px] font-mono bg-cyan-950 border border-cyan-500/40 text-cyan-300">
+                  <span className="px-2 py-0.5 rounded-full text-[11px] font-mono bg-sky-50 dark:bg-cyan-950 border border-sky-200 dark:border-cyan-500/40 text-sky-800 dark:text-cyan-300 font-medium">
                     {overviewActFilter === "all"
                       ? `${slides.length} Cards`
                       : `Act ${overviewActFilter}`}
@@ -1930,14 +1985,14 @@ export function PresentationApp({
                 </div>
 
                 {/* Act Filter Pills */}
-                <div className="flex items-center gap-1 bg-slate-900/90 border border-slate-800 p-0.5 rounded-lg overflow-x-auto max-w-full">
+                <div className="flex items-center gap-1 bg-slate-100 dark:bg-slate-900/90 border border-slate-200 dark:border-slate-800 p-0.5 rounded-lg overflow-x-auto max-w-full">
                   <button
                     type="button"
                     onClick={() => setOverviewActFilter("all")}
                     className={`px-2 sm:px-2.5 py-0.5 rounded-md text-[11px] sm:text-xs font-mono transition cursor-pointer shrink-0 ${
                       overviewActFilter === "all"
-                        ? "bg-cyan-500/20 text-cyan-300 border border-cyan-500/40 font-bold"
-                        : "text-slate-400 hover:text-white"
+                        ? "bg-white dark:bg-cyan-500/20 text-sky-800 dark:text-cyan-300 border border-sky-300 dark:border-cyan-500/40 font-bold shadow-sm"
+                        : "text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white"
                     }`}
                   >
                     All ({slides.length})
@@ -1949,8 +2004,8 @@ export function PresentationApp({
                       onClick={() => setOverviewActFilter(act.number)}
                       className={`px-2 sm:px-2.5 py-0.5 rounded-md text-[11px] sm:text-xs font-mono transition cursor-pointer shrink-0 ${
                         overviewActFilter === act.number
-                          ? "bg-cyan-500/20 text-cyan-300 border border-cyan-500/40 font-bold"
-                          : "text-slate-400 hover:text-white"
+                          ? "bg-white dark:bg-cyan-500/20 text-sky-800 dark:text-cyan-300 border border-sky-300 dark:border-cyan-500/40 font-bold shadow-sm"
+                          : "text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white"
                       }`}
                     >
                       Act {act.number}
@@ -1960,15 +2015,15 @@ export function PresentationApp({
               </div>
 
               <div className="flex items-center gap-2">
-                <span className="hidden lg:inline text-xs font-mono text-slate-400">
+                <span className="hidden lg:inline text-xs font-mono text-slate-500 dark:text-slate-400">
                   Press ESC or G to close
                 </span>
                 <button
                   type="button"
                   onClick={() => setShowOverview(false)}
-                  className="inline-flex items-center gap-1.5 px-3 py-1 sm:px-3.5 sm:py-1.5 rounded-xl text-xs font-mono font-semibold bg-slate-800 hover:bg-slate-700 text-slate-200 hover:text-white border border-slate-700 transition cursor-pointer"
+                  className="inline-flex items-center gap-1.5 px-3 py-1 sm:px-3.5 sm:py-1.5 rounded-xl text-xs font-mono font-semibold bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 hover:text-slate-900 dark:hover:text-white border border-slate-200 dark:border-slate-700 transition cursor-pointer"
                 >
-                  <IconClose className="w-3.5 h-3.5 text-slate-400" />
+                  <IconClose className="w-3.5 h-3.5 text-slate-500 dark:text-slate-400" />
                   <span>Close</span>
                 </button>
               </div>
@@ -2005,10 +2060,10 @@ export function PresentationApp({
                           }, 100);
                         }
                       }}
-                      className={`group text-left rounded-2xl border transition-all duration-200 flex flex-col items-stretch overflow-hidden cursor-pointer shadow-xl hover:shadow-cyan-500/25 hover:-translate-y-1.5 min-h-[420px] h-[420px] ${
+                      className={`group text-left rounded-2xl border transition-all duration-200 flex flex-col items-stretch overflow-hidden cursor-pointer shadow-sm hover:shadow-lg dark:hover:shadow-cyan-500/25 hover:-translate-y-1.5 min-h-[420px] h-[420px] ${
                         isCurrent
-                          ? "bg-[#060919] border-cyan-400 ring-2 ring-cyan-400/50 shadow-[0_0_30px_rgba(34,211,238,0.35)]"
-                          : "bg-[#060919] border-slate-800/90 hover:border-cyan-500/50"
+                          ? "bg-white dark:bg-[#060919] border-sky-500 dark:border-cyan-400 ring-2 ring-sky-500/40 dark:ring-cyan-400/50 shadow-md dark:shadow-[0_0_30px_rgba(34,211,238,0.35)]"
+                          : "bg-white dark:bg-[#060919] border-slate-200 dark:border-slate-800/90 hover:border-sky-400 dark:hover:border-cyan-500/50"
                       }`}
                     >
                       {/* Top 50%: Slide thumbnail preview */}
@@ -2023,7 +2078,7 @@ export function PresentationApp({
                               "/images/night-sky-dark/images (9).jpg";
                           }}
                         />
-                        <div className="absolute inset-0 bg-gradient-to-t from-[#060919] via-transparent to-black/60 pointer-events-none" />
+                        <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-transparent to-black/60 pointer-events-none" />
 
                         {/* Thumbnail badges */}
                         <div className="absolute top-2.5 left-2.5 right-2.5 flex items-center justify-between text-xs font-mono font-bold z-10">
@@ -2046,8 +2101,8 @@ export function PresentationApp({
                         {/* Active Badge or Topic Tag */}
                         <div className="absolute bottom-2.5 left-2.5 right-2.5 flex items-center justify-between z-10">
                           {isCurrent ? (
-                            <span className="inline-flex items-center gap-1.5 bg-cyan-400 text-slate-950 px-2.5 py-0.5 rounded-md text-[10px] font-mono font-extrabold shadow-[0_0_12px_#22d3ee]">
-                              <span className="w-1.5 h-1.5 rounded-full bg-slate-950 animate-pulse" />
+                            <span className="inline-flex items-center gap-1.5 bg-sky-500 dark:bg-cyan-400 text-white dark:text-slate-950 px-2.5 py-0.5 rounded-md text-[10px] font-mono font-extrabold shadow-sm dark:shadow-[0_0_12px_#22d3ee]">
+                              <span className="w-1.5 h-1.5 rounded-full bg-white dark:bg-slate-950 animate-pulse" />
                               ACTIVE NOW
                             </span>
                           ) : (
@@ -2059,16 +2114,16 @@ export function PresentationApp({
                       </div>
 
                       {/* Bottom 50%: Full slide text & details */}
-                      <div className="p-4 sm:p-5 flex-1 flex flex-col justify-between gap-3 bg-[#060919] border-t border-slate-800/70">
+                      <div className="p-4 sm:p-5 flex-1 flex flex-col justify-between gap-3 bg-white dark:bg-[#060919] border-t border-slate-100 dark:border-slate-800/70">
                         <div>
                           {/* Slide Title */}
-                          <h3 className="font-display font-bold text-base sm:text-lg text-white group-hover:text-cyan-300 transition line-clamp-1">
+                          <h3 className="font-display font-bold text-base sm:text-lg text-slate-900 dark:text-white group-hover:text-sky-700 dark:group-hover:text-cyan-300 transition line-clamp-1">
                             {s.title}
                           </h3>
 
                           {/* Subtitle if available */}
                           {s.subtitle && (
-                            <p className="text-xs font-mono text-cyan-400/90 line-clamp-1 mt-0.5">
+                            <p className="text-xs font-mono text-sky-700 dark:text-cyan-400/90 line-clamp-1 mt-0.5 font-medium">
                               {s.subtitle}
                             </p>
                           )}
@@ -2078,12 +2133,12 @@ export function PresentationApp({
                             {s.bullets.slice(0, 2).map((b, bIdx) => (
                               <div
                                 key={bIdx}
-                                className="flex items-start gap-2 text-xs text-slate-300 leading-relaxed"
+                                className="flex items-start gap-2 text-xs text-slate-600 dark:text-slate-300 leading-relaxed"
                               >
-                                <span className="w-1.5 h-1.5 rounded-full bg-cyan-400 shrink-0 mt-1.5 shadow-[0_0_4px_#22d3ee]" />
+                                <span className="w-1.5 h-1.5 rounded-full bg-sky-500 dark:bg-cyan-400 shrink-0 mt-1.5 shadow-[0_0_4px_#0284c7] dark:shadow-[0_0_4px_#22d3ee]" />
                                 <span className="line-clamp-2">
                                   {b.label && (
-                                    <strong className="text-slate-100 font-semibold mr-1">
+                                    <strong className="text-slate-900 dark:text-slate-100 font-semibold mr-1">
                                       {b.label}
                                     </strong>
                                   )}
@@ -2095,21 +2150,21 @@ export function PresentationApp({
                         </div>
 
                         {/* Footer Info: Category Tag & Key Stat / Voiceover hint */}
-                        <div className="pt-2.5 border-t border-slate-800/80 flex items-center justify-between text-xs font-mono gap-2">
-                          <span className="truncate text-cyan-400 font-medium bg-cyan-950/50 px-2 py-0.5 rounded border border-cyan-500/30">
+                        <div className="pt-2.5 border-t border-slate-100 dark:border-slate-800/80 flex items-center justify-between text-xs font-mono gap-2">
+                          <span className="truncate text-sky-800 dark:text-cyan-400 font-medium bg-sky-50 dark:bg-cyan-950/50 px-2 py-0.5 rounded border border-sky-200 dark:border-cyan-500/30">
                             {s.tag}
                           </span>
 
                           {s.keyStat ? (
                             <span
-                              className="shrink-0 text-amber-300 font-semibold bg-amber-950/40 px-2 py-0.5 rounded border border-amber-500/30 text-[11px]"
+                              className="shrink-0 text-amber-800 dark:text-amber-300 font-semibold bg-amber-50 dark:bg-amber-950/40 px-2 py-0.5 rounded border border-amber-200 dark:border-amber-500/30 text-[11px]"
                               title={s.keyStat.label}
                             >
                               {s.keyStat.value}
                             </span>
                           ) : (
-                            <span className="shrink-0 text-slate-400 inline-flex items-center gap-1">
-                              <IconMic className="w-3 h-3 text-cyan-400" />
+                            <span className="shrink-0 text-slate-500 dark:text-slate-400 inline-flex items-center gap-1">
+                              <IconMic className="w-3 h-3 text-sky-600 dark:text-cyan-400" />
                               <span>Speaker Note</span>
                             </span>
                           )}
@@ -2128,15 +2183,15 @@ export function PresentationApp({
           role="dialog"
           aria-modal="true"
           aria-labelledby="shortcuts-modal-title"
-          className="fixed inset-0 z-50 bg-black/85 backdrop-blur-xl flex items-center justify-center p-3 sm:p-6 overflow-y-auto"
+          className="fixed inset-0 z-50 bg-slate-900/60 dark:bg-black/85 backdrop-blur-xl flex items-center justify-center p-3 sm:p-6 overflow-y-auto"
         >
-          <div className="bg-[#060a1a] border border-cyan-500/40 rounded-3xl max-w-lg w-full overflow-hidden shadow-2xl p-5 sm:p-6 my-auto animate-in fade-in duration-200">
-            <div className="flex items-center justify-between pb-3 border-b border-slate-800">
+          <div className="bg-white dark:bg-[#060a1a] border border-slate-200 dark:border-cyan-500/40 rounded-3xl max-w-lg w-full overflow-hidden shadow-2xl p-5 sm:p-6 my-auto animate-in fade-in duration-200">
+            <div className="flex items-center justify-between pb-3 border-b border-slate-200 dark:border-slate-800">
               <div className="flex items-center gap-2">
-                <IconKeyboard className="w-5 h-5 text-cyan-400" />
+                <IconKeyboard className="w-5 h-5 text-sky-600 dark:text-cyan-400" />
                 <h2
                   id="shortcuts-modal-title"
-                  className="font-display text-base sm:text-lg font-bold text-white"
+                  className="font-display text-base sm:text-lg font-bold text-slate-900 dark:text-white"
                 >
                   Keyboard Shortcuts
                 </h2>
@@ -2144,75 +2199,79 @@ export function PresentationApp({
               <button
                 type="button"
                 onClick={() => setShowShortcutsModal(false)}
-                className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-xs font-mono bg-slate-800 text-slate-200 hover:bg-slate-700 hover:text-white border border-slate-700/80 cursor-pointer transition"
+                className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-xs font-mono bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200 hover:bg-slate-200 dark:hover:bg-slate-700 hover:text-slate-900 dark:hover:text-white border border-slate-200 dark:border-slate-700/80 cursor-pointer transition"
                 aria-label="Close keyboard shortcuts dialog"
               >
-                <IconClose className="w-3.5 h-3.5 text-slate-400" />
+                <IconClose className="w-3.5 h-3.5 text-slate-500 dark:text-slate-400" />
                 <span>Close</span>
               </button>
             </div>
 
             <div className="mt-4 space-y-4 text-xs font-mono">
               <div>
-                <div className="text-[11px] font-bold uppercase tracking-wider text-cyan-400 mb-2">
+                <div className="text-[11px] font-bold uppercase tracking-wider text-sky-700 dark:text-cyan-400 mb-2">
                   Navigation
                 </div>
-                <div className="space-y-1.5 bg-slate-950/70 rounded-xl p-2.5 border border-slate-800/80">
+                <div className="space-y-1.5 bg-slate-50 dark:bg-slate-950/70 rounded-xl p-2.5 border border-slate-200 dark:border-slate-800/80">
                   <div className="flex items-center justify-between">
-                    <span className="text-slate-300">Next slide</span>
+                    <span className="text-slate-700 dark:text-slate-300">Next slide</span>
                     <span className="flex items-center gap-1">
-                      <kbd className="px-1.5 py-0.5 rounded bg-slate-800 border border-slate-700 text-slate-200">→</kbd>
-                      <span className="text-slate-500">or</span>
-                      <kbd className="px-1.5 py-0.5 rounded bg-slate-800 border border-slate-700 text-slate-200">Space</kbd>
+                      <kbd className="px-1.5 py-0.5 rounded bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-700 text-slate-800 dark:text-slate-200 shadow-xs">→</kbd>
+                      <span className="text-slate-400 dark:text-slate-500">or</span>
+                      <kbd className="px-1.5 py-0.5 rounded bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-700 text-slate-800 dark:text-slate-200 shadow-xs">Space</kbd>
                     </span>
                   </div>
                   <div className="flex items-center justify-between">
-                    <span className="text-slate-300">Previous slide</span>
-                    <kbd className="px-1.5 py-0.5 rounded bg-slate-800 border border-slate-700 text-slate-200">←</kbd>
+                    <span className="text-slate-700 dark:text-slate-300">Previous slide</span>
+                    <kbd className="px-1.5 py-0.5 rounded bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-700 text-slate-800 dark:text-slate-200 shadow-xs">←</kbd>
                   </div>
                   <div className="flex items-center justify-between">
-                    <span className="text-slate-300">First / Last slide</span>
+                    <span className="text-slate-700 dark:text-slate-300">First / Last slide</span>
                     <span className="flex items-center gap-1">
-                      <kbd className="px-1.5 py-0.5 rounded bg-slate-800 border border-slate-700 text-slate-200">Home</kbd>
-                      <span className="text-slate-500">/</span>
-                      <kbd className="px-1.5 py-0.5 rounded bg-slate-800 border border-slate-700 text-slate-200">End</kbd>
+                      <kbd className="px-1.5 py-0.5 rounded bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-700 text-slate-800 dark:text-slate-200 shadow-xs">Home</kbd>
+                      <span className="text-slate-400 dark:text-slate-500">/</span>
+                      <kbd className="px-1.5 py-0.5 rounded bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-700 text-slate-800 dark:text-slate-200 shadow-xs">End</kbd>
                     </span>
                   </div>
                 </div>
               </div>
 
               <div>
-                <div className="text-[11px] font-bold uppercase tracking-wider text-cyan-400 mb-2">
+                <div className="text-[11px] font-bold uppercase tracking-wider text-sky-700 dark:text-cyan-400 mb-2">
                   Presentation &amp; Views
                 </div>
-                <div className="space-y-1.5 bg-slate-950/70 rounded-xl p-2.5 border border-slate-800/80">
+                <div className="space-y-1.5 bg-slate-50 dark:bg-slate-950/70 rounded-xl p-2.5 border border-slate-200 dark:border-slate-800/80">
                   <div className="flex items-center justify-between">
-                    <span className="text-slate-300">Slide Grid overview</span>
-                    <kbd className="px-1.5 py-0.5 rounded bg-slate-800 border border-slate-700 text-slate-200">G</kbd>
+                    <span className="text-slate-700 dark:text-slate-300">Toggle Light / Dark Theme</span>
+                    <kbd className="px-1.5 py-0.5 rounded bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-700 text-slate-800 dark:text-slate-200 shadow-xs font-bold text-sky-700 dark:text-cyan-300">T</kbd>
                   </div>
                   <div className="flex items-center justify-between">
-                    <span className="text-slate-300">Toggle Speaker Notes teleprompter</span>
-                    <kbd className="px-1.5 py-0.5 rounded bg-slate-800 border border-slate-700 text-slate-200">N</kbd>
+                    <span className="text-slate-700 dark:text-slate-300">Slide Grid overview</span>
+                    <kbd className="px-1.5 py-0.5 rounded bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-700 text-slate-800 dark:text-slate-200 shadow-xs">G</kbd>
                   </div>
                   <div className="flex items-center justify-between">
-                    <span className="text-slate-300">Voiceover read aloud</span>
-                    <kbd className="px-1.5 py-0.5 rounded bg-slate-800 border border-slate-700 text-slate-200">V</kbd>
+                    <span className="text-slate-700 dark:text-slate-300">Toggle Speaker Notes teleprompter</span>
+                    <kbd className="px-1.5 py-0.5 rounded bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-700 text-slate-800 dark:text-slate-200 shadow-xs">N</kbd>
                   </div>
                   <div className="flex items-center justify-between">
-                    <span className="text-slate-300">Switch Deck / Continuous Read</span>
-                    <kbd className="px-1.5 py-0.5 rounded bg-slate-800 border border-slate-700 text-slate-200">M</kbd>
+                    <span className="text-slate-700 dark:text-slate-300">Voiceover read aloud</span>
+                    <kbd className="px-1.5 py-0.5 rounded bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-700 text-slate-800 dark:text-slate-200 shadow-xs">V</kbd>
                   </div>
                   <div className="flex items-center justify-between">
-                    <span className="text-slate-300">Toggle Fullscreen</span>
-                    <kbd className="px-1.5 py-0.5 rounded bg-slate-800 border border-slate-700 text-slate-200">F</kbd>
+                    <span className="text-slate-700 dark:text-slate-300">Switch Deck / Continuous Read</span>
+                    <kbd className="px-1.5 py-0.5 rounded bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-700 text-slate-800 dark:text-slate-200 shadow-xs">M</kbd>
                   </div>
                   <div className="flex items-center justify-between">
-                    <span className="text-slate-300">Cheatsheet help</span>
-                    <kbd className="px-1.5 py-0.5 rounded bg-slate-800 border border-slate-700 text-slate-200">?</kbd>
+                    <span className="text-slate-700 dark:text-slate-300">Toggle Fullscreen</span>
+                    <kbd className="px-1.5 py-0.5 rounded bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-700 text-slate-800 dark:text-slate-200 shadow-xs">F</kbd>
                   </div>
                   <div className="flex items-center justify-between">
-                    <span className="text-slate-300">Close modal / popover</span>
-                    <kbd className="px-1.5 py-0.5 rounded bg-slate-800 border border-slate-700 text-slate-200">Esc</kbd>
+                    <span className="text-slate-700 dark:text-slate-300">Cheatsheet help</span>
+                    <kbd className="px-1.5 py-0.5 rounded bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-700 text-slate-800 dark:text-slate-200 shadow-xs">?</kbd>
+                  </div>
+                  <div className="flex items-center justify-between">
+                    <span className="text-slate-700 dark:text-slate-300">Close modal / popover</span>
+                    <kbd className="px-1.5 py-0.5 rounded bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-700 text-slate-800 dark:text-slate-200 shadow-xs">Esc</kbd>
                   </div>
                 </div>
               </div>

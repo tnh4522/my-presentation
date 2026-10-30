@@ -166,7 +166,7 @@ export const SLIDE_MEDIA_MAP: Record<
   },
 };
 
-export function SlideVisual({ slideId }: SlideVisualProps) {
+export const SlideVisual = React.memo(function SlideVisual({ slideId }: SlideVisualProps) {
   const [selectedShell, setSelectedShell] = useState<number>(0); // Slide 4
   const [sightAngle, setSightAngle] = useState<number>(18); // Slide 5
   const [shellDensity, setShellDensity] = useState<number>(85); // Slide 6
@@ -222,6 +222,7 @@ export function SlideVisual({ slideId }: SlideVisualProps) {
           loop
           muted
           playsInline
+          preload="metadata"
           onError={() => setVideoError(true)}
           className={`absolute inset-0 w-full h-full ${customImgClass}`}
         />
@@ -2313,4 +2314,4 @@ export function SlideVisual({ slideId }: SlideVisualProps) {
         </div>
       );
   }
-}
+});
