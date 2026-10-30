@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useCallback } from "react";
 
 function IconPhoto({ className = "w-3 h-3" }: { className?: string }) {
   return (
@@ -176,6 +176,48 @@ export const SlideVisual = React.memo(function SlideVisual({ slideId }: SlideVis
   const [useVideo, setUseVideo] = useState<boolean>(false);
   const [videoError, setVideoError] = useState<boolean>(false);
   const videoRef = useRef<HTMLVideoElement | null>(null);
+  const comparisonContainerRef = useRef<HTMLDivElement | null>(null);
+  const [isDraggingSplit, setIsDraggingSplit] = useState<boolean>(false);
+
+  const handleSplitMove = useCallback((clientX: number) => {
+    const container = comparisonContainerRef.current;
+    if (!container) return;
+    const rect = container.getBoundingClientRect();
+    if (rect.width <= 0) return;
+    const offsetX = clientX - rect.left;
+    const pct = Math.max(0, Math.min(100, (offsetX / rect.width) * 100));
+    setSplitPos(Math.round(pct));
+  }, []);
+
+  const handleSplitPointerDown = useCallback(
+    (e: React.PointerEvent<HTMLDivElement>) => {
+      e.currentTarget.setPointerCapture(e.pointerId);
+      setIsDraggingSplit(true);
+      handleSplitMove(e.clientX);
+    },
+    [handleSplitMove]
+  );
+
+  const handleSplitPointerMove = useCallback(
+    (e: React.PointerEvent<HTMLDivElement>) => {
+      if (isDraggingSplit || e.buttons > 0) {
+        handleSplitMove(e.clientX);
+      }
+    },
+    [isDraggingSplit, handleSplitMove]
+  );
+
+  const handleSplitPointerUp = useCallback(
+    (e: React.PointerEvent<HTMLDivElement>) => {
+      setIsDraggingSplit(false);
+      try {
+        e.currentTarget.releasePointerCapture(e.pointerId);
+      } catch {
+        // ignore
+      }
+    },
+    []
+  );
 
   const media = SLIDE_MEDIA_MAP[slideId] || SLIDE_MEDIA_MAP[1];
 
@@ -907,58 +949,81 @@ export const SlideVisual = React.memo(function SlideVisual({ slideId }: SlideVis
 
     case 7:
       return (
-        <div className={`${containerBase} border border-amber-500/35 p-3`}>
-          {renderOverlayToggle()}
-
-          <div className="relative z-20 flex items-center justify-between gap-2 shrink-0 pr-28">
+        <div className={`${containerBase} border border-amber-500/35 p-3 sm:p-3.5`}>
+          <div className="relative z-20 flex flex-wrap items-center justify-between gap-2 shrink-0">
             <span className="text-[11px] font-mono uppercase tracking-wider text-amber-300 bg-amber-950/85 border border-amber-500/40 px-2.5 py-0.5 rounded-full">
               Theory vs. Reality Split
             </span>
-            <label className="flex items-center gap-2 text-xs font-mono text-slate-200 bg-slate-950/80 px-2.5 py-0.5 rounded-lg">
-              <span>Compare:</span>
-              <input
-                type="range"
-                min={15}
-                max={85}
-                value={splitPos}
-                aria-label="Compare theory versus observation split position"
-                style={{ touchAction: "none" }}
-                onTouchStart={(e) => e.stopPropagation()}
-                onTouchEnd={(e) => e.stopPropagation()}
-                onTouchCancel={(e) => e.stopPropagation()}
-                onChange={(e) => setSplitPos(Number(e.target.value))}
-                className="accent-amber-400 w-24 cursor-pointer"
-              />
-            </label>
+
+            <div className="flex items-center gap-2">
+              <label className="flex items-center gap-2 text-xs font-mono text-slate-200 bg-slate-950/80 border border-amber-500/40 px-2.5 py-1 rounded-lg backdrop-blur-md shadow-sm">
+                <span>Compare:</span>
+                <input
+                  type="range"
+                  min={0}
+                  max={100}
+                  value={splitPos}
+                  aria-label="Compare theory versus observation split position"
+                  style={{ touchAction: "none" }}
+                  onTouchStart={(e) => e.stopPropagation()}
+                  onTouchEnd={(e) => e.stopPropagation()}
+                  onTouchCancel={(e) => e.stopPropagation()}
+                  onChange={(e) => setSplitPos(Number(e.target.value))}
+                  className="accent-amber-400 w-24 sm:w-28 cursor-pointer"
+                />
+                <span className="text-[10px] font-mono font-bold text-amber-300 w-7 text-right">
+                  {splitPos}%
+                </span>
+              </label>
+
+              <button
+                type="button"
+                onClick={() => setShowOverlay((prev) => !prev)}
+                className="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg text-[11px] font-mono bg-slate-900/85 text-slate-300 border border-slate-700/60 hover:border-cyan-400 hover:text-cyan-200 backdrop-blur-md cursor-pointer transition shadow focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-cyan-400"
+                title={showOverlay ? "Hide information overlay" : "Show information overlay"}
+                aria-label={showOverlay ? "Hide overlay" : "Show overlay"}
+              >
+                {showOverlay ? "Hide Info" : "Show Info"}
+              </button>
+            </div>
           </div>
 
-          <div className="relative z-10 flex-1 min-h-0 mt-2 rounded-xl overflow-hidden border border-slate-700">
-            {/* Base Right Layer: Pitch-black starry night (Reality) */}
+          {/* Interactive Split Surface (Draggable by Mouse or Touch) */}
+          <div
+            ref={comparisonContainerRef}
+            onPointerDown={handleSplitPointerDown}
+            onPointerMove={handleSplitPointerMove}
+            onPointerUp={handleSplitPointerUp}
+            onPointerCancel={handleSplitPointerUp}
+            className="relative z-10 flex-1 min-h-0 mt-2 rounded-xl overflow-hidden border border-slate-700/80 cursor-ew-resize select-none touch-none group"
+            title="Drag horizontally to compare Theory vs Reality"
+          >
+            {/* Base Layer: Pitch-black starry night (Reality) */}
             <img
               src={media.primaryImage}
-              alt="Split comparison of dark starry sky and bright sky"
+              alt="Split comparison: dark starry sky observation"
               loading="lazy"
               decoding="async"
               onError={(e) => {
                 e.currentTarget.src = "/images/night-sky-dark/images (9).jpg";
               }}
-              className="absolute inset-0 w-full h-full object-cover"
+              className="absolute inset-0 w-full h-full object-cover pointer-events-none select-none"
             />
 
-            {/* Left Layer Clipped: Blindingly Bright Golden Sky (Theory) */}
+            {/* Clipped Top Layer: Golden Bright Sky (Theory) */}
             <div
-              className="absolute inset-0 overflow-hidden"
+              className="absolute inset-0 overflow-hidden pointer-events-none select-none"
               style={{ clipPath: `inset(0 ${100 - splitPos}% 0 0)` }}
             >
               <img
                 src={media.secondaryImage}
-                alt="Bright sky theory"
+                alt="Split comparison: blindingly bright sky theory"
                 loading="lazy"
                 decoding="async"
                 onError={(e) => {
                   e.currentTarget.src = "/images/night-sky-dark/images (9).jpg";
                 }}
-                className="absolute inset-0 w-full h-full object-cover"
+                className="absolute inset-0 w-full h-full object-cover pointer-events-none select-none"
               />
               <div
                 className="absolute inset-0"
@@ -967,35 +1032,46 @@ export const SlideVisual = React.memo(function SlideVisual({ slideId }: SlideVis
                     "linear-gradient(180deg, rgba(254,240,138,0.92) 0%, rgba(245,158,11,0.85) 70%, rgba(120,53,15,0.6) 100%)",
                 }}
               />
-              {showOverlay && (
-                <div className="absolute top-6 left-5 bg-slate-950/85 border border-amber-400 rounded-xl px-3.5 py-2">
-                  <div className="text-xs font-mono font-bold text-amber-300">
-                    THEORY SAYS
-                  </div>
-                  <div className="text-sm font-bold text-white">
-                    Blindingly Bright Forever
-                  </div>
-                </div>
-              )}
             </div>
 
+            {/* Badges placed outside clipPath so text is never sliced */}
             {showOverlay && (
-              <div className="absolute top-6 right-5 bg-slate-950/85 border border-cyan-400 rounded-xl px-3.5 py-2 text-right">
-                <div className="text-xs font-mono font-bold text-cyan-300">
-                  REALITY SAYS
+              <div
+                className="absolute top-4 left-4 z-20 bg-slate-950/85 backdrop-blur-md border border-amber-400 rounded-xl px-3 py-1.5 sm:px-3.5 sm:py-2 pointer-events-none transition-opacity duration-150 shadow-lg"
+                style={{ opacity: splitPos < 18 ? Math.max(0, splitPos / 18) : 1 }}
+              >
+                <div className="text-[10px] font-mono font-bold text-amber-300 uppercase tracking-wider">
+                  Theory Says
                 </div>
-                <div className="text-sm font-bold text-white">
+                <div className="text-xs sm:text-sm font-bold text-white">
+                  Blindingly Bright Forever
+                </div>
+              </div>
+            )}
+
+            {showOverlay && (
+              <div
+                className="absolute top-4 right-4 z-20 bg-slate-950/85 backdrop-blur-md border border-cyan-400 rounded-xl px-3 py-1.5 sm:px-3.5 sm:py-2 text-right pointer-events-none transition-opacity duration-150 shadow-lg"
+                style={{ opacity: splitPos > 82 ? Math.max(0, (100 - splitPos) / 18) : 1 }}
+              >
+                <div className="text-[10px] font-mono font-bold text-cyan-300 uppercase tracking-wider">
+                  Reality Says
+                </div>
+                <div className="text-xs sm:text-sm font-bold text-white">
                   Dark Starry Night Sky
                 </div>
               </div>
             )}
 
-            {/* Divider Line */}
+            {/* Vertical Split Line & Draggable Handle */}
             <div
-              className="absolute top-0 bottom-0 w-0.5 bg-white shadow-[0_0_12px_#ffffff]"
+              className="absolute top-0 bottom-0 w-0.5 bg-white shadow-[0_0_12px_#ffffff] z-20 pointer-events-none"
               style={{ left: `${splitPos}%` }}
             >
-              <div className="absolute top-1/2 -translate-x-1/2 -translate-y-1/2 w-8 h-8 rounded-full bg-slate-950 border-2 border-amber-400 flex items-center justify-center text-[10px] font-mono font-bold text-amber-300">
+              <div
+                className="absolute top-1/2 -translate-x-1/2 -translate-y-1/2 w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-slate-950 border-2 border-amber-400 flex items-center justify-center text-[10px] font-mono font-bold text-amber-300 shadow-[0_0_14px_rgba(251,191,36,0.6)] cursor-ew-resize select-none pointer-events-auto transition-transform hover:scale-110 active:scale-95"
+                title="Drag left or right to compare"
+              >
                 VS
               </div>
             </div>
