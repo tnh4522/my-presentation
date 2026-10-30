@@ -64,7 +64,7 @@ export function PresentationHub() {
             <div className="min-w-0">
               <div className="flex items-center gap-2">
                 <h1 className="font-display text-sm sm:text-lg font-bold tracking-tight text-white whitespace-nowrap">
-                  my-presentation
+                  My Presentation
                 </h1>
                 <span className="hidden sm:inline-flex text-[10px] font-mono uppercase tracking-widest px-2 py-0.5 rounded-full bg-cyan-500/15 text-cyan-300 border border-cyan-500/30 shrink-0">
                   Slide Hub
