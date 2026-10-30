@@ -1707,7 +1707,7 @@ export function PresentationApp({
                 >
                   <IconArrowLeft className="w-3.5 h-3.5" />
                   <span>Prev</span>
-                  <kbd className="hidden lg:inline text-[9px] px-1 rounded bg-slate-950 border border-slate-700 text-slate-400">←</kbd>
+                  <kbd className="hidden lg:inline text-[10px] px-1 rounded bg-slate-950 border border-slate-700 text-slate-400">←</kbd>
                 </button>
                 <button
                   type="button"
@@ -1717,7 +1717,7 @@ export function PresentationApp({
                 >
                   <span>Next</span>
                   <IconArrowRight className="w-3.5 h-3.5" />
-                  <kbd className="hidden lg:inline text-[9px] px-1 rounded bg-cyan-950 border border-cyan-500/40 text-cyan-300 font-normal">→</kbd>
+                  <kbd className="hidden lg:inline text-[10px] px-1 rounded bg-cyan-950 border border-cyan-500/40 text-cyan-300 font-normal">→</kbd>
                 </button>
               </div>
 
@@ -1779,7 +1779,7 @@ export function PresentationApp({
                   <span className="hidden sm:inline">
                     {showNotes ? "Hide Notes" : "Speaker Notes"}
                   </span>
-                  <kbd className="hidden lg:inline text-[9px] px-1 rounded bg-slate-950 border border-slate-700 text-slate-400">N</kbd>
+                  <kbd className="hidden lg:inline text-[10px] px-1 rounded bg-slate-950 border border-slate-700 text-slate-400">N</kbd>
                 </button>
               </div>
             </div>
