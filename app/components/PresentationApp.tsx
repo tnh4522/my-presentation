@@ -847,7 +847,7 @@ export function PresentationApp({
             </button>
 
             {showActMenu && (
-              <div className="absolute top-full left-1/2 -translate-x-1/2 mt-1.5 w-64 bg-[#070b1c] border border-cyan-500/40 rounded-xl shadow-2xl p-1.5 z-40 backdrop-blur-xl animate-in fade-in duration-150">
+              <div className="absolute top-full left-1/2 -translate-x-1/2 mt-1.5 w-64 max-w-[calc(100vw-24px)] bg-[#070b1c] border border-cyan-500/40 rounded-xl shadow-2xl p-1.5 z-40 backdrop-blur-xl animate-in fade-in duration-150">
                 <div className="text-[10px] font-mono uppercase tracking-wider text-slate-400 px-2 py-1 border-b border-slate-800/80 mb-1">
                   Cosmic Chapters
                 </div>
@@ -942,7 +942,7 @@ export function PresentationApp({
               </button>
 
               {showMediaMenu && (
-                <div className="absolute top-full right-0 mt-1.5 w-72 bg-[#070b1c] border border-cyan-500/35 rounded-2xl shadow-2xl p-3 z-40 backdrop-blur-xl space-y-3 animate-in fade-in duration-150">
+                <div className="absolute top-full right-0 mt-1.5 w-72 max-w-[calc(100vw-24px)] bg-[#070b1c] border border-cyan-500/35 rounded-2xl shadow-2xl p-3 z-40 backdrop-blur-xl space-y-3 animate-in fade-in duration-150">
                   <div className="text-[10px] font-mono uppercase tracking-wider text-slate-400 border-b border-slate-800 pb-1.5">
                     Cosmic Media Studio
                   </div>

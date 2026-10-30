@@ -346,7 +346,7 @@ export function PresentationHub() {
                       {deck.tags.map((tag) => (
                         <span
                           key={tag}
-                          className="text-[11px] font-mono px-2.5 py-0.5 rounded-md bg-slate-900 border border-slate-800 text-slate-300"
+                          className="text-[11px] font-mono px-2.5 py-0.5 rounded-md bg-slate-900 border border-slate-800 text-slate-300 whitespace-nowrap"
                         >
                           #{tag}
                         </span>
@@ -370,10 +370,10 @@ export function PresentationHub() {
                                 slideIndex: act.slides[0] - 1,
                               })
                             }
-                            className="text-left px-3 py-1.5 rounded-xl bg-slate-900/90 border border-slate-800 hover:border-cyan-400/50 text-xs font-mono text-slate-200 flex items-center justify-between transition cursor-pointer"
+                            className="text-left px-3 py-2 rounded-xl bg-slate-900/90 border border-slate-800 hover:border-cyan-400/50 text-xs font-mono text-slate-200 flex items-center justify-between transition cursor-pointer"
                           >
                             <span className="truncate">{act.title}</span>
-                            <span className="text-[10px] text-cyan-400 shrink-0 ml-2">
+                            <span className="text-[10px] text-cyan-400 font-bold shrink-0 ml-2 bg-slate-950 px-1.5 py-0.5 rounded border border-slate-800/80">
                               S{act.slides[0]}–{act.slides[act.slides.length - 1]}
                             </span>
                           </button>
@@ -410,17 +410,17 @@ export function PresentationHub() {
             ))}
 
               {/* Upcoming Cosmic Explorations Teaser */}
-              <div className="rounded-3xl border border-slate-800/90 bg-[#060918]/60 p-6 flex flex-col justify-between space-y-4 min-h-[340px]">
+              <div className="rounded-2xl sm:rounded-3xl border border-slate-800/90 bg-[#060918]/60 p-4 sm:p-6 flex flex-col justify-between space-y-4">
                 <div>
-                  <div className="flex items-center justify-between gap-2 mb-3">
-                    <span className="text-[11px] font-mono text-cyan-300 bg-cyan-950/80 border border-cyan-500/40 px-2.5 py-0.5 rounded-full uppercase tracking-wider">
+                  <div className="flex items-center justify-between gap-2 mb-2.5 sm:mb-3">
+                    <span className="text-[11px] font-mono text-cyan-300 bg-cyan-950/80 border border-cyan-500/40 px-2.5 py-0.5 rounded-full uppercase tracking-wider whitespace-nowrap">
                       ✦ Upcoming Expeditions
                     </span>
-                    <span className="text-[11px] font-mono text-slate-400">
+                    <span className="text-[11px] font-mono text-slate-400 whitespace-nowrap">
                       In Research
                     </span>
                   </div>
-                  <h3 className="font-display text-xl font-bold text-white">
+                  <h3 className="font-display text-lg sm:text-xl font-bold text-white leading-snug">
                     The Fermi Paradox &amp; The Great Silence
                   </h3>
                   <p className="text-xs sm:text-sm text-slate-300 mt-2 leading-relaxed">
@@ -428,12 +428,13 @@ export function PresentationHub() {
                   </p>
                 </div>
 
-                <div className="pt-4 border-t border-slate-800/80 flex items-center justify-between">
-                  <span className="text-xs font-mono text-slate-400">
-                    Expected Release: Late 2026
+                <div className="pt-3 sm:pt-4 border-t border-slate-800/80 flex items-center justify-between gap-2 text-[11px] sm:text-xs font-mono">
+                  <span className="text-slate-400 whitespace-nowrap">
+                    Release: Late 2026
                   </span>
-                  <span className="text-xs font-mono text-cyan-400">
-                    Act Outline Ready ▹
+                  <span className="text-cyan-400 whitespace-nowrap font-medium flex items-center gap-1">
+                    <span>Outline Ready</span>
+                    <span>▹</span>
                   </span>
                 </div>
               </div>
