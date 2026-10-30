@@ -2,6 +2,49 @@
 
 import React, { useState, useRef } from "react";
 
+function IconPhoto({ className = "w-3 h-3" }: { className?: string }) {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      className={className}
+      aria-hidden="true"
+    >
+      <rect x="3" y="3" width="18" height="18" rx="2" ry="2" />
+      <circle cx="8.5" cy="8.5" r="1.5" />
+      <polyline points="21 15 16 10 5 21" />
+    </svg>
+  );
+}
+
+function IconFilm({ className = "w-3 h-3" }: { className?: string }) {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      className={className}
+      aria-hidden="true"
+    >
+      <rect x="2" y="2" width="20" height="20" rx="2.18" ry="2.18" />
+      <line x1="7" y1="2" x2="7" y2="22" />
+      <line x1="17" y1="2" x2="17" y2="22" />
+      <line x1="2" y1="12" x2="22" y2="12" />
+      <line x1="2" y1="7" x2="7" y2="7" />
+      <line x1="2" y1="17" x2="7" y2="17" />
+      <line x1="17" y1="17" x2="22" y2="17" />
+      <line x1="17" y1="7" x2="22" y2="7" />
+    </svg>
+  );
+}
+
 interface SlideVisualProps {
   slideId: number;
 }
@@ -147,10 +190,20 @@ export function SlideVisual({ slideId }: SlideVisualProps) {
           <button
             type="button"
             onClick={() => setUseVideo((prev) => !prev)}
-            className="px-2.5 py-1 rounded-lg text-[11px] font-mono bg-cyan-950/90 text-cyan-200 border border-cyan-500/40 hover:border-cyan-300 backdrop-blur-md cursor-pointer transition shadow"
+            className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-[11px] font-mono bg-cyan-950/90 text-cyan-200 border border-cyan-500/40 hover:border-cyan-300 backdrop-blur-md cursor-pointer transition shadow focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-cyan-400"
             title={useVideo ? "Switch to still photo" : "Enable motion video"}
           >
-            {useVideo ? "🖼 Photo" : "🎬 Video"}
+            {useVideo ? (
+              <>
+                <IconPhoto className="w-3 h-3 text-cyan-400" />
+                <span>Still Photo</span>
+              </>
+            ) : (
+              <>
+                <IconFilm className="w-3 h-3 text-cyan-400" />
+                <span>Motion Video</span>
+              </>
+            )}
           </button>
         )}
         {extraControl}
@@ -1020,7 +1073,7 @@ export function SlideVisual({ slideId }: SlideVisualProps) {
                   fontSize="13"
                   fontFamily="monospace"
                 >
-                  N(r) = 4πr² · n  [CORRECT ✅]
+                  N(r) = 4πr² · n  [VERIFIED]
                 </text>
 
                 <text
@@ -1040,7 +1093,7 @@ export function SlideVisual({ slideId }: SlideVisualProps) {
                   fontSize="13"
                   fontFamily="monospace"
                 >
-                  I = ∫ (4πr² · L / 4πr²) dr [✅]
+                  I = ∫ (4πr² · L / 4πr²) dr  [DIVERGES]
                 </text>
 
                 <rect
@@ -1191,7 +1244,7 @@ export function SlideVisual({ slideId }: SlideVisualProps) {
             <div className="flex gap-1">
               {[
                 { s: 1, label: "1. Absorb" },
-                { s: 2, label: "2. Heat 🔥" },
+                { s: 2, label: "2. Thermalize" },
                 { s: 3, label: "3. Glow" },
               ].map((item) => (
                 <button
@@ -1254,7 +1307,7 @@ export function SlideVisual({ slideId }: SlideVisualProps) {
                     {dustStep === 1
                       ? "1. DUST ABSORBS"
                       : dustStep === 2
-                      ? "2. DUST GETS HOT 🔥"
+                      ? "2. DUST HEATS UP"
                       : "3. HOT DUST GLOWS!"}
                   </text>
                   <text
@@ -1381,7 +1434,7 @@ export function SlideVisual({ slideId }: SlideVisualProps) {
                   fontFamily="monospace"
                   fontWeight="bold"
                 >
-                  STATIC INFINITE MODEL = BROKEN ❌
+                  STATIC INFINITE MODEL = CONTRADICTED
                 </text>
               </g>
             </svg>

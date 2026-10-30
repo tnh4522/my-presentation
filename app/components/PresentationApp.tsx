@@ -7,6 +7,394 @@ import { PresentationDeck } from "../data/presentations";
 import { SlideVisual, SLIDE_MEDIA_MAP } from "./SlideVisuals";
 import { StarfieldCanvas } from "./StarfieldCanvas";
 
+/* ─── Tailored Deep-Space SVG Icons (Craft Floor: No Raw Unicode / Emojis) ─── */
+
+function IconArrowLeft({ className = "w-4 h-4" }: { className?: string }) {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      className={className}
+      aria-hidden="true"
+    >
+      <polyline points="15 18 9 12 15 6" />
+    </svg>
+  );
+}
+
+function IconArrowRight({ className = "w-4 h-4" }: { className?: string }) {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      className={className}
+      aria-hidden="true"
+    >
+      <polyline points="9 18 15 12 9 6" />
+    </svg>
+  );
+}
+
+function IconChevronDown({ className = "w-3.5 h-3.5" }: { className?: string }) {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      className={className}
+      aria-hidden="true"
+    >
+      <polyline points="6 9 12 15 18 9" />
+    </svg>
+  );
+}
+
+function IconClose({ className = "w-3.5 h-3.5" }: { className?: string }) {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      className={className}
+      aria-hidden="true"
+    >
+      <line x1="18" y1="6" x2="6" y2="18" />
+      <line x1="6" y1="6" x2="18" y2="18" />
+    </svg>
+  );
+}
+
+function IconMic({ className = "w-3.5 h-3.5" }: { className?: string }) {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      className={className}
+      aria-hidden="true"
+    >
+      <path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z" />
+      <path d="M19 10v2a7 7 0 0 1-14 0v-2" />
+      <line x1="12" y1="19" x2="12" y2="23" />
+      <line x1="8" y1="23" x2="16" y2="23" />
+    </svg>
+  );
+}
+
+function IconPlay({ className = "w-3.5 h-3.5" }: { className?: string }) {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      fill="currentColor"
+      className={className}
+      aria-hidden="true"
+    >
+      <polygon points="5 3 19 12 5 21 5 3" />
+    </svg>
+  );
+}
+
+function IconStop({ className = "w-3 h-3" }: { className?: string }) {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      fill="currentColor"
+      className={className}
+      aria-hidden="true"
+    >
+      <rect x="5" y="5" width="14" height="14" rx="2" ry="2" />
+    </svg>
+  );
+}
+
+function IconVolume({ className = "w-3.5 h-3.5" }: { className?: string }) {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      className={className}
+      aria-hidden="true"
+    >
+      <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5" />
+      <path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07" />
+    </svg>
+  );
+}
+
+function IconVolumeMute({ className = "w-3.5 h-3.5" }: { className?: string }) {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      className={className}
+      aria-hidden="true"
+    >
+      <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5" />
+      <line x1="23" y1="9" x2="17" y2="15" />
+      <line x1="17" y1="9" x2="23" y2="15" />
+    </svg>
+  );
+}
+
+function IconFilm({ className = "w-3.5 h-3.5" }: { className?: string }) {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      className={className}
+      aria-hidden="true"
+    >
+      <rect x="2" y="2" width="20" height="20" rx="2.18" ry="2.18" />
+      <line x1="7" y1="2" x2="7" y2="22" />
+      <line x1="17" y1="2" x2="17" y2="22" />
+      <line x1="2" y1="12" x2="22" y2="12" />
+      <line x1="2" y1="7" x2="7" y2="7" />
+      <line x1="2" y1="17" x2="7" y2="17" />
+      <line x1="17" y1="17" x2="22" y2="17" />
+      <line x1="17" y1="7" x2="22" y2="7" />
+    </svg>
+  );
+}
+
+function IconFullscreen({ className = "w-4 h-4" }: { className?: string }) {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      className={className}
+      aria-hidden="true"
+    >
+      <path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3" />
+    </svg>
+  );
+}
+
+function IconFullscreenExit({ className = "w-4 h-4" }: { className?: string }) {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      className={className}
+      aria-hidden="true"
+    >
+      <path d="M4 14h6m0 0v6m0-6L3 21m17-7h-6m0 0v6m0-6l7 7M4 10h6m0 0V4m0 6L3 3m17 7h-6m0 0V4m0 6l7-7" />
+    </svg>
+  );
+}
+
+function IconGrid({ className = "w-4 h-4" }: { className?: string }) {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      className={className}
+      aria-hidden="true"
+    >
+      <rect x="3" y="3" width="7" height="7" />
+      <rect x="14" y="3" width="7" height="7" />
+      <rect x="14" y="14" width="7" height="7" />
+      <rect x="3" y="14" width="7" height="7" />
+    </svg>
+  );
+}
+
+function IconHelp({ className = "w-4 h-4" }: { className?: string }) {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      className={className}
+      aria-hidden="true"
+    >
+      <circle cx="12" cy="12" r="10" />
+      <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3" />
+      <line x1="12" y1="17" x2="12.01" y2="17" />
+    </svg>
+  );
+}
+
+function IconKeyboard({ className = "w-4 h-4" }: { className?: string }) {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.8"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      className={className}
+      aria-hidden="true"
+    >
+      <rect x="2" y="4" width="20" height="16" rx="2" ry="2" />
+      <line x1="6" y1="8" x2="6.01" y2="8" />
+      <line x1="10" y1="8" x2="10.01" y2="8" />
+      <line x1="14" y1="8" x2="14.01" y2="8" />
+      <line x1="18" y1="8" x2="18.01" y2="8" />
+      <line x1="6" y1="12" x2="6.01" y2="12" />
+      <line x1="10" y1="12" x2="10.01" y2="12" />
+      <line x1="14" y1="12" x2="14.01" y2="12" />
+      <line x1="18" y1="12" x2="18.01" y2="12" />
+      <line x1="7" y1="16" x2="17" y2="16" />
+    </svg>
+  );
+}
+
+function IconDockSide({ className = "w-3.5 h-3.5" }: { className?: string }) {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      className={className}
+      aria-hidden="true"
+    >
+      <rect x="3" y="3" width="18" height="18" rx="2" ry="2" />
+      <line x1="15" y1="3" x2="15" y2="21" />
+      <rect x="15" y="3" width="6" height="18" fill="currentColor" fillOpacity="0.35" />
+    </svg>
+  );
+}
+
+function IconDockBottom({ className = "w-3.5 h-3.5" }: { className?: string }) {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      className={className}
+      aria-hidden="true"
+    >
+      <rect x="3" y="3" width="18" height="18" rx="2" ry="2" />
+      <line x1="3" y1="15" x2="21" y2="15" />
+      <rect x="3" y="15" width="18" height="6" fill="currentColor" fillOpacity="0.35" />
+    </svg>
+  );
+}
+
+function IconType({ className = "w-3.5 h-3.5" }: { className?: string }) {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      className={className}
+      aria-hidden="true"
+    >
+      <polyline points="4 7 4 4 20 4 20 7" />
+      <line x1="9" y1="20" x2="15" y2="20" />
+      <line x1="12" y1="4" x2="12" y2="20" />
+    </svg>
+  );
+}
+
+function IconCopy({ className = "w-3.5 h-3.5" }: { className?: string }) {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      className={className}
+      aria-hidden="true"
+    >
+      <rect x="9" y="9" width="13" height="13" rx="2" ry="2" />
+      <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" />
+    </svg>
+  );
+}
+
+function IconCheck({ className = "w-3.5 h-3.5" }: { className?: string }) {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2.5"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      className={className}
+      aria-hidden="true"
+    >
+      <polyline points="20 6 9 17 4 12" />
+    </svg>
+  );
+}
+
+function IconRadioDish({ className = "w-5 h-5" }: { className?: string }) {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.8"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      className={className}
+      aria-hidden="true"
+    >
+      <path d="M4 11a9 9 0 0 1 9 9" />
+      <path d="M4 4a16 16 0 0 1 16 16" />
+      <circle cx="5" cy="19" r="1" />
+    </svg>
+  );
+}
+
 const ACCENT_STYLES: Record<
   SlideAccent,
   {
@@ -162,6 +550,16 @@ export function PresentationApp({
   const [showMediaMenu, setShowMediaMenu] = useState<boolean>(false);
   const [showShortcutsModal, setShowShortcutsModal] = useState<boolean>(false);
   const [teleprompterDock, setTeleprompterDock] = useState<"bottom" | "side">("bottom");
+  const [isFullscreen, setIsFullscreen] = useState<boolean>(false);
+
+  useEffect(() => {
+    const handleFullscreenChange = () => {
+      setIsFullscreen(Boolean(document.fullscreenElement));
+    };
+    document.addEventListener("fullscreenchange", handleFullscreenChange);
+    return () =>
+      document.removeEventListener("fullscreenchange", handleFullscreenChange);
+  }, []);
 
   // Background Piano Music (Interstellar Main Theme - Piano Version)
   const bgAudioRef = useRef<HTMLAudioElement | null>(null);
@@ -529,7 +927,7 @@ export function PresentationApp({
           className={`pointer-events-none absolute inset-0 bg-gradient-to-br ${style.glow}`}
         />
 
-        <div className="relative z-10 shrink-0 flex flex-wrap items-center justify-between gap-2 px-3.5 sm:px-6 py-2 sm:py-2 lg:py-1.5 border-b border-slate-800/80">
+        <div className="relative z-10 shrink-0 flex flex-wrap items-center justify-between gap-2 px-4 sm:px-8 py-2.5 sm:py-3 border-b border-slate-800/80">
           <div className="flex items-center gap-2 sm:gap-2.5">
             <span
               className={`font-mono text-xs sm:text-sm font-bold tracking-wider ${style.numberText} bg-slate-950/90 border border-slate-800 px-2 sm:px-2.5 py-0.5 rounded-lg`}
@@ -552,20 +950,20 @@ export function PresentationApp({
         </div>
 
         <div
-          className={`relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-3 sm:gap-5 xl:gap-7 px-3.5 sm:px-6 ${
+          className={`relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-5 sm:gap-6 lg:gap-8 px-4 sm:px-8 lg:px-9 ${
             isScrollMode
               ? "py-5 sm:py-6 flex-1 items-stretch"
-              : "py-2.5 sm:py-3 lg:py-2 flex-1 lg:min-h-0 lg:items-stretch lg:overflow-hidden"
+              : "py-4 sm:py-5 lg:py-6 flex-1 lg:min-h-0 lg:items-stretch lg:overflow-hidden"
           }`}
         >
           <div
             className={`lg:col-span-5 xl:col-span-5 flex flex-col justify-between ${
               isScrollMode
                 ? "space-y-4 sm:space-y-5"
-                : "space-y-2.5 lg:space-y-0 lg:min-h-0 lg:gap-1.5 xl:gap-2"
+                : "space-y-3 lg:space-y-0 lg:min-h-0 lg:gap-3"
             }`}
           >
-            <div className={isDenseSlide ? "space-y-1.5" : "space-y-2.5"}>
+            <div className={isDenseSlide ? "space-y-2" : "space-y-3 sm:space-y-3.5"}>
               <div>
                 <h2
                   className={`font-display font-bold tracking-tight text-white leading-tight ${
@@ -590,7 +988,7 @@ export function PresentationApp({
                   <li
                     key={idx}
                     className={`rounded-xl transition-all ${
-                      isDenseSlide ? "px-2.5 py-1 sm:px-3 sm:py-1.5" : "px-3 py-1.5 sm:px-3.5 sm:py-2"
+                      isDenseSlide ? "px-3 py-1.5 sm:px-3.5 sm:py-2" : "px-3.5 py-2 sm:px-4 sm:py-2.5"
                     } ${
                       b.highlight
                         ? `border ${style.highlightBox} shadow-md`
@@ -630,9 +1028,9 @@ export function PresentationApp({
                             {b.subItems.map((sub, sIdx) => (
                               <li
                                 key={sIdx}
-                                className="text-xs font-mono text-slate-300 flex items-center gap-1.5"
+                                className="text-xs font-mono text-slate-300 flex items-center gap-2"
                               >
-                                <span className="text-cyan-400">▹</span>
+                                <span className="w-1.5 h-1.5 rounded-full bg-cyan-400/80 shrink-0" />
                                 <span>{sub}</span>
                               </li>
                             ))}
@@ -645,7 +1043,7 @@ export function PresentationApp({
               </ul>
 
               {slide.id === 1 && (
-                <div className="flex items-center gap-2.5 p-2 sm:p-2.5 rounded-xl bg-cyan-950/40 border border-cyan-500/30 backdrop-blur-sm">
+                <div className="flex items-center gap-3 p-2.5 sm:p-3 rounded-xl bg-cyan-950/40 border border-cyan-500/30 backdrop-blur-sm">
                   <img
                     src="/images/night-sky-dark/23825795249_3b22921aef_o.webp"
                     alt="Milky Way over clouds"
@@ -671,7 +1069,7 @@ export function PresentationApp({
             {slide.keyStat && (
               <div
                 className={`shrink-0 rounded-xl border ${
-                  isDenseSlide ? "px-2.5 py-1 sm:px-3 sm:py-1.5" : "px-3 py-1.5 sm:px-3.5 sm:py-2"
+                  isDenseSlide ? "px-3 py-1.5 sm:px-3.5 sm:py-2" : "px-3.5 py-2 sm:px-4 sm:py-2.5"
                 } flex items-center justify-between gap-3 ${style.statBorder}`}
               >
                 <div className="min-w-0 flex-1">
@@ -719,8 +1117,8 @@ export function PresentationApp({
           <footer className="relative z-10 shrink-0 mx-3.5 sm:mx-7 mb-3 rounded-xl border border-cyan-500/25 bg-[#030612]/95 px-3.5 sm:px-4 py-2.5 shadow-inner">
             <div className="flex flex-wrap items-center justify-between gap-2 pb-1.5 mb-1.5 border-b border-slate-800/90">
               <div className="flex items-center gap-2">
-                <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded text-[11px] font-mono font-semibold bg-cyan-500/15 text-cyan-300 border border-cyan-500/30">
-                  <span>🎙️</span>
+                <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded text-[11px] font-mono font-semibold bg-cyan-500/15 text-cyan-300 border border-cyan-500/30">
+                  <IconMic className="w-3.5 h-3.5 text-cyan-400" />
                   <span>SPEAKER NOTES / VOICEOVER</span>
                 </span>
                 <span className="text-[11px] font-mono text-slate-400 hidden sm:inline">
@@ -740,12 +1138,12 @@ export function PresentationApp({
                 >
                   {isSpeakingThis ? (
                     <>
-                      <span className="w-1.5 h-1.5 rounded-full bg-slate-950 animate-ping" />
-                      <span>■ Stop Voiceover</span>
+                      <IconStop className="w-3 h-3 fill-current" />
+                      <span>Stop Voiceover</span>
                     </>
                   ) : (
                     <>
-                      <span>▶</span>
+                      <IconPlay className="w-3 h-3 fill-current" />
                       <span>Listen Voiceover</span>
                     </>
                   )}
@@ -754,18 +1152,29 @@ export function PresentationApp({
                 <button
                   type="button"
                   onClick={() => setLargeTeleprompter((prev) => !prev)}
-                  className="px-2 py-0.5 rounded-md text-[11px] font-mono text-slate-300 bg-slate-900 border border-slate-700 hover:border-slate-500 cursor-pointer"
+                  className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md text-[11px] font-mono text-slate-300 bg-slate-900 border border-slate-700 hover:border-slate-500 cursor-pointer"
                   title="Toggle Teleprompter Text Size"
                 >
-                  {largeTeleprompter ? "Text: Large" : "Text: Normal"}
+                  <IconType className="w-3 h-3 text-cyan-400" />
+                  <span>{largeTeleprompter ? "Normal" : "Large"}</span>
                 </button>
 
                 <button
                   type="button"
                   onClick={() => handleCopyVoiceover(slide)}
-                  className="px-2 py-0.5 rounded-md text-[11px] font-mono text-slate-300 bg-slate-900 border border-slate-700 hover:border-slate-500 cursor-pointer"
+                  className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md text-[11px] font-mono text-slate-300 bg-slate-900 border border-slate-700 hover:border-slate-500 cursor-pointer"
                 >
-                  {copiedId === slide.id ? "✓ Copied" : "Copy"}
+                  {copiedId === slide.id ? (
+                    <>
+                      <IconCheck className="w-3 h-3 text-emerald-400" />
+                      <span className="text-emerald-400 font-bold">Copied</span>
+                    </>
+                  ) : (
+                    <>
+                      <IconCopy className="w-3 h-3" />
+                      <span>Copy</span>
+                    </>
+                  )}
                 </button>
               </div>
             </div>
@@ -818,7 +1227,7 @@ export function PresentationApp({
                 className="inline-flex items-center gap-1.5 px-2.5 sm:px-3 py-1.5 rounded-xl text-xs sm:text-sm font-mono bg-slate-900 border border-slate-700 text-cyan-300 hover:border-cyan-400 hover:bg-slate-800 transition shrink-0 cursor-pointer"
                 title="Return to My Presentations Hub"
               >
-                <span>←</span>
+                <IconArrowLeft className="w-3.5 h-3.5" />
                 <span className="hidden sm:inline">All Topics</span>
               </button>
             ) : (
@@ -828,7 +1237,7 @@ export function PresentationApp({
                 className="inline-flex items-center gap-1.5 px-2.5 sm:px-3 py-1.5 rounded-xl text-xs sm:text-sm font-mono bg-slate-900 border border-slate-700 text-cyan-300 hover:border-cyan-400 hover:bg-slate-800 transition shrink-0"
                 title="Return to My Presentations Hub"
               >
-                <span>←</span>
+                <IconArrowLeft className="w-3.5 h-3.5" />
                 <span className="hidden sm:inline">All Topics</span>
               </Link>
             )}
@@ -861,7 +1270,11 @@ export function PresentationApp({
               <span className="hidden sm:inline text-slate-300 max-w-[140px] md:max-w-[220px] lg:max-w-[320px] truncate">
                 {acts.find((a) => a.number === currentSlide.actNumber)?.title || `Act ${currentSlide.actNumber}`}
               </span>
-              <span className="text-[10px] sm:text-xs text-cyan-400">▾</span>
+              <IconChevronDown
+                className={`w-3.5 h-3.5 text-cyan-400 transition-transform duration-200 ${
+                  showActMenu ? "rotate-180" : ""
+                }`}
+              />
             </button>
 
             {showActMenu && (
@@ -893,8 +1306,18 @@ export function PresentationApp({
                       }`}
                     >
                       <span className="truncate">Act {act.number}: {act.title}</span>
-                      <span className="text-[10px] text-slate-500 font-normal shrink-0 ml-1">
-                        S{act.slides[0]}-{act.slides[act.slides.length - 1]}
+                      <span
+                        className={`text-[10px] font-normal shrink-0 ml-1 px-1.5 py-0.2 rounded border ${
+                          isCurrentAct
+                            ? "bg-cyan-950 text-cyan-300 border-cyan-500/40"
+                            : "bg-slate-950 text-slate-500 border-slate-800"
+                        }`}
+                      >
+                        S{String(act.slides[0]).padStart(2, "0")}–
+                        {String(act.slides[act.slides.length - 1]).padStart(
+                          2,
+                          "0"
+                        )}
                       </span>
                     </button>
                   );
@@ -951,18 +1374,35 @@ export function PresentationApp({
                 title="Audio, Voiceover & Video controls"
               >
                 <span className="flex items-center gap-0.5">
-                  <span className={`w-1 h-3.5 rounded-full bg-cyan-400 ${isBgmPlaying ? "animate-pulse" : "opacity-60"}`} />
-                  <span className={`w-1 h-2.5 rounded-full bg-cyan-300 ${isBgmPlaying ? "animate-pulse" : "opacity-40"}`} />
-                  <span className={`w-1 h-4 rounded-full bg-cyan-400 ${isBgmPlaying ? "animate-pulse" : "opacity-60"}`} />
+                  <span
+                    className={`w-1 h-3.5 rounded-full bg-cyan-400 ${
+                      isBgmPlaying ? "animate-pulse" : "opacity-60"
+                    }`}
+                  />
+                  <span
+                    className={`w-1 h-2.5 rounded-full bg-cyan-300 ${
+                      isBgmPlaying ? "animate-pulse" : "opacity-40"
+                    }`}
+                  />
+                  <span
+                    className={`w-1 h-4 rounded-full bg-cyan-400 ${
+                      isBgmPlaying ? "animate-pulse" : "opacity-60"
+                    }`}
+                  />
                 </span>
                 <span className="hidden sm:inline">Media</span>
-                <span className="text-[10px] sm:text-xs text-cyan-400">▾</span>
+                <IconChevronDown
+                  className={`w-3.5 h-3.5 text-cyan-400 transition-transform duration-200 ${
+                    showMediaMenu ? "rotate-180" : ""
+                  }`}
+                />
               </button>
 
               {showMediaMenu && (
                 <div className="absolute top-full right-0 mt-1.5 w-72 max-w-[calc(100vw-24px)] bg-[#070b1c] border border-cyan-500/35 rounded-2xl shadow-2xl p-3 z-40 backdrop-blur-xl space-y-3 animate-in fade-in duration-150">
-                  <div className="text-[10px] font-mono uppercase tracking-wider text-slate-400 border-b border-slate-800 pb-1.5">
-                    Cosmic Media Studio
+                  <div className="text-[10px] font-mono uppercase tracking-wider text-slate-400 border-b border-slate-800 pb-1.5 flex items-center justify-between">
+                    <span>Cosmic Media Studio</span>
+                    <span className="w-1.5 h-1.5 rounded-full bg-cyan-400 animate-ping" />
                   </div>
 
                   {/* BGM Row */}
@@ -972,13 +1412,23 @@ export function PresentationApp({
                       <button
                         type="button"
                         onClick={toggleBgm}
-                        className={`px-2 py-0.5 rounded text-[10px] font-bold cursor-pointer transition ${
+                        className={`inline-flex items-center gap-1 px-2 py-0.5 rounded text-[10px] font-bold cursor-pointer transition ${
                           isBgmPlaying
                             ? "bg-cyan-500/20 text-cyan-300 border border-cyan-500/50"
                             : "bg-slate-800 text-slate-400 hover:text-white"
                         }`}
                       >
-                        {isBgmPlaying ? "ON" : "OFF"}
+                        {isBgmPlaying ? (
+                          <>
+                            <IconVolume className="w-3 h-3 text-cyan-400" />
+                            <span>ON</span>
+                          </>
+                        ) : (
+                          <>
+                            <IconVolumeMute className="w-3 h-3 text-slate-400" />
+                            <span>OFF</span>
+                          </>
+                        )}
                       </button>
                     </div>
                     <div className="flex items-center gap-2">
@@ -1031,12 +1481,12 @@ export function PresentationApp({
                     >
                       {autoPlayDeck || speakingSlideId !== null ? (
                         <>
-                          <span className="w-1.5 h-1.5 rounded-full bg-slate-950 animate-ping" />
-                          <span>■ Stop Voiceover</span>
+                          <IconStop className="w-3 h-3 fill-current" />
+                          <span>Stop Narration</span>
                         </>
                       ) : (
                         <>
-                          <span>▶</span>
+                          <IconPlay className="w-3 h-3 fill-current" />
                           <span>Auto-Narrate</span>
                         </>
                       )}
@@ -1051,9 +1501,9 @@ export function PresentationApp({
                         setShowMediaMenu(false);
                         setShowVideoModal(true);
                       }}
-                      className="w-full py-1.5 px-2.5 rounded-lg text-xs font-mono bg-indigo-950/80 border border-indigo-500/40 text-indigo-200 hover:border-indigo-400 flex items-center justify-center gap-1.5 cursor-pointer"
+                      className="w-full py-1.5 px-2.5 rounded-lg text-xs font-mono bg-indigo-950/80 border border-indigo-500/40 text-indigo-200 hover:border-indigo-400 flex items-center justify-center gap-1.5 cursor-pointer transition"
                     >
-                      <span className="text-indigo-400">▶</span>
+                      <IconFilm className="w-3.5 h-3.5 text-indigo-400 mr-1" />
                       <span>Cosmic Video Library ({COSMIC_VIDEOS.length})</span>
                     </button>
                   </div>
@@ -1061,13 +1511,14 @@ export function PresentationApp({
               )}
             </div>
 
-            {/* Grid button - hidden on small mobile, accessible via bottom bar 1/20 */}
+            {/* Grid button - hidden on small mobile, accessible via bottom bar */}
             <button
               type="button"
               onClick={() => setShowOverview((prev) => !prev)}
-              className="hidden sm:inline-flex px-3 sm:px-3.5 py-1.5 rounded-xl text-xs sm:text-sm font-mono bg-slate-900 border border-slate-700 text-slate-200 hover:border-cyan-400/50 hover:bg-slate-800/80 hover:text-white transition cursor-pointer"
+              className="hidden sm:inline-flex items-center gap-1.5 px-3 sm:px-3.5 py-1.5 rounded-xl text-xs sm:text-sm font-mono bg-slate-900 border border-slate-700 text-slate-200 hover:border-cyan-400/50 hover:bg-slate-800/80 hover:text-white transition cursor-pointer"
               title="Open Slide Grid (Shortcut: G)"
             >
+              <IconGrid className="w-3.5 h-3.5 text-cyan-400" />
               <span>Grid ({slides.length})</span>
             </button>
 
@@ -1075,21 +1526,26 @@ export function PresentationApp({
             <button
               type="button"
               onClick={() => setShowShortcutsModal(true)}
-              className="hidden md:inline-flex px-2.5 sm:px-3 py-1.5 rounded-xl text-xs sm:text-sm font-mono bg-slate-900 border border-slate-800 text-slate-400 hover:text-cyan-300 hover:border-cyan-500/50 hover:bg-slate-800/80 transition cursor-pointer"
+              className="hidden md:inline-flex items-center justify-center w-8 h-8 rounded-xl text-xs sm:text-sm font-mono bg-slate-900 border border-slate-800 text-slate-400 hover:text-cyan-300 hover:border-cyan-500/50 hover:bg-slate-800/80 transition cursor-pointer"
               title="Keyboard Shortcuts Cheatsheet (?)"
               aria-label="Keyboard Shortcuts"
             >
-              ?
+              <IconHelp className="w-4 h-4" />
             </button>
 
             {/* Fullscreen button */}
             <button
               type="button"
               onClick={toggleFullscreen}
-              className="hidden sm:inline-flex px-2.5 sm:px-3 py-1.5 rounded-xl text-xs sm:text-sm font-mono bg-slate-900 border border-slate-700 text-slate-300 hover:border-cyan-400/50 hover:bg-slate-800/80 hover:text-white transition cursor-pointer"
-              title="Toggle Fullscreen (Shortcut: F)"
+              className="hidden sm:inline-flex items-center justify-center w-8 h-8 rounded-xl text-xs sm:text-sm font-mono bg-slate-900 border border-slate-700 text-slate-300 hover:border-cyan-400/50 hover:bg-slate-800/80 hover:text-white transition cursor-pointer"
+              title={isFullscreen ? "Exit Fullscreen (F)" : "Enter Fullscreen (F)"}
+              aria-label={isFullscreen ? "Exit Fullscreen" : "Enter Fullscreen"}
             >
-              ⛶
+              {isFullscreen ? (
+                <IconFullscreenExit className="w-4 h-4 text-cyan-400" />
+              ) : (
+                <IconFullscreen className="w-4 h-4" />
+              )}
             </button>
           </div>
         </div>
@@ -1114,9 +1570,9 @@ export function PresentationApp({
       </header>
 
       <main
-        className={`relative z-10 flex-1 w-full max-w-[1760px] mx-auto px-3 sm:px-6 lg:px-12 xl:px-16 flex flex-col justify-between ${
+        className={`relative z-10 flex-1 w-full max-w-[1520px] mx-auto px-3 sm:px-6 md:px-8 lg:px-10 flex flex-col justify-between ${
           viewMode === "deck"
-            ? "py-2 sm:py-2.5 gap-2 sm:gap-2 lg:min-h-0 lg:overflow-hidden"
+            ? "py-3 sm:py-4 lg:py-5 gap-3 sm:gap-4 lg:min-h-0 lg:overflow-hidden"
             : "py-6 sm:py-8"
         }`}
       >
@@ -1137,8 +1593,8 @@ export function PresentationApp({
               >
                 <div className="flex items-center justify-between gap-2 pb-2 mb-2 border-b border-slate-800/90">
                   <div className="flex items-center gap-2 min-w-0">
-                    <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded text-[11px] font-mono font-bold bg-cyan-500/20 text-cyan-300 border border-cyan-500/40 truncate">
-                      <span>🎙️</span>
+                    <span className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded text-[11px] font-mono font-bold bg-cyan-500/20 text-cyan-300 border border-cyan-500/40 truncate">
+                      <IconMic className="w-3.5 h-3.5 text-cyan-400" />
                       <span>NOTES · S{String(currentSlide.id).padStart(2, "0")}</span>
                     </span>
                     <span className="text-[11px] font-mono text-slate-400 hidden sm:inline">
@@ -1157,46 +1613,71 @@ export function PresentationApp({
                     >
                       {speakingSlideId === currentSlide.id ? (
                         <>
-                          <span className="w-1.5 h-1.5 rounded-full bg-slate-950 animate-ping" />
-                          <span>■ Stop</span>
+                          <IconStop className="w-3 h-3 fill-current" />
+                          <span>Stop</span>
                         </>
                       ) : (
                         <>
-                          <span>▶</span>
+                          <IconPlay className="w-3 h-3 fill-current" />
                           <span>Listen</span>
                         </>
                       )}
                     </button>
                     <button
                       type="button"
-                      onClick={() => setTeleprompterDock((prev) => (prev === "bottom" ? "side" : "bottom"))}
-                      className="hidden sm:inline-flex px-2 py-1 rounded-md text-[11px] font-mono text-slate-300 bg-slate-900 border border-slate-700 hover:border-slate-500 cursor-pointer"
+                      onClick={() =>
+                        setTeleprompterDock((prev) =>
+                          prev === "bottom" ? "side" : "bottom"
+                        )
+                      }
+                      className="hidden sm:inline-flex items-center gap-1 px-2 py-1 rounded-md text-[11px] font-mono text-slate-300 bg-slate-900 border border-slate-700 hover:border-slate-500 cursor-pointer"
                       title="Dock notes to side or bottom so slide visuals stay visible"
                     >
-                      {teleprompterDock === "bottom" ? "Dock: Side ◨" : "Dock: Bottom ⬒"}
+                      {teleprompterDock === "bottom" ? (
+                        <>
+                          <IconDockSide className="w-3.5 h-3.5 text-cyan-400" />
+                          <span>Dock: Side</span>
+                        </>
+                      ) : (
+                        <>
+                          <IconDockBottom className="w-3.5 h-3.5 text-cyan-400" />
+                          <span>Dock: Bottom</span>
+                        </>
+                      )}
                     </button>
                     <button
                       type="button"
                       onClick={() => setLargeTeleprompter((prev) => !prev)}
-                      className="px-2 py-1 rounded-md text-[11px] font-mono text-slate-300 bg-slate-900 border border-slate-700 hover:border-slate-500 cursor-pointer"
+                      className="inline-flex items-center gap-1 px-2 py-1 rounded-md text-[11px] font-mono text-slate-300 bg-slate-900 border border-slate-700 hover:border-slate-500 cursor-pointer"
                       title="Toggle text size"
                     >
-                      {largeTeleprompter ? "Aa Normal" : "Aa Large"}
+                      <IconType className="w-3 h-3 text-cyan-400" />
+                      <span>{largeTeleprompter ? "Normal" : "Large"}</span>
                     </button>
                     <button
                       type="button"
                       onClick={() => handleCopyVoiceover(currentSlide)}
-                      className="px-2 py-1 rounded-md text-[11px] font-mono text-slate-300 bg-slate-900 border border-slate-700 hover:border-slate-500 cursor-pointer"
+                      className="inline-flex items-center gap-1 px-2 py-1 rounded-md text-[11px] font-mono text-slate-300 bg-slate-900 border border-slate-700 hover:border-slate-500 cursor-pointer"
                     >
-                      {copiedId === currentSlide.id ? "✓ Copied" : "Copy"}
+                      {copiedId === currentSlide.id ? (
+                        <>
+                          <IconCheck className="w-3 h-3 text-emerald-400" />
+                          <span className="text-emerald-400 font-bold">Copied</span>
+                        </>
+                      ) : (
+                        <>
+                          <IconCopy className="w-3 h-3" />
+                          <span>Copy</span>
+                        </>
+                      )}
                     </button>
                     <button
                       type="button"
                       onClick={() => setShowNotes(false)}
-                      className="px-2 py-1 rounded-md text-[11px] font-mono text-slate-400 hover:text-white bg-slate-900 border border-slate-800 cursor-pointer"
+                      className="p-1 rounded-md text-[11px] font-mono text-slate-400 hover:text-white bg-slate-900 border border-slate-800 cursor-pointer"
                       aria-label="Close speaker notes"
                     >
-                      ✕
+                      <IconClose className="w-3.5 h-3.5" />
                     </button>
                   </div>
                 </div>
@@ -1222,17 +1703,21 @@ export function PresentationApp({
                   type="button"
                   onClick={goPrev}
                   disabled={currentIndex === 0}
-                  className="h-8 sm:h-8.5 px-2.5 sm:px-3 rounded-lg text-xs font-mono font-medium bg-slate-900 border border-slate-700/80 text-slate-300 hover:border-cyan-400 hover:bg-slate-800 disabled:opacity-30 disabled:pointer-events-none inline-flex items-center justify-center cursor-pointer transition"
+                  className="h-8 sm:h-8.5 px-2.5 sm:px-3 rounded-lg text-xs font-mono font-medium bg-slate-900 border border-slate-700/80 text-slate-300 hover:border-cyan-400 hover:bg-slate-800 disabled:opacity-30 disabled:pointer-events-none inline-flex items-center justify-center cursor-pointer transition gap-1.5 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-cyan-400"
                 >
-                  ← Prev
+                  <IconArrowLeft className="w-3.5 h-3.5" />
+                  <span>Prev</span>
+                  <kbd className="hidden lg:inline text-[9px] px-1 rounded bg-slate-950 border border-slate-700 text-slate-400">←</kbd>
                 </button>
                 <button
                   type="button"
                   onClick={goNext}
                   disabled={currentIndex === slides.length - 1}
-                  className="h-8 sm:h-8.5 px-3 sm:px-3.5 rounded-lg text-xs font-mono font-bold bg-cyan-400 text-slate-950 hover:bg-cyan-300 disabled:opacity-30 disabled:pointer-events-none shadow-[0_0_10px_rgba(34,211,238,0.3)] inline-flex items-center justify-center cursor-pointer transition"
+                  className="h-8 sm:h-8.5 px-3 sm:px-3.5 rounded-lg text-xs font-mono font-bold bg-cyan-400 text-slate-950 hover:bg-cyan-300 disabled:opacity-30 disabled:pointer-events-none shadow-[0_0_10px_rgba(34,211,238,0.3)] inline-flex items-center justify-center cursor-pointer transition gap-1.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-300"
                 >
-                  Next →
+                  <span>Next</span>
+                  <IconArrowRight className="w-3.5 h-3.5" />
+                  <kbd className="hidden lg:inline text-[9px] px-1 rounded bg-cyan-950 border border-cyan-500/40 text-cyan-300 font-normal">→</kbd>
                 </button>
               </div>
 
@@ -1240,13 +1725,14 @@ export function PresentationApp({
                 <button
                   type="button"
                   onClick={() => setShowOverview(true)}
-                  className="sm:hidden h-8 inline-flex items-center gap-1 px-2.5 py-1 rounded-lg bg-slate-900/90 border border-slate-800 font-mono text-xs text-slate-300 hover:border-cyan-500/50 cursor-pointer"
+                  className="sm:hidden h-8 inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-slate-900/90 border border-slate-800 font-mono text-xs text-slate-300 hover:border-cyan-500/50 cursor-pointer"
                   title="Tap to see all slides"
                 >
+                  <IconGrid className="w-3 h-3 text-cyan-400" />
                   <span className="text-cyan-400 font-bold">{currentIndex + 1}</span>
                   <span className="text-slate-500">/</span>
                   <span className="text-slate-400">{slides.length}</span>
-                  <span className="text-[10px] text-cyan-400 ml-0.5">▼</span>
+                  <IconChevronDown className="w-3 h-3 text-cyan-400 ml-0.5" />
                 </button>
 
                 <div className="hidden sm:flex items-center gap-0.5 md:gap-1 overflow-x-auto py-0.5 px-2 sm:px-3 border-x border-slate-800/80 max-w-full">
@@ -1281,17 +1767,19 @@ export function PresentationApp({
                 <button
                   type="button"
                   onClick={() => setShowNotes((prev) => !prev)}
-                  className={`h-8 sm:h-8.5 px-2.5 sm:px-3 rounded-lg text-xs font-mono border transition inline-flex items-center justify-center cursor-pointer ${
+                  className={`h-8 sm:h-8.5 px-2.5 sm:px-3 rounded-lg text-xs font-mono border transition inline-flex items-center justify-center gap-1.5 cursor-pointer focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-cyan-400 ${
                     showNotes
                       ? "bg-cyan-950/80 border-cyan-500/40 text-cyan-300 shadow-[0_0_8px_rgba(34,211,238,0.2)]"
                       : "bg-slate-900 border-slate-800 text-slate-400 hover:text-white hover:bg-slate-800"
                   }`}
                   title="Speaker notes (Shortcut: N)"
                 >
-                  <span className="sm:hidden">{showNotes ? "Hide 🎙️" : "Notes 🎙️"}</span>
+                  <IconMic className="w-3.5 h-3.5 text-cyan-400" />
+                  <span className="sm:hidden">{showNotes ? "Hide" : "Notes"}</span>
                   <span className="hidden sm:inline">
-                    {showNotes ? "Hide Notes (N)" : "Show Notes (N)"}
+                    {showNotes ? "Hide Notes" : "Speaker Notes"}
                   </span>
+                  <kbd className="hidden lg:inline text-[9px] px-1 rounded bg-slate-950 border border-slate-700 text-slate-400">N</kbd>
                 </button>
               </div>
             </div>
@@ -1335,8 +1823,9 @@ export function PresentationApp({
             <div className="px-5 py-3.5 border-b border-slate-800 flex flex-wrap items-center justify-between gap-3 bg-[#03050c]/90">
               <div>
                 <div className="flex items-center gap-2">
+                  <IconFilm className="w-5 h-5 text-cyan-400" />
                   <h2 id="video-modal-title" className="font-display text-base font-bold text-white">
-                    🎬 Deep Space Videos · {deckTitle}
+                    Deep Space Video Archive · {deckTitle}
                   </h2>
                   <span className="text-[11px] font-mono px-2 py-0.5 rounded-full bg-cyan-950 text-cyan-300 border border-cyan-500/30">
                     {COSMIC_VIDEOS.length} Videos
@@ -1349,9 +1838,10 @@ export function PresentationApp({
               <button
                 type="button"
                 onClick={() => setShowVideoModal(false)}
-                className="px-3.5 py-1.5 rounded-xl text-xs font-mono bg-slate-800 text-slate-200 hover:bg-slate-700 cursor-pointer"
+                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-mono bg-slate-800 text-slate-200 hover:bg-slate-700 hover:text-white border border-slate-700/80 transition cursor-pointer"
               >
-                ✕ Close
+                <IconClose className="w-3.5 h-3.5 text-slate-400" />
+                <span>Close</span>
               </button>
             </div>
 
@@ -1367,13 +1857,14 @@ export function PresentationApp({
                       setModalVideoError(false);
                       setSelectedVideoUrl(v.path);
                     }}
-                    className={`px-3 py-1 rounded-lg text-xs font-mono whitespace-nowrap transition cursor-pointer ${
+                    className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-lg text-xs font-mono whitespace-nowrap transition cursor-pointer ${
                       active
                         ? "bg-cyan-500/20 text-cyan-300 border border-cyan-500/50 font-bold shadow-[0_0_10px_rgba(34,211,238,0.3)]"
                         : "text-slate-400 hover:text-white bg-slate-900 border border-slate-800"
                     }`}
                   >
-                    ▶ {v.name}
+                    <IconPlay className="w-2.5 h-2.5 fill-current shrink-0" />
+                    <span>{v.name}</span>
                   </button>
                 );
               })}
@@ -1382,7 +1873,9 @@ export function PresentationApp({
             <div className="p-4 bg-black flex items-center justify-center min-h-[260px] sm:min-h-[360px]">
               {modalVideoError ? (
                 <div className="p-8 text-center max-w-md mx-auto space-y-3">
-                  <div className="text-3xl">📡</div>
+                  <div className="w-12 h-12 rounded-2xl bg-rose-500/10 border border-rose-500/30 flex items-center justify-center mx-auto text-rose-400">
+                    <IconRadioDish className="w-6 h-6 animate-pulse" />
+                  </div>
                   <div className="text-sm font-mono font-bold text-rose-300">
                     Video Stream Unreachable
                   </div>
@@ -1425,6 +1918,7 @@ export function PresentationApp({
             <div className="px-4 sm:px-6 py-3 sm:py-4 border-b border-slate-800/90 flex flex-wrap items-center justify-between gap-2.5 bg-[#03050c]/90">
               <div className="flex flex-wrap items-center gap-2 sm:gap-3 min-w-0">
                 <div className="flex items-center gap-2">
+                  <IconGrid className="w-4 h-4 text-cyan-400 shrink-0" />
                   <h2 id="overview-modal-title" className="font-display text-sm sm:text-lg font-bold text-white truncate">
                     All {slides.length} Slides
                   </h2>
@@ -1472,9 +1966,10 @@ export function PresentationApp({
                 <button
                   type="button"
                   onClick={() => setShowOverview(false)}
-                  className="px-3 py-1 sm:px-3.5 sm:py-1.5 rounded-xl text-xs font-mono font-semibold bg-slate-800 hover:bg-slate-700 text-slate-200 hover:text-white border border-slate-700 transition cursor-pointer"
+                  className="inline-flex items-center gap-1.5 px-3 py-1 sm:px-3.5 sm:py-1.5 rounded-xl text-xs font-mono font-semibold bg-slate-800 hover:bg-slate-700 text-slate-200 hover:text-white border border-slate-700 transition cursor-pointer"
                 >
-                  ✕ Close
+                  <IconClose className="w-3.5 h-3.5 text-slate-400" />
+                  <span>Close</span>
                 </button>
               </div>
             </div>
@@ -1538,7 +2033,8 @@ export function PresentationApp({
                           <div className="flex items-center gap-1.5">
                             {hasVideo && (
                               <span className="bg-indigo-950/90 backdrop-blur-md px-2 py-0.5 rounded-lg border border-indigo-500/50 text-[10px] text-indigo-300 shadow flex items-center gap-1">
-                                <span>🎬</span> Video
+                                <IconFilm className="w-2.5 h-2.5 text-indigo-400" />
+                                <span>Video</span>
                               </span>
                             )}
                             <span className="bg-slate-950/90 backdrop-blur-md px-2.5 py-0.5 rounded-lg border border-slate-800 text-[11px] text-slate-300">
@@ -1550,8 +2046,9 @@ export function PresentationApp({
                         {/* Active Badge or Topic Tag */}
                         <div className="absolute bottom-2.5 left-2.5 right-2.5 flex items-center justify-between z-10">
                           {isCurrent ? (
-                            <span className="bg-cyan-400 text-slate-950 px-2.5 py-0.5 rounded-md text-[10px] font-mono font-extrabold shadow-[0_0_12px_#22d3ee]">
-                              ● ACTIVE NOW
+                            <span className="inline-flex items-center gap-1.5 bg-cyan-400 text-slate-950 px-2.5 py-0.5 rounded-md text-[10px] font-mono font-extrabold shadow-[0_0_12px_#22d3ee]">
+                              <span className="w-1.5 h-1.5 rounded-full bg-slate-950 animate-pulse" />
+                              ACTIVE NOW
                             </span>
                           ) : (
                             <span className="text-[11px] font-mono text-slate-300 bg-slate-950/85 backdrop-blur-sm px-2 py-0.5 rounded border border-slate-800/80 truncate max-w-[85%]">
@@ -1581,11 +2078,9 @@ export function PresentationApp({
                             {s.bullets.slice(0, 2).map((b, bIdx) => (
                               <div
                                 key={bIdx}
-                                className="flex items-start gap-1.5 text-xs text-slate-300 leading-relaxed"
+                                className="flex items-start gap-2 text-xs text-slate-300 leading-relaxed"
                               >
-                                <span className="text-cyan-400 shrink-0 font-bold mt-0.5">
-                                  ›
-                                </span>
+                                <span className="w-1.5 h-1.5 rounded-full bg-cyan-400 shrink-0 mt-1.5 shadow-[0_0_4px_#22d3ee]" />
                                 <span className="line-clamp-2">
                                   {b.label && (
                                     <strong className="text-slate-100 font-semibold mr-1">
@@ -1613,8 +2108,9 @@ export function PresentationApp({
                               {s.keyStat.value}
                             </span>
                           ) : (
-                            <span className="shrink-0 text-slate-400">
-                              🎙️ Note
+                            <span className="shrink-0 text-slate-400 inline-flex items-center gap-1">
+                              <IconMic className="w-3 h-3 text-cyan-400" />
+                              <span>Speaker Note</span>
                             </span>
                           )}
                         </div>
@@ -1637,7 +2133,7 @@ export function PresentationApp({
           <div className="bg-[#060a1a] border border-cyan-500/40 rounded-3xl max-w-lg w-full overflow-hidden shadow-2xl p-5 sm:p-6 my-auto animate-in fade-in duration-200">
             <div className="flex items-center justify-between pb-3 border-b border-slate-800">
               <div className="flex items-center gap-2">
-                <span className="text-xl">⌨️</span>
+                <IconKeyboard className="w-5 h-5 text-cyan-400" />
                 <h2
                   id="shortcuts-modal-title"
                   className="font-display text-base sm:text-lg font-bold text-white"
@@ -1648,10 +2144,11 @@ export function PresentationApp({
               <button
                 type="button"
                 onClick={() => setShowShortcutsModal(false)}
-                className="px-2.5 py-1 rounded-lg text-xs font-mono bg-slate-800 text-slate-200 hover:bg-slate-700 cursor-pointer"
+                className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-xs font-mono bg-slate-800 text-slate-200 hover:bg-slate-700 hover:text-white border border-slate-700/80 cursor-pointer transition"
                 aria-label="Close keyboard shortcuts dialog"
               >
-                ✕ Close
+                <IconClose className="w-3.5 h-3.5 text-slate-400" />
+                <span>Close</span>
               </button>
             </div>
 
