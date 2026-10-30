@@ -123,3 +123,33 @@ h1, h2, h3, .font-display {
 ::-webkit-scrollbar-thumb:hover {
   background: #38bdf8;
 }
+
+/* Defensive text wrapping against extreme inputs */
+.break-words-anywhere {
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}
+
+/* Print & PDF Handout Hardening for Educators & Students */
+@media print {
+  body {
+    background: #ffffff !important;
+    color: #0f172a !important;
+  }
+  header,
+  audio,
+  video,
+  button,
+  [role="dialog"],
+  .fixed {
+    display: none !important;
+  }
+  article {
+    page-break-after: always;
+    break-after: page;
+    border: 1px solid #cbd5e1 !important;
+    background: #ffffff !important;
+    color: #0f172a !important;
+    box-shadow: none !important;
+  }
+}

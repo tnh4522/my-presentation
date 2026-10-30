@@ -180,6 +180,9 @@ export function SlideVisual({ slideId }: SlideVisualProps) {
         alt={altText}
         loading="lazy"
         decoding="async"
+        onError={(e) => {
+          e.currentTarget.src = "/images/night-sky-dark/images (9).jpg";
+        }}
         className={`absolute inset-0 w-full h-full ${customImgClass} transition-transform duration-700 group-hover:scale-105`}
       />
     );
@@ -203,11 +206,7 @@ export function SlideVisual({ slideId }: SlideVisualProps) {
     case 2:
       return (
         <div className={`${containerBase} border border-indigo-500/35`}>
-          <img
-            src={media.primaryImage}
-            alt="Silhouette of astronomer looking up at the Milky Way"
-            className="absolute inset-0 w-full h-full object-cover"
-          />
+          {renderBackdrop("Silhouette of astronomer looking up at the Milky Way")}
           <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#03050e]/85 via-transparent to-[#03050e]/40" />
 
           {renderOverlayToggle()}
@@ -342,11 +341,7 @@ export function SlideVisual({ slideId }: SlideVisualProps) {
     case 3:
       return (
         <div className={`${containerBase} border border-amber-500/35`}>
-          <img
-            src={media.primaryImage}
-            alt="Panoramic Milky Way arch over astronomer"
-            className="absolute inset-0 w-full h-full object-cover"
-          />
+          {renderBackdrop("Panoramic Milky Way arch over astronomer")}
           <div className="pointer-events-none absolute inset-0 bg-gradient-to-r from-[#05060d]/90 via-[#05060d]/55 to-transparent" />
 
           {renderOverlayToggle()}
@@ -481,11 +476,10 @@ export function SlideVisual({ slideId }: SlideVisualProps) {
     case 4:
       return (
         <div className={`${containerBase} border border-cyan-500/35 p-3`}>
-          <img
-            src={media.primaryImage}
-            alt="Concentric orbits around bright sun in space"
-            className="absolute inset-0 w-full h-full object-cover opacity-55"
-          />
+          {renderBackdrop(
+            "Concentric orbits around bright sun in space",
+            "object-cover opacity-55"
+          )}
           <div className="pointer-events-none absolute inset-0 bg-[#040816]/65" />
 
           <div className="relative z-20 flex flex-wrap items-center justify-between gap-1.5 shrink-0 pr-28">
@@ -680,8 +674,10 @@ export function SlideVisual({ slideId }: SlideVisualProps) {
                 max={30}
                 value={sightAngle}
                 aria-label="Sight line angle"
+                style={{ touchAction: "none" }}
                 onTouchStart={(e) => e.stopPropagation()}
                 onTouchEnd={(e) => e.stopPropagation()}
+                onTouchCancel={(e) => e.stopPropagation()}
                 onChange={(e) => setSightAngle(Number(e.target.value))}
                 className="accent-emerald-400 w-24 cursor-pointer"
               />
@@ -694,6 +690,11 @@ export function SlideVisual({ slideId }: SlideVisualProps) {
               <img
                 src={media.primaryImage}
                 alt="Dense forest trees under starry sky"
+                loading="lazy"
+                decoding="async"
+                onError={(e) => {
+                  e.currentTarget.src = "/images/night-sky-dark/images (9).jpg";
+                }}
                 className="absolute inset-0 w-full h-full object-cover object-bottom"
               />
               <div className="pointer-events-none absolute inset-0 bg-gradient-to-r from-black/75 via-black/25 to-transparent" />
@@ -738,6 +739,11 @@ export function SlideVisual({ slideId }: SlideVisualProps) {
               <img
                 src={media.secondaryImage}
                 alt="Deep space field full of stars in every direction"
+                loading="lazy"
+                decoding="async"
+                onError={(e) => {
+                  e.currentTarget.src = "/images/night-sky-dark/images (9).jpg";
+                }}
                 className="absolute inset-0 w-full h-full object-cover"
               />
               <div className="pointer-events-none absolute inset-0 bg-gradient-to-r from-black/75 via-black/20 to-transparent" />
@@ -810,8 +816,10 @@ export function SlideVisual({ slideId }: SlideVisualProps) {
                 max={100}
                 value={shellDensity}
                 aria-label="Star shell density"
+                style={{ touchAction: "none" }}
                 onTouchStart={(e) => e.stopPropagation()}
                 onTouchEnd={(e) => e.stopPropagation()}
+                onTouchCancel={(e) => e.stopPropagation()}
                 onChange={(e) => setShellDensity(Number(e.target.value))}
                 className="accent-amber-400 w-24 cursor-pointer"
               />
@@ -851,8 +859,10 @@ export function SlideVisual({ slideId }: SlideVisualProps) {
                 max={85}
                 value={splitPos}
                 aria-label="Compare theory versus observation split position"
+                style={{ touchAction: "none" }}
                 onTouchStart={(e) => e.stopPropagation()}
                 onTouchEnd={(e) => e.stopPropagation()}
+                onTouchCancel={(e) => e.stopPropagation()}
                 onChange={(e) => setSplitPos(Number(e.target.value))}
                 className="accent-amber-400 w-24 cursor-pointer"
               />
@@ -864,6 +874,11 @@ export function SlideVisual({ slideId }: SlideVisualProps) {
             <img
               src={media.primaryImage}
               alt="Split comparison of dark starry sky and bright sky"
+              loading="lazy"
+              decoding="async"
+              onError={(e) => {
+                e.currentTarget.src = "/images/night-sky-dark/images (9).jpg";
+              }}
               className="absolute inset-0 w-full h-full object-cover"
             />
 
@@ -875,6 +890,11 @@ export function SlideVisual({ slideId }: SlideVisualProps) {
               <img
                 src={media.secondaryImage}
                 alt="Bright sky theory"
+                loading="lazy"
+                decoding="async"
+                onError={(e) => {
+                  e.currentTarget.src = "/images/night-sky-dark/images (9).jpg";
+                }}
                 className="absolute inset-0 w-full h-full object-cover"
               />
               <div
@@ -923,11 +943,7 @@ export function SlideVisual({ slideId }: SlideVisualProps) {
     case 8:
       return (
         <div className={`${containerBase} border border-violet-500/35`}>
-          <img
-            src={media.primaryImage}
-            alt="Concentric circular star trails over observatory"
-            className="absolute inset-0 w-full h-full object-cover"
-          />
+          {renderBackdrop("Concentric circular star trails over observatory")}
           <div className="pointer-events-none absolute inset-0 bg-[#050611]/55" />
 
           {renderOverlayToggle()}
@@ -1161,11 +1177,9 @@ export function SlideVisual({ slideId }: SlideVisualProps) {
     case 10:
       return (
         <div className={`${containerBase} border border-rose-500/40 p-3`}>
-          <img
-            src={media.primaryImage}
-            alt="Glowing heated cosmic dust nebula radiating bright light"
-            className="absolute inset-0 w-full h-full object-cover"
-          />
+          {renderBackdrop(
+            "Glowing heated cosmic dust nebula radiating bright light"
+          )}
           <div className="pointer-events-none absolute inset-0 bg-[#0f050a]/55" />
 
           {renderOverlayToggle()}
@@ -1307,11 +1321,7 @@ export function SlideVisual({ slideId }: SlideVisualProps) {
     case 11:
       return (
         <div className={`${containerBase} border border-violet-500/35`}>
-          <img
-            src={media.primaryImage}
-            alt="Crab Nebula shattered cosmic filaments"
-            className="absolute inset-0 w-full h-full object-cover"
-          />
+          {renderBackdrop("Crab Nebula shattered cosmic filaments")}
           <div className="pointer-events-none absolute inset-0 bg-[#04040c]/55" />
 
           {renderOverlayToggle()}
@@ -1382,11 +1392,7 @@ export function SlideVisual({ slideId }: SlideVisualProps) {
     case 12:
       return (
         <div className={`${containerBase} border border-cyan-500/35`}>
-          <img
-            src={media.primaryImage}
-            alt="Curved spacetime galaxy grid"
-            className="absolute inset-0 w-full h-full object-cover"
-          />
+          {renderBackdrop("Curved spacetime galaxy grid")}
           <div className="pointer-events-none absolute inset-0 bg-[#03050e]/55" />
 
           {renderOverlayToggle()}
@@ -1486,11 +1492,9 @@ export function SlideVisual({ slideId }: SlideVisualProps) {
     case 13:
       return (
         <div className={`${containerBase} border border-emerald-500/35`}>
-          <img
-            src={media.primaryImage}
-            alt="NGC 4414 isolated spiral galaxy surrounded by dark void"
-            className="absolute inset-0 w-full h-full object-cover"
-          />
+          {renderBackdrop(
+            "NGC 4414 isolated spiral galaxy surrounded by dark void"
+          )}
           <div className="pointer-events-none absolute inset-0 bg-radial from-transparent via-transparent to-black/85" />
 
           {renderOverlayToggle()}
@@ -1552,11 +1556,10 @@ export function SlideVisual({ slideId }: SlideVisualProps) {
     case 14:
       return (
         <div className={`${containerBase} border border-amber-500/35`}>
-          <img
-            src={media.primaryImage}
-            alt="Cosmic planets and time cycles"
-            className="absolute inset-0 w-full h-full object-cover opacity-55"
-          />
+          {renderBackdrop(
+            "Cosmic planets and time cycles",
+            "object-cover opacity-55"
+          )}
           <div className="pointer-events-none absolute inset-0 bg-[#04050c]/65" />
 
           {renderOverlayToggle()}
@@ -1763,11 +1766,9 @@ export function SlideVisual({ slideId }: SlideVisualProps) {
     case 16:
       return (
         <div className={`${containerBase} border border-amber-400/40`}>
-          <img
-            src={media.primaryImage}
-            alt="Big Bang hot dense cosmic expansion evolving into stars"
-            className="absolute inset-0 w-full h-full object-cover"
-          />
+          {renderBackdrop(
+            "Big Bang hot dense cosmic expansion evolving into stars"
+          )}
           <div className="pointer-events-none absolute inset-0 bg-gradient-to-r from-[#03050c]/80 via-[#03050c]/35 to-[#03050c]/75" />
 
           {renderOverlayToggle()}
@@ -2043,11 +2044,7 @@ export function SlideVisual({ slideId }: SlideVisualProps) {
     case 19:
       return (
         <div className={`${containerBase} border border-emerald-500/35`}>
-          <img
-            src={media.primaryImage}
-            alt="Searching deep space for distant signals"
-            className="absolute inset-0 w-full h-full object-cover"
-          />
+          {renderBackdrop("Searching deep space for distant signals")}
           <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#03050c]/85 via-[#03050c]/30 to-[#03050c]/60" />
 
           {renderOverlayToggle()}
@@ -2193,6 +2190,11 @@ export function SlideVisual({ slideId }: SlideVisualProps) {
                 <img
                   src="/images/night-sky-dark/v5n22xGyNNHLzSnSArbrVH.jpg"
                   alt="Newton Gravity Orbits"
+                  loading="lazy"
+                  decoding="async"
+                  onError={(e) => {
+                    e.currentTarget.src = "/images/night-sky-dark/images (9).jpg";
+                  }}
                   className="w-full h-14 object-cover rounded-lg mb-1.5 border border-rose-500/30"
                 />
                 <div className="text-[11px] font-mono uppercase text-rose-300 font-bold">
@@ -2210,6 +2212,11 @@ export function SlideVisual({ slideId }: SlideVisualProps) {
                 <img
                   src="/images/night-sky-dark/quantum-gravity-curved-spacetime-galaxy.webp"
                   alt="Maxwell Waves"
+                  loading="lazy"
+                  decoding="async"
+                  onError={(e) => {
+                    e.currentTarget.src = "/images/night-sky-dark/images (9).jpg";
+                  }}
                   className="w-full h-14 object-cover rounded-lg mb-1.5 border border-amber-500/30"
                 />
                 <div className="text-[11px] font-mono uppercase text-amber-300 font-bold">
@@ -2227,6 +2234,11 @@ export function SlideVisual({ slideId }: SlideVisualProps) {
                 <img
                   src="/images/night-sky-dark/04-Dunkery-Beacon-Keith-Trueman-d4dd113-e1597842367814.webp"
                   alt="Olbers Dark Sky"
+                  loading="lazy"
+                  decoding="async"
+                  onError={(e) => {
+                    e.currentTarget.src = "/images/night-sky-dark/images (9).jpg";
+                  }}
                   className="w-full h-14 object-cover rounded-lg mb-1.5 border border-cyan-400/40"
                 />
                 <div className="text-[11px] font-mono uppercase text-cyan-300 font-bold">

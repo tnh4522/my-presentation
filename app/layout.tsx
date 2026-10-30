@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Space_Grotesk, Plus_Jakarta_Sans, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 
@@ -19,6 +19,13 @@ const jetbrainsMono = JetBrains_Mono({
   subsets: ["latin"],
   weight: ["400", "500", "600"],
 });
+
+export const viewport: Viewport = {
+  themeColor: "#03050c",
+  width: "device-width",
+  initialScale: 1,
+  maximumScale: 5,
+};
 
 const siteUrl =
   process.env.NEXT_PUBLIC_SITE_URL ||

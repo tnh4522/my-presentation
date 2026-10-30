@@ -82,10 +82,11 @@ export function PresentationHub() {
               <input
                 type="text"
                 value={searchQuery}
+                maxLength={120}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 placeholder="Search presentation topics, keywords..."
                 aria-label="Search presentation topics"
-                className="w-full rounded-xl bg-slate-900/90 border border-slate-800 px-4 py-2 text-xs sm:text-sm text-slate-100 placeholder:text-slate-400 focus:outline-none focus:border-cyan-400 transition"
+                className="w-full rounded-xl bg-slate-900/90 border border-slate-800 px-4 py-2 text-base sm:text-sm text-slate-100 placeholder:text-slate-400 focus:outline-none focus:border-cyan-400 transition"
               />
               {searchQuery && (
                 <button
@@ -123,6 +124,11 @@ export function PresentationHub() {
             <img
               src={featuredDeck.coverImage}
               alt={featuredDeck.title}
+              loading="eager"
+              decoding="async"
+              onError={(e) => {
+                e.currentTarget.src = "/images/night-sky-dark/images (9).jpg";
+              }}
               className="pointer-events-none absolute inset-0 w-full h-full object-cover opacity-35"
             />
             <div className="pointer-events-none absolute inset-0 bg-gradient-to-r from-[#040714] via-[#040714]/90 to-transparent" />
@@ -217,6 +223,11 @@ export function PresentationHub() {
                       <img
                         src={media?.primaryImage}
                         alt={slideObj.title}
+                        loading="lazy"
+                        decoding="async"
+                        onError={(e) => {
+                          e.currentTarget.src = "/images/night-sky-dark/images (9).jpg";
+                        }}
                         className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                       />
                       <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/35 to-transparent" />
@@ -237,8 +248,32 @@ export function PresentationHub() {
         )}
 
         {/* Section Header + Category Filter */}
-        {/* Section Header + Category Filter */}
         <section className="space-y-4 sm:space-y-5">
+          {/* Mobile Search Bar (visible on screens < 768px) */}
+          <div className="md:hidden">
+            <div className="relative">
+              <input
+                type="text"
+                value={searchQuery}
+                maxLength={120}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                placeholder="Search topics, keywords..."
+                aria-label="Search presentation topics"
+                className="w-full rounded-xl bg-slate-900/90 border border-slate-800 px-4 py-2.5 text-base sm:text-sm text-slate-100 placeholder:text-slate-400 focus:outline-none focus:border-cyan-400 transition"
+              />
+              {searchQuery && (
+                <button
+                  type="button"
+                  onClick={() => setSearchQuery("")}
+                  aria-label="Clear search query"
+                  className="absolute right-3 top-1/2 -translate-y-1/2 min-w-[32px] min-h-[32px] flex items-center justify-center text-xs text-slate-400 hover:text-white cursor-pointer"
+                >
+                  ✕
+                </button>
+              )}
+            </div>
+          </div>
+
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-slate-800/80 pb-4">
             <div>
               <h2 className="font-display text-lg sm:text-2xl font-bold text-white">
@@ -312,6 +347,11 @@ export function PresentationHub() {
                     <img
                       src={deck.coverImage}
                       alt={deck.title}
+                      loading="lazy"
+                      decoding="async"
+                      onError={(e) => {
+                        e.currentTarget.src = "/images/night-sky-dark/images (9).jpg";
+                      }}
                       className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-[#060918] via-[#060918]/30 to-transparent" />

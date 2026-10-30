@@ -147,6 +147,7 @@ export function PresentationApp({
   const [showOverview, setShowOverview] = useState<boolean>(false);
   const [overviewActFilter, setOverviewActFilter] = useState<number | "all">("all");
   const [showVideoModal, setShowVideoModal] = useState<boolean>(false);
+  const [modalVideoError, setModalVideoError] = useState<boolean>(false);
   const [selectedVideoUrl, setSelectedVideoUrl] = useState<string>(
     "/videos/night-sky-dark/interstellar.mp4"
   );
@@ -190,6 +191,11 @@ export function PresentationApp({
         goPrev();
       }
     }
+    touchStartX.current = null;
+    touchStartY.current = null;
+  };
+
+  const handleTouchCancel = () => {
     touchStartX.current = null;
     touchStartY.current = null;
   };
@@ -511,6 +517,11 @@ export function PresentationApp({
           src={mediaInfo.primaryImage}
           alt=""
           aria-hidden="true"
+          loading="lazy"
+          decoding="async"
+          onError={(e) => {
+            e.currentTarget.src = "/images/night-sky-dark/images (9).jpg";
+          }}
           className="pointer-events-none absolute inset-0 w-full h-full object-cover opacity-[0.07] blur-2xl scale-110"
         />
 
@@ -638,6 +649,11 @@ export function PresentationApp({
                   <img
                     src="/images/night-sky-dark/23825795249_3b22921aef_o.webp"
                     alt="Milky Way over clouds"
+                    loading="lazy"
+                    decoding="async"
+                    onError={(e) => {
+                      e.currentTarget.src = "/images/night-sky-dark/images (9).jpg";
+                    }}
                     className="w-14 h-10 sm:w-16 sm:h-12 object-cover rounded-lg border border-cyan-400/40 shadow-lg shrink-0"
                   />
                   <div>
@@ -773,6 +789,7 @@ export function PresentationApp({
     <div
       onTouchStart={handleTouchStart}
       onTouchEnd={handleTouchEnd}
+      onTouchCancel={handleTouchCancel}
       className={`relative flex flex-col bg-[#03050c] text-slate-100 ${
         viewMode === "deck"
           ? "min-h-dvh lg:h-dvh lg:max-h-dvh w-full overflow-x-hidden lg:overflow-hidden"
@@ -786,6 +803,7 @@ export function PresentationApp({
         preload="auto"
         onPlay={() => setIsBgmPlaying(true)}
         onPause={() => setIsBgmPlaying(false)}
+        onError={() => setIsBgmPlaying(false)}
       />
       <StarfieldCanvas />
 
@@ -1205,7 +1223,7 @@ export function PresentationApp({
                   type="button"
                   onClick={goPrev}
                   disabled={currentIndex === 0}
-                  className="px-2.5 sm:px-3 py-1.5 rounded-lg text-xs font-mono font-semibold bg-slate-900 border border-slate-700 text-slate-200 hover:border-cyan-400 disabled:opacity-35 disabled:pointer-events-none cursor-pointer"
+                  className="min-h-[40px] min-w-[40px] px-3 py-1.5 rounded-lg text-xs font-mono font-semibold bg-slate-900 border border-slate-700 text-slate-200 hover:border-cyan-400 disabled:opacity-35 disabled:pointer-events-none inline-flex items-center justify-center cursor-pointer"
                 >
                   ← Prev
                 </button>
@@ -1213,7 +1231,7 @@ export function PresentationApp({
                   type="button"
                   onClick={goNext}
                   disabled={currentIndex === slides.length - 1}
-                  className="px-3 sm:px-3.5 py-1.5 rounded-lg text-xs font-mono font-bold bg-cyan-400 text-slate-950 hover:bg-cyan-300 disabled:opacity-35 disabled:pointer-events-none shadow-[0_0_15px_rgba(34,211,238,0.4)] cursor-pointer"
+                  className="min-h-[40px] px-3.5 py-1.5 rounded-lg text-xs font-mono font-bold bg-cyan-400 text-slate-950 hover:bg-cyan-300 disabled:opacity-35 disabled:pointer-events-none shadow-[0_0_15px_rgba(34,211,238,0.4)] inline-flex items-center justify-center cursor-pointer"
                 >
                   Next →
                 </button>
@@ -1223,7 +1241,7 @@ export function PresentationApp({
                 <button
                   type="button"
                   onClick={() => setShowOverview(true)}
-                  className="sm:hidden flex items-center gap-1 px-2.5 py-1 rounded-lg bg-slate-900/90 border border-slate-800 font-mono text-xs text-slate-300 hover:border-cyan-500/50 cursor-pointer"
+                  className="sm:hidden min-h-[40px] inline-flex items-center gap-1 px-3 py-1 rounded-lg bg-slate-900/90 border border-slate-800 font-mono text-xs text-slate-300 hover:border-cyan-500/50 cursor-pointer"
                   title="Tap to see all slides"
                 >
                   <span className="text-cyan-400 font-bold">{currentIndex + 1}</span>
@@ -1245,7 +1263,7 @@ export function PresentationApp({
                         }}
                         title={`Slide ${s.id}: ${s.title}`}
                         aria-label={`Go to slide ${s.id}: ${s.title}`}
-                        className="min-w-[24px] min-h-[24px] p-1 flex items-center justify-center cursor-pointer group focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-cyan-400 rounded-full"
+                        className="min-w-[28px] min-h-[28px] p-1 flex items-center justify-center cursor-pointer group focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-cyan-400 rounded-full"
                       >
                         <span
                           className={`h-2 rounded-full transition-all ${
@@ -1264,7 +1282,7 @@ export function PresentationApp({
                 <button
                   type="button"
                   onClick={() => setShowNotes((prev) => !prev)}
-                  className={`px-2 sm:px-2.5 py-1.5 rounded-lg text-[11px] font-mono border transition cursor-pointer ${
+                  className={`min-h-[40px] px-2.5 sm:px-3 py-1.5 rounded-lg text-[11px] font-mono border transition inline-flex items-center justify-center cursor-pointer ${
                     showNotes
                       ? "bg-cyan-950/80 border-cyan-500/40 text-cyan-300 shadow-[0_0_10px_rgba(34,211,238,0.2)]"
                       : "bg-slate-900 border-slate-800 text-slate-400 hover:text-white"
@@ -1346,7 +1364,10 @@ export function PresentationApp({
                   <button
                     key={v.id}
                     type="button"
-                    onClick={() => setSelectedVideoUrl(v.path)}
+                    onClick={() => {
+                      setModalVideoError(false);
+                      setSelectedVideoUrl(v.path);
+                    }}
                     className={`px-3 py-1 rounded-lg text-xs font-mono whitespace-nowrap transition cursor-pointer ${
                       active
                         ? "bg-cyan-500/20 text-cyan-300 border border-cyan-500/50 font-bold shadow-[0_0_10px_rgba(34,211,238,0.3)]"
@@ -1359,15 +1380,35 @@ export function PresentationApp({
               })}
             </div>
 
-            <div className="p-4 bg-black flex items-center justify-center">
-              <video
-                key={selectedVideoUrl}
-                src={selectedVideoUrl}
-                poster="/images/night-sky-dark/images (9).jpg"
-                controls
-                autoPlay
-                className="max-h-[70vh] w-auto rounded-xl shadow-2xl"
-              />
+            <div className="p-4 bg-black flex items-center justify-center min-h-[260px] sm:min-h-[360px]">
+              {modalVideoError ? (
+                <div className="p-8 text-center max-w-md mx-auto space-y-3">
+                  <div className="text-3xl">📡</div>
+                  <div className="text-sm font-mono font-bold text-rose-300">
+                    Video Stream Unreachable
+                  </div>
+                  <p className="text-xs text-slate-400">
+                    The requested cosmic media asset could not be decoded or loaded in your current network session.
+                  </p>
+                  <button
+                    type="button"
+                    onClick={() => setModalVideoError(false)}
+                    className="px-4 py-2 rounded-xl text-xs font-mono font-bold bg-cyan-400 text-slate-950 hover:bg-cyan-300 cursor-pointer"
+                  >
+                    Retry Loading Video
+                  </button>
+                </div>
+              ) : (
+                <video
+                  key={selectedVideoUrl}
+                  src={selectedVideoUrl}
+                  poster="/images/night-sky-dark/images (9).jpg"
+                  controls
+                  autoPlay
+                  onError={() => setModalVideoError(true)}
+                  className="max-h-[70vh] w-auto rounded-xl shadow-2xl"
+                />
+              )}
             </div>
           </div>
         </div>
