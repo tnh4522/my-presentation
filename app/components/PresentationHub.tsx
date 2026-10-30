@@ -56,7 +56,7 @@ export function PresentationHub() {
 
       {/* Top Navigation Bar */}
       <header className="sticky top-0 z-30 border-b border-slate-800/80 bg-[#03050c]/85 backdrop-blur-md">
-        <div className="w-full max-w-[1760px] mx-auto px-6 sm:px-10 lg:px-16 xl:px-20 h-16 flex items-center justify-between gap-4">
+        <div className="w-full max-w-[1760px] mx-auto px-3.5 sm:px-8 lg:px-16 xl:px-20 h-16 flex items-center justify-between gap-4">
           <div className="flex items-center gap-3">
             <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-cyan-400 via-sky-500 to-indigo-600 flex items-center justify-center text-slate-950 font-bold text-lg shadow-[0_0_25px_rgba(34,211,238,0.45)]">
               ✦
@@ -114,10 +114,10 @@ export function PresentationHub() {
         </div>
       </header>
 
-      <main className="relative z-10 flex-1 w-full max-w-[1760px] mx-auto px-6 sm:px-10 lg:px-16 xl:px-20 py-8 space-y-10">
+      <main className="relative z-10 flex-1 w-full max-w-[1760px] mx-auto px-3.5 sm:px-8 lg:px-16 xl:px-20 py-6 sm:py-8 space-y-8 sm:space-y-10">
         {/* Featured Presentation Hero Banner */}
         {featuredDeck && (
-          <section className="relative rounded-3xl border border-cyan-500/35 bg-[#060a1c]/90 overflow-hidden shadow-[0_25px_80px_-20px_rgba(34,211,238,0.25)]">
+          <section className="relative rounded-2xl sm:rounded-3xl border border-cyan-500/35 bg-[#060a1c]/90 overflow-hidden shadow-[0_25px_80px_-20px_rgba(34,211,238,0.25)]">
             <img
               src={featuredDeck.coverImage}
               alt={featuredDeck.title}
@@ -125,7 +125,7 @@ export function PresentationHub() {
             />
             <div className="pointer-events-none absolute inset-0 bg-gradient-to-r from-[#040714] via-[#040714]/90 to-transparent" />
 
-            <div className="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-6 p-6 sm:p-10 items-center">
+            <div className="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-6 p-4 sm:p-8 lg:p-10 items-center">
               <div className="lg:col-span-7 space-y-4">
                 <div className="flex flex-wrap items-center gap-2">
                   <span className="px-3 py-1 rounded-full text-xs font-mono font-semibold bg-cyan-400 text-slate-950">

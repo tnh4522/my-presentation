@@ -161,6 +161,38 @@ export function PresentationApp({
   const [isBgmPlaying, setIsBgmPlaying] = useState<boolean>(false);
   const [bgmVolume, setBgmVolume] = useState<number>(0.07); // Soft 7% background volume
 
+  // Mobile swipe gestures
+  const touchStartX = useRef<number | null>(null);
+  const touchStartY = useRef<number | null>(null);
+
+  const handleTouchStart = (e: React.TouchEvent) => {
+    touchStartX.current = e.touches[0].clientX;
+    touchStartY.current = e.touches[0].clientY;
+  };
+
+  const handleTouchEnd = (e: React.TouchEvent) => {
+    if (touchStartX.current === null || touchStartY.current === null) return;
+    const deltaX = e.changedTouches[0].clientX - touchStartX.current;
+    const deltaY = e.changedTouches[0].clientY - touchStartY.current;
+
+    if (Math.abs(deltaX) > 45 && Math.abs(deltaX) > Math.abs(deltaY) * 1.2) {
+      if (deltaX < 0) {
+        goNext();
+      } else {
+        goPrev();
+      }
+    }
+    touchStartX.current = null;
+    touchStartY.current = null;
+  };
+
+  // Reset scroll on mobile when changing slides
+  useEffect(() => {
+    if (typeof window !== "undefined" && window.innerWidth < 1024) {
+      window.scrollTo({ top: 0, behavior: "instant" });
+    }
+  }, [currentIndex]);
+
   useEffect(() => {
     const audio = bgAudioRef.current;
     if (!audio) return;
@@ -388,8 +420,8 @@ export function PresentationApp({
         id={`slide-card-${slide.id}`}
         className={`relative w-full ${
           isScrollMode
-            ? "rounded-3xl min-h-[82vh] flex flex-col justify-between"
-            : "flex-1 min-h-0 flex flex-col justify-between rounded-2xl sm:rounded-3xl"
+            ? "rounded-2xl sm:rounded-3xl min-h-[82vh] flex flex-col justify-between"
+            : "flex-1 lg:min-h-0 flex flex-col justify-between rounded-2xl sm:rounded-3xl"
         } border ${style.border} bg-[#060919]/92 backdrop-blur-xl shadow-[0_20px_70px_-20px_rgba(0,0,0,0.85)] overflow-hidden transition-all duration-300`}
       >
         <img
@@ -403,10 +435,10 @@ export function PresentationApp({
           className={`pointer-events-none absolute inset-0 bg-gradient-to-br ${style.glow}`}
         />
 
-        <div className="relative z-10 shrink-0 flex flex-wrap items-center justify-between gap-2 px-5 sm:px-7 py-2.5 border-b border-slate-800/80">
-          <div className="flex items-center gap-2.5">
+        <div className="relative z-10 shrink-0 flex flex-wrap items-center justify-between gap-2 px-3.5 sm:px-7 py-2 sm:py-2.5 border-b border-slate-800/80">
+          <div className="flex items-center gap-2 sm:gap-2.5">
             <span
-              className={`font-mono text-xs sm:text-sm font-bold tracking-wider ${style.numberText} bg-slate-950/90 border border-slate-800 px-2.5 py-0.5 rounded-lg`}
+              className={`font-mono text-xs sm:text-sm font-bold tracking-wider ${style.numberText} bg-slate-950/90 border border-slate-800 px-2 sm:px-2.5 py-0.5 rounded-lg`}
             >
               SLIDE {String(slide.id).padStart(2, "0")} /{" "}
               {String(slides.length).padStart(2, "0")}
@@ -426,15 +458,17 @@ export function PresentationApp({
         </div>
 
         <div
-          className={`relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-4 sm:gap-6 xl:gap-8 px-5 sm:px-7 ${
+          className={`relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-3.5 sm:gap-6 xl:gap-8 px-3.5 sm:px-7 ${
             isScrollMode
-              ? "py-6 flex-1 items-stretch"
-              : "py-3.5 flex-1 min-h-0 items-stretch overflow-hidden"
+              ? "py-5 sm:py-6 flex-1 items-stretch"
+              : "py-3 sm:py-3.5 flex-1 lg:min-h-0 lg:items-stretch lg:overflow-hidden"
           }`}
         >
           <div
             className={`lg:col-span-5 xl:col-span-5 flex flex-col justify-between ${
-              isScrollMode ? "space-y-5" : "min-h-0 overflow-y-auto pr-1 gap-2"
+              isScrollMode
+                ? "space-y-4 sm:space-y-5"
+                : "space-y-3 lg:space-y-0 lg:min-h-0 lg:overflow-y-auto lg:pr-1 lg:gap-2"
             }`}
           >
             <div className={isDenseSlide ? "space-y-2" : "space-y-3"}>
@@ -517,11 +551,11 @@ export function PresentationApp({
               </ul>
 
               {slide.id === 1 && (
-                <div className="flex items-center gap-3 p-3 rounded-2xl bg-cyan-950/40 border border-cyan-500/30 backdrop-blur-sm">
+                <div className="flex items-center gap-2.5 p-2.5 sm:p-3 rounded-2xl bg-cyan-950/40 border border-cyan-500/30 backdrop-blur-sm">
                   <img
                     src="/images/night-sky-dark/23825795249_3b22921aef_o.webp"
                     alt="Milky Way over clouds"
-                    className="w-20 h-14 object-cover rounded-xl border border-cyan-400/40 shadow-lg shrink-0"
+                    className="w-16 h-12 sm:w-20 sm:h-14 object-cover rounded-xl border border-cyan-400/40 shadow-lg shrink-0"
                   />
                   <div>
                     <div className="text-[10px] font-mono uppercase tracking-widest text-cyan-400 font-bold">
@@ -538,7 +572,7 @@ export function PresentationApp({
             {slide.keyStat && (
               <div
                 className={`shrink-0 rounded-xl border ${
-                  isDenseSlide ? "px-3.5 py-2" : "px-4 py-2.5"
+                  isDenseSlide ? "px-3 py-1.5 sm:px-3.5 sm:py-2" : "px-3.5 py-2 sm:px-4 sm:py-2.5"
                 } flex items-center justify-between gap-3 ${style.statBorder}`}
               >
                 <div className="min-w-0">
@@ -560,19 +594,21 @@ export function PresentationApp({
 
           <div
             className={`lg:col-span-7 xl:col-span-7 flex flex-col justify-between gap-2 ${
-              isScrollMode ? "min-h-[380px]" : "min-h-0 overflow-hidden"
+              isScrollMode
+                ? "min-h-[280px] sm:min-h-[380px]"
+                : "w-full min-h-[240px] xs:min-h-[280px] sm:min-h-[340px] lg:min-h-0 lg:flex-1 lg:overflow-hidden"
             }`}
           >
-            <div className="flex-1 min-h-0 flex flex-col">
+            <div className="flex-1 min-h-[200px] xs:min-h-[240px] sm:min-h-[280px] lg:min-h-0 flex flex-col">
               <SlideVisual slideId={slide.id} />
             </div>
 
             <div className="shrink-0 flex items-center justify-between gap-2 px-3 py-1.5 rounded-xl bg-slate-950/85 border border-slate-800/80 text-xs text-slate-400">
-              <div className="flex items-center gap-2 truncate">
+              <div className="flex items-center gap-2 min-w-0">
                 <span className="font-mono uppercase text-[10px] tracking-wider px-2 py-0.5 rounded bg-slate-800 text-cyan-300 shrink-0">
                   {mediaInfo.credit}
                 </span>
-                <span className="truncate italic text-slate-300">
+                <span className="truncate italic text-slate-300 text-[11px] sm:text-xs">
                   {slide.visualPrompt}
                 </span>
               </div>
@@ -581,7 +617,7 @@ export function PresentationApp({
         </div>
 
         {(showNotes || isScrollMode) && (
-          <footer className="relative z-10 shrink-0 mx-5 sm:mx-7 mb-3 rounded-xl border border-cyan-500/25 bg-[#030612]/95 px-4 py-2.5 shadow-inner">
+          <footer className="relative z-10 shrink-0 mx-3.5 sm:mx-7 mb-3 rounded-xl border border-cyan-500/25 bg-[#030612]/95 px-3.5 sm:px-4 py-2.5 shadow-inner">
             <div className="flex flex-wrap items-center justify-between gap-2 pb-1.5 mb-1.5 border-b border-slate-800/90">
               <div className="flex items-center gap-2">
                 <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded text-[11px] font-mono font-semibold bg-cyan-500/15 text-cyan-300 border border-cyan-500/30">
@@ -644,10 +680,12 @@ export function PresentationApp({
 
   return (
     <div
+      onTouchStart={handleTouchStart}
+      onTouchEnd={handleTouchEnd}
       className={`relative flex flex-col bg-[#03050c] text-slate-100 ${
         viewMode === "deck"
-          ? "h-dvh max-h-dvh w-screen overflow-hidden"
-          : "min-h-screen w-full"
+          ? "min-h-dvh lg:h-dvh lg:max-h-dvh w-full overflow-x-hidden lg:overflow-hidden"
+          : "min-h-screen w-full overflow-x-hidden"
       }`}
     >
       <audio
@@ -661,14 +699,14 @@ export function PresentationApp({
       <StarfieldCanvas />
 
       <header className="shrink-0 sticky top-0 z-30 border-b border-slate-800/80 bg-[#03050c]/85 backdrop-blur-md">
-        <div className="w-full max-w-[1760px] mx-auto px-6 sm:px-10 lg:px-16 xl:px-20 h-12 flex items-center justify-between gap-3">
+        <div className="w-full max-w-[1760px] mx-auto px-3 sm:px-6 lg:px-12 xl:px-16 h-12 flex items-center justify-between gap-2 sm:gap-3">
           {/* Back to Hub + Presentation Title */}
-          <div className="flex items-center gap-2.5 min-w-0">
+          <div className="flex items-center gap-1.5 sm:gap-2.5 min-w-0">
             {onBackToHub ? (
               <button
                 type="button"
                 onClick={handleExitToHub}
-                className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-xs font-mono bg-slate-900 border border-slate-700 text-cyan-300 hover:border-cyan-400 transition shrink-0 cursor-pointer"
+                className="inline-flex items-center gap-1 px-2 py-1 rounded-lg text-xs font-mono bg-slate-900 border border-slate-700 text-cyan-300 hover:border-cyan-400 transition shrink-0 cursor-pointer"
                 title="Return to My Presentations Hub"
               >
                 <span>←</span>
@@ -678,7 +716,7 @@ export function PresentationApp({
               <Link
                 href="/"
                 onClick={handleExitToHub}
-                className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-xs font-mono bg-slate-900 border border-slate-700 text-cyan-300 hover:border-cyan-400 transition shrink-0"
+                className="inline-flex items-center gap-1 px-2 py-1 rounded-lg text-xs font-mono bg-slate-900 border border-slate-700 text-cyan-300 hover:border-cyan-400 transition shrink-0"
                 title="Return to My Presentations Hub"
               >
                 <span>←</span>
@@ -686,8 +724,8 @@ export function PresentationApp({
               </Link>
             )}
 
-            <div className="flex items-center gap-2 truncate">
-              <h1 className="font-display text-sm font-bold text-white truncate">
+            <div className="flex items-center gap-1.5 truncate">
+              <h1 className="font-display text-xs sm:text-sm font-bold text-white truncate max-w-[130px] xs:max-w-[180px] sm:max-w-[280px] md:max-w-none">
                 {deckTitle}
               </h1>
               <span className="hidden lg:inline text-[11px] font-mono text-cyan-400">
@@ -727,7 +765,7 @@ export function PresentationApp({
           </div>
 
           {/* Right Mode & Action Controls */}
-          <div className="flex items-center gap-1.5">
+          <div className="flex items-center gap-1 sm:gap-1.5 shrink-0">
             <div className="flex items-center bg-slate-900 border border-slate-800 rounded-lg p-0.5">
               <button
                 type="button"
@@ -738,7 +776,8 @@ export function PresentationApp({
                     : "text-slate-400 hover:text-white"
                 }`}
               >
-                Slide Deck
+                <span className="sm:hidden">Deck</span>
+                <span className="hidden sm:inline">Slide Deck</span>
               </button>
               <button
                 type="button"
@@ -749,11 +788,12 @@ export function PresentationApp({
                     : "text-slate-400 hover:text-white"
                 }`}
               >
-                All {slides.length} Cards
+                <span className="sm:hidden">All ({slides.length})</span>
+                <span className="hidden sm:inline">All {slides.length} Cards</span>
               </button>
             </div>
 
-            <div className="inline-flex items-center gap-2 bg-slate-900 border border-slate-800 rounded-lg px-2.5 py-1">
+            <div className="inline-flex items-center gap-1.5 bg-slate-900 border border-slate-800 rounded-lg px-2 py-1">
               <button
                 type="button"
                 onClick={toggleBgm}
@@ -765,7 +805,10 @@ export function PresentationApp({
                 title="Toggle Interstellar Piano Background Music"
               >
                 <span className={isBgmPlaying ? "animate-pulse" : ""}>
-                  {isBgmPlaying ? "🎵 Music: ON" : "🔇 Music: OFF"}
+                  {isBgmPlaying ? "🎵" : "🔇"}
+                </span>
+                <span className="hidden md:inline">
+                  {isBgmPlaying ? "Music: ON" : "Music: OFF"}
                 </span>
               </button>
 
@@ -782,7 +825,7 @@ export function PresentationApp({
                     bgAudioRef.current.volume = vol;
                   }
                 }}
-                className="w-12 sm:w-16 h-1 bg-slate-700 accent-cyan-400 rounded-lg cursor-pointer"
+                className="hidden sm:block w-12 sm:w-16 h-1 bg-slate-700 accent-cyan-400 rounded-lg cursor-pointer"
                 title={`Background music volume: ${Math.round(bgmVolume * 100)}%`}
               />
             </div>
@@ -824,10 +867,11 @@ export function PresentationApp({
             <button
               type="button"
               onClick={() => setShowOverview((prev) => !prev)}
-              className="px-2.5 py-1 rounded-lg text-[11px] font-mono bg-slate-900 border border-slate-700 text-slate-200 hover:border-cyan-400/50 cursor-pointer"
+              className="px-2 py-1 sm:px-2.5 sm:py-1 rounded-lg text-[11px] font-mono bg-slate-900 border border-slate-700 text-slate-200 hover:border-cyan-400/50 cursor-pointer"
               title="Open Slide Grid (Shortcut: G)"
             >
-              Grid ({slides.length})
+              <span className="sm:hidden">Grid</span>
+              <span className="hidden sm:inline">Grid ({slides.length})</span>
             </button>
 
             <button
@@ -850,23 +894,23 @@ export function PresentationApp({
       </header>
 
       <main
-        className={`relative z-10 flex-1 w-full max-w-[1760px] mx-auto px-6 sm:px-10 lg:px-16 xl:px-20 flex flex-col justify-between ${
+        className={`relative z-10 flex-1 w-full max-w-[1760px] mx-auto px-3 sm:px-6 lg:px-12 xl:px-16 flex flex-col justify-between ${
           viewMode === "deck"
-            ? "min-h-0 py-3 sm:py-4 gap-2.5 overflow-hidden"
-            : "py-8"
+            ? "py-2 sm:py-3.5 gap-2 sm:gap-2.5 lg:min-h-0 lg:overflow-hidden"
+            : "py-6 sm:py-8"
         }`}
       >
         {viewMode === "deck" ? (
           <>
             {renderSlideCard(currentSlide, false)}
 
-            <div className="shrink-0 flex flex-wrap items-center justify-between gap-3 bg-slate-950/90 border border-slate-800/90 rounded-xl px-3.5 py-1.5 backdrop-blur-md">
-              <div className="flex items-center gap-2">
+            <div className="shrink-0 sticky bottom-2 lg:static z-20 flex items-center justify-between gap-1.5 sm:gap-3 bg-slate-950/95 border border-slate-800/90 rounded-xl px-2.5 sm:px-4 py-1.5 sm:py-2 backdrop-blur-md shadow-2xl">
+              <div className="flex items-center gap-1.5 sm:gap-2">
                 <button
                   type="button"
                   onClick={goPrev}
                   disabled={currentIndex === 0}
-                  className="px-3 py-1 rounded-lg text-xs font-mono font-semibold bg-slate-900 border border-slate-700 text-slate-200 hover:border-cyan-400 disabled:opacity-35 disabled:pointer-events-none cursor-pointer"
+                  className="px-2.5 sm:px-3 py-1.5 rounded-lg text-xs font-mono font-semibold bg-slate-900 border border-slate-700 text-slate-200 hover:border-cyan-400 disabled:opacity-35 disabled:pointer-events-none cursor-pointer"
                 >
                   ← Prev
                 </button>
@@ -874,45 +918,63 @@ export function PresentationApp({
                   type="button"
                   onClick={goNext}
                   disabled={currentIndex === slides.length - 1}
-                  className="px-3.5 py-1 rounded-lg text-xs font-mono font-bold bg-cyan-400 text-slate-950 hover:bg-cyan-300 disabled:opacity-35 disabled:pointer-events-none shadow-[0_0_15px_rgba(34,211,238,0.4)] cursor-pointer"
+                  className="px-3 sm:px-3.5 py-1.5 rounded-lg text-xs font-mono font-bold bg-cyan-400 text-slate-950 hover:bg-cyan-300 disabled:opacity-35 disabled:pointer-events-none shadow-[0_0_15px_rgba(34,211,238,0.4)] cursor-pointer"
                 >
-                  Next Slide →
+                  Next →
                 </button>
               </div>
 
-              <div className="flex items-center gap-1.5 overflow-x-auto py-0.5 max-w-full">
-                {slides.map((s, idx) => {
-                  const active = idx === currentIndex;
-                  return (
-                    <button
-                      key={s.id}
-                      type="button"
-                      onClick={() => {
-                        stopSpeech();
-                        setCurrentIndex(idx);
-                      }}
-                      title={`Slide ${s.id}: ${s.title}`}
-                      className={`h-2 rounded-full transition-all cursor-pointer ${
-                        active
-                          ? "w-6 bg-cyan-400 shadow-[0_0_10px_#22d3ee]"
-                          : "w-2 bg-slate-700 hover:bg-slate-500"
-                      }`}
-                    />
-                  );
-                })}
+              <div className="flex items-center justify-center min-w-0">
+                <button
+                  type="button"
+                  onClick={() => setShowOverview(true)}
+                  className="sm:hidden flex items-center gap-1 px-2.5 py-1 rounded-lg bg-slate-900/90 border border-slate-800 font-mono text-xs text-slate-300 hover:border-cyan-500/50 cursor-pointer"
+                  title="Tap to see all slides"
+                >
+                  <span className="text-cyan-400 font-bold">{currentIndex + 1}</span>
+                  <span className="text-slate-500">/</span>
+                  <span className="text-slate-400">{slides.length}</span>
+                  <span className="text-[10px] text-cyan-400 ml-0.5">▼</span>
+                </button>
+
+                <div className="hidden sm:flex items-center gap-1.5 overflow-x-auto py-0.5 max-w-full">
+                  {slides.map((s, idx) => {
+                    const active = idx === currentIndex;
+                    return (
+                      <button
+                        key={s.id}
+                        type="button"
+                        onClick={() => {
+                          stopSpeech();
+                          setCurrentIndex(idx);
+                        }}
+                        title={`Slide ${s.id}: ${s.title}`}
+                        className={`h-2 rounded-full transition-all cursor-pointer ${
+                          active
+                            ? "w-6 bg-cyan-400 shadow-[0_0_10px_#22d3ee]"
+                            : "w-2 bg-slate-700 hover:bg-slate-500"
+                        }`}
+                      />
+                    );
+                  })}
+                </div>
               </div>
 
-              <div className="flex items-center gap-2">
+              <div className="flex items-center gap-1.5">
                 <button
                   type="button"
                   onClick={() => setShowNotes((prev) => !prev)}
-                  className={`px-2.5 py-1 rounded-lg text-[11px] font-mono border transition cursor-pointer ${
+                  className={`px-2 sm:px-2.5 py-1.5 rounded-lg text-[11px] font-mono border transition cursor-pointer ${
                     showNotes
                       ? "bg-cyan-950/80 border-cyan-500/40 text-cyan-300"
-                      : "bg-slate-900 border-slate-800 text-slate-400"
+                      : "bg-slate-900 border-slate-800 text-slate-400 hover:text-white"
                   }`}
+                  title="Speaker notes (Shortcut: N)"
                 >
-                  {showNotes ? "Hide Notes (N)" : "Show Notes (N)"}
+                  <span className="sm:hidden">{showNotes ? "Hide 🎙️" : "Notes 🎙️"}</span>
+                  <span className="hidden sm:inline">
+                    {showNotes ? "Hide Notes (N)" : "Show Notes (N)"}
+                  </span>
                 </button>
               </div>
             </div>
@@ -1007,16 +1069,16 @@ export function PresentationApp({
       )}
 
       {showOverview && (
-        <div className="fixed inset-0 z-50 bg-black/85 backdrop-blur-xl flex items-center justify-center p-3 sm:p-6 overflow-y-auto">
+        <div className="fixed inset-0 z-50 bg-black/85 backdrop-blur-xl flex items-center justify-center p-2.5 sm:p-6 overflow-y-auto">
           <div className="bg-[#050816] border border-cyan-500/40 rounded-3xl max-w-7xl w-full max-h-[94vh] flex flex-col overflow-hidden shadow-[0_0_80px_-20px_rgba(34,211,238,0.35)]">
             {/* Modal Header */}
-            <div className="px-6 py-4 border-b border-slate-800/90 flex flex-wrap items-center justify-between gap-3 bg-[#03050c]/90">
-              <div className="flex flex-wrap items-center gap-3">
-                <div className="flex items-center gap-2.5">
-                  <h2 className="font-display text-lg font-bold text-white">
-                    All {slides.length} Presentation Slides · Visual Overview
+            <div className="px-4 sm:px-6 py-3 sm:py-4 border-b border-slate-800/90 flex flex-wrap items-center justify-between gap-2.5 bg-[#03050c]/90">
+              <div className="flex flex-wrap items-center gap-2 sm:gap-3 min-w-0">
+                <div className="flex items-center gap-2">
+                  <h2 className="font-display text-sm sm:text-lg font-bold text-white truncate">
+                    All {slides.length} Slides
                   </h2>
-                  <span className="px-2.5 py-0.5 rounded-full text-xs font-mono bg-cyan-950 border border-cyan-500/40 text-cyan-300">
+                  <span className="px-2 py-0.5 rounded-full text-[11px] font-mono bg-cyan-950 border border-cyan-500/40 text-cyan-300">
                     {overviewActFilter === "all"
                       ? `${slides.length} Cards`
                       : `Act ${overviewActFilter}`}
@@ -1024,11 +1086,11 @@ export function PresentationApp({
                 </div>
 
                 {/* Act Filter Pills */}
-                <div className="flex items-center gap-1 bg-slate-900/90 border border-slate-800 p-0.5 rounded-lg">
+                <div className="flex items-center gap-1 bg-slate-900/90 border border-slate-800 p-0.5 rounded-lg overflow-x-auto max-w-full">
                   <button
                     type="button"
                     onClick={() => setOverviewActFilter("all")}
-                    className={`px-2.5 py-0.5 rounded-md text-xs font-mono transition cursor-pointer ${
+                    className={`px-2 sm:px-2.5 py-0.5 rounded-md text-[11px] sm:text-xs font-mono transition cursor-pointer shrink-0 ${
                       overviewActFilter === "all"
                         ? "bg-cyan-500/20 text-cyan-300 border border-cyan-500/40 font-bold"
                         : "text-slate-400 hover:text-white"
@@ -1041,7 +1103,7 @@ export function PresentationApp({
                       key={act.number}
                       type="button"
                       onClick={() => setOverviewActFilter(act.number)}
-                      className={`px-2.5 py-0.5 rounded-md text-xs font-mono transition cursor-pointer ${
+                      className={`px-2 sm:px-2.5 py-0.5 rounded-md text-[11px] sm:text-xs font-mono transition cursor-pointer shrink-0 ${
                         overviewActFilter === act.number
                           ? "bg-cyan-500/20 text-cyan-300 border border-cyan-500/40 font-bold"
                           : "text-slate-400 hover:text-white"
@@ -1060,15 +1122,15 @@ export function PresentationApp({
                 <button
                   type="button"
                   onClick={() => setShowOverview(false)}
-                  className="px-3.5 py-1.5 rounded-xl text-xs font-mono font-semibold bg-slate-800 hover:bg-slate-700 text-slate-200 hover:text-white border border-slate-700 transition cursor-pointer"
+                  className="px-3 py-1 sm:px-3.5 sm:py-1.5 rounded-xl text-xs font-mono font-semibold bg-slate-800 hover:bg-slate-700 text-slate-200 hover:text-white border border-slate-700 transition cursor-pointer"
                 >
-                  ✕ Close (ESC)
+                  ✕ Close
                 </button>
               </div>
             </div>
 
             {/* Modal Cards Grid: 50% Top Thumbnail, 50% Bottom Rich Slide Information */}
-            <div className="p-5 sm:p-6 overflow-y-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
+            <div className="p-3 sm:p-6 overflow-y-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3.5 sm:gap-5">
               {slides
                 .filter(
                   (s) =>

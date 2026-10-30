@@ -20,10 +20,45 @@ const jetbrainsMono = JetBrains_Mono({
   weight: ["400", "500", "600"],
 });
 
+const siteUrl =
+  process.env.NEXT_PUBLIC_SITE_URL ||
+  (process.env.VERCEL_PROJECT_PRODUCTION_URL
+    ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`
+    : "https://my-presentation-nine.vercel.app");
+
 export const metadata: Metadata = {
-  title: "My Presentations | Interactive Web Slide Decks",
+  metadataBase: new URL(siteUrl),
+  title: {
+    default: "My Presentations | Interactive Web Slide Decks",
+    template: "%s | My Presentations",
+  },
   description:
     "Personal presentation hub featuring 'Why Is the Night Sky Dark?' (Olbers' Paradox) and interactive slide decks.",
+  openGraph: {
+    type: "website",
+    locale: "en_US",
+    url: siteUrl,
+    title: "My Presentations | Interactive Web Slide Decks",
+    description:
+      "Personal presentation hub featuring 'Why Is the Night Sky Dark?' (Olbers' Paradox) and interactive slide decks.",
+    siteName: "My Presentations",
+    images: [
+      {
+        url: "/images/og-hub.png",
+        width: 1200,
+        height: 630,
+        alt: "My Presentations | Interactive Web Slide Decks",
+        type: "image/png",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "My Presentations | Interactive Web Slide Decks",
+    description:
+      "Personal presentation hub featuring 'Why Is the Night Sky Dark?' (Olbers' Paradox) and interactive slide decks.",
+    images: ["/images/og-hub.png"],
+  },
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {

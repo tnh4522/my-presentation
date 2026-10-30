@@ -14,6 +14,7 @@ export interface PresentationDeck {
   category: string;
   level?: string;
   coverImage: string;
+  ogImage?: string;
   videoPreview?: string;
   accent: SlideAccent;
   tags: string[];
@@ -35,6 +36,7 @@ export const PRESENTATIONS: PresentationDeck[] = [
     category: "Astronomy & Cosmology",
     coverImage:
       "/images/night-sky-dark/04-Dunkery-Beacon-Keith-Trueman-d4dd113-e1597842367814.webp",
+    ogImage: "/images/night-sky-dark/og-cover.png",
     videoPreview: "/videos/night-sky-dark/interstellar.mp4",
     accent: "cyan",
     tags: [
