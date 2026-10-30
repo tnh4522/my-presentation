@@ -1,0 +1,274 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-10-30T11:06:15.000Z",
+  "title": "Design System: my-presentation",
+  "extensions": {
+    "colorMeta": {
+      "obsidian-void": {
+        "role": "neutral",
+        "displayName": "Obsidian Void",
+        "canonical": "#03050c",
+        "tonalRamp": ["#010206", "#03050c", "#070b18", "#0b1126", "#111b3b", "#1b2b5c", "#294085", "#3f5eb8"]
+      },
+      "slate-glass": {
+        "role": "neutral",
+        "displayName": "Cosmic Glass",
+        "canonical": "#060919",
+        "tonalRamp": ["#02040b", "#060919", "#0c1330", "#141e4a", "#1e2c69", "#2d4091", "#425bbb", "#617ee0"]
+      },
+      "starlight-white": {
+        "role": "neutral",
+        "displayName": "Starlight White",
+        "canonical": "#f1f5f9",
+        "tonalRamp": ["#334155", "#475569", "#64748b", "#94a3b8", "#cbd5e1", "#e2e8f0", "#f1f5f9", "#ffffff"]
+      },
+      "slate-muted": {
+        "role": "neutral",
+        "displayName": "Muted Nebula",
+        "canonical": "#94a3b8",
+        "tonalRamp": ["#1e293b", "#334155", "#475569", "#64748b", "#94a3b8", "#cbd5e1", "#e2e8f0", "#f8fafc"]
+      },
+      "slate-border": {
+        "role": "neutral",
+        "displayName": "Instrument Border",
+        "canonical": "#1e293b",
+        "tonalRamp": ["#0f172a", "#1e293b", "#334155", "#475569", "#64748b", "#94a3b8", "#cbd5e1", "#e2e8f0"]
+      },
+      "cerenkov-cyan": {
+        "role": "primary",
+        "displayName": "Cerenkov Cyan",
+        "canonical": "#22d3ee",
+        "tonalRamp": ["#083344", "#0e7490", "#06b6d4", "#22d3ee", "#67e8f9", "#a5f3fc", "#cffafe", "#ecfeff"]
+      },
+      "cyan-glow": {
+        "role": "primary",
+        "displayName": "Cyan Glow Hover",
+        "canonical": "#67e8f9",
+        "tonalRamp": ["#0e7490", "#06b6d4", "#22d3ee", "#67e8f9", "#a5f3fc", "#cffafe", "#ecfeff", "#f8ffff"]
+      },
+      "cyan-dim": {
+        "role": "primary",
+        "displayName": "Cyan Void Tint",
+        "canonical": "#082f49",
+        "tonalRamp": ["#02121a", "#051e2b", "#082f49", "#0c4a6e", "#0369a1", "#0284c7", "#0ea5e9", "#38bdf8"]
+      },
+      "deep-nebula": {
+        "role": "secondary",
+        "displayName": "Deep Nebula Indigo",
+        "canonical": "#818cf8",
+        "tonalRamp": ["#1e1b4b", "#312e81", "#3730a3", "#4f46e5", "#6366f1", "#818cf8", "#a5b4fc", "#c7d2fe"]
+      },
+      "solar-flare": {
+        "role": "tertiary",
+        "displayName": "Solar Flare Amber",
+        "canonical": "#fbbf24",
+        "tonalRamp": ["#451a03", "#78350f", "#92400e", "#b45309", "#d97706", "#f59e0b", "#fbbf24", "#fde68a"]
+      },
+      "aurora-emerald": {
+        "role": "tertiary",
+        "displayName": "Aurora Emerald",
+        "canonical": "#34d399",
+        "tonalRamp": ["#022c22", "#064e3b", "#065f46", "#047857", "#059669", "#10b981", "#34d399", "#6ee7b7"]
+      }
+    },
+    "typographyMeta": {
+      "display": {
+        "displayName": "Display (Space Grotesk)",
+        "purpose": "Presentation titles, act headings, hero banners."
+      },
+      "headline": {
+        "displayName": "Headline (Space Grotesk)",
+        "purpose": "Slide section headings and major deck cards."
+      },
+      "title": {
+        "displayName": "Title (Plus Jakarta Sans)",
+        "purpose": "Slide subtitles, category labels, modal headers."
+      },
+      "body": {
+        "displayName": "Body (Plus Jakarta Sans)",
+        "purpose": "Slide explanation bullet text, descriptions, voiceover notes."
+      },
+      "label": {
+        "displayName": "Label / Telemetry (JetBrains Mono)",
+        "purpose": "Slide indices, timestamps, tags, stats, keyboard hints."
+      },
+      "telemetry": {
+        "displayName": "Telemetry HUD (JetBrains Mono)",
+        "purpose": "Dense observatory telemetry, act ranges (S1-S4), metadata tags (11px)."
+      },
+      "micro": {
+        "displayName": "Micro Telemetry (JetBrains Mono)",
+        "purpose": "Micro-badges and slide thumbnail counters (10px)."
+      }
+    },
+    "shadows": [
+      {
+        "name": "glow-cyan-primary",
+        "value": "0 0 25px rgba(34, 211, 238, 0.45)",
+        "purpose": "Luminous aura on primary action buttons and active deck launches."
+      },
+      {
+        "name": "glow-cyan-subtle",
+        "value": "0 0 15px rgba(34, 211, 238, 0.2)",
+        "purpose": "Subtle border glow on hovered cards and focused inputs."
+      },
+      {
+        "name": "deep-void-card",
+        "value": "0 20px 70px -20px rgba(0, 0, 0, 0.85)",
+        "purpose": "Ambient backdrop isolation for glass presentation cards."
+      },
+      {
+        "name": "hero-cosmic-glow",
+        "value": "0 25px 80px -20px rgba(34, 211, 238, 0.25)",
+        "purpose": "Radiant foundation glow under the featured deck hero banner."
+      }
+    ],
+    "motion": [
+      {
+        "name": "ease-cosmic",
+        "value": "cubic-bezier(0.16, 1, 0.3, 1)",
+        "purpose": "Fluid transitions for slide changes, drawer animations, and card hover scaling."
+      },
+      {
+        "name": "pulse-glow",
+        "value": "pulse-glow 3s cubic-bezier(0.4, 0, 0.6, 1) infinite",
+        "purpose": "Subtle breathing aura on key cosmic diagram nodes and active speakers."
+      },
+      {
+        "name": "float-slow",
+        "value": "float-slow 6s ease-in-out infinite",
+        "purpose": "Zero-gravity gentle floating motion for astronomical diagram highlights."
+      }
+    ],
+    "breakpoints": [
+      { "name": "sm", "value": "640px" },
+      { "name": "md", "value": "768px" },
+      { "name": "lg", "value": "1024px" },
+      { "name": "xl", "value": "1280px" },
+      { "name": "2xl", "value": "1536px" }
+    ]
+  },
+  "components": [
+    {
+      "name": "Primary Action Button",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "High-impact CTA for launching presentation deck view.",
+      "html": "<button class=\"ds-btn-primary\"><span>▶ Present Now (Slide Deck)</span></button>",
+      "css": ".ds-btn-primary { display: inline-flex; align-items: center; justify-content: center; gap: 8px; padding: 10px 20px; border-radius: 16px; font-family: ui-monospace, 'JetBrains Mono', monospace; font-size: 14px; font-weight: 700; background: #22d3ee; color: #03050c; border: none; cursor: pointer; box-shadow: 0 0 25px rgba(34, 211, 238, 0.45); transition: background 0.2s, transform 0.2s, box-shadow 0.2s; } .ds-btn-primary:hover { background: #67e8f9; transform: translateY(-1px); box-shadow: 0 0 35px rgba(34, 211, 238, 0.65); } .ds-btn-primary:focus-visible { outline: 2px solid #67e8f9; outline-offset: 2px; }"
+    },
+    {
+      "name": "Secondary Mode Button",
+      "kind": "button",
+      "refersTo": "button-secondary",
+      "description": "Subdued glass button for switching into continuous scroll mode or secondary actions.",
+      "html": "<button class=\"ds-btn-secondary\"><span>📜 Scroll Mode (20 Cards)</span></button>",
+      "css": ".ds-btn-secondary { display: inline-flex; align-items: center; justify-content: center; gap: 8px; padding: 10px 16px; border-radius: 16px; font-family: ui-monospace, 'JetBrains Mono', monospace; font-size: 13px; font-weight: 600; background: rgba(15, 23, 42, 0.85); color: #f1f5f9; border: 1px solid #334155; cursor: pointer; transition: border-color 0.2s, color 0.2s, background 0.2s; } .ds-btn-secondary:hover { border-color: #22d3ee; color: #22d3ee; background: rgba(15, 23, 42, 0.95); } .ds-btn-secondary:focus-visible { outline: 2px solid #22d3ee; outline-offset: 2px; }"
+    },
+    {
+      "name": "Telemetry Badge",
+      "kind": "chip",
+      "refersTo": "badge-telemetry",
+      "description": "Compact monospaced tag for slide categories, astronomical tags, and durations.",
+      "html": "<span class=\"ds-badge-telemetry\">ASTRONOMY & COSMOLOGY</span>",
+      "css": ".ds-badge-telemetry { display: inline-flex; align-items: center; padding: 3px 10px; border-radius: 9999px; font-family: ui-monospace, 'JetBrains Mono', monospace; font-size: 11px; font-weight: 600; letter-spacing: 0.05em; background: rgba(8, 47, 73, 0.7); color: #67e8f9; border: 1px solid rgba(34, 211, 238, 0.35); text-transform: uppercase; }"
+    },
+    {
+      "name": "Glass Presentation Card",
+      "kind": "card",
+      "refersTo": "card-glass",
+      "description": "Translucent dark glass enclosure housing slide content and visual media.",
+      "html": "<div class=\"ds-card-glass\"><div class=\"ds-card-header\"><span class=\"ds-badge-telemetry\">SLIDE 01 / 20</span><span class=\"ds-card-act\">ACT I: THE OBVIOUS QUESTION</span></div><h3 class=\"ds-card-title\">Why Is the Night Sky Dark?</h3><p class=\"ds-card-body\">Billions of stars illuminate infinite space, yet our night sky is pitch black. This paradox reveals the secret origins of the cosmos.</p></div>",
+      "css": ".ds-card-glass { position: relative; border-radius: 24px; padding: 24px 28px; background: rgba(6, 9, 25, 0.92); backdrop-filter: blur(20px); border: 1px solid rgba(34, 211, 238, 0.25); box-shadow: 0 20px 70px -20px rgba(0, 0, 0, 0.85); color: #f1f5f9; display: flex; flex-direction: column; gap: 12px; transition: border-color 0.3s; } .ds-card-glass:hover { border-color: rgba(34, 211, 238, 0.45); } .ds-card-header { display: flex; justify-content: space-between; align-items: center; padding-bottom: 8px; border-bottom: 1px solid rgba(30, 41, 59, 0.8); } .ds-card-act { font-family: ui-monospace, 'JetBrains Mono', monospace; font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em; color: #94a3b8; } .ds-card-title { font-family: 'Space Grotesk', system-ui, sans-serif; font-size: 22px; font-weight: 700; color: #ffffff; margin: 0; } .ds-card-body { font-family: 'Plus Jakarta Sans', system-ui, sans-serif; font-size: 14px; line-height: 1.6; color: #cbd5e1; margin: 0; }"
+    },
+    {
+      "name": "Cosmic Search Field",
+      "kind": "input",
+      "refersTo": "input-search",
+      "description": "Header search field for finding presentation decks by topic or keyword.",
+      "html": "<input type=\"text\" class=\"ds-input-search\" placeholder=\"Search presentation topics, keywords...\" value=\"\" />",
+      "css": ".ds-input-search { width: 100%; box-sizing: border-box; border-radius: 12px; padding: 8px 16px; font-family: 'Plus Jakarta Sans', system-ui, sans-serif; font-size: 13px; background: rgba(15, 23, 42, 0.9); border: 1px solid #1e293b; color: #f1f5f9; outline: none; transition: border-color 0.2s, box-shadow 0.2s; } .ds-input-search::placeholder { color: #64748b; } .ds-input-search:focus { border-color: #22d3ee; box-shadow: 0 0 12px rgba(34, 211, 238, 0.25); }"
+    },
+    {
+      "name": "Category Filter Chip",
+      "kind": "chip",
+      "refersTo": "chip-category",
+      "description": "Interactive pill chip for filtering presentations by topic category.",
+      "html": "<div style=\"display:flex;gap:8px;\"><button class=\"ds-chip-active\">All</button><button class=\"ds-chip-inactive\">Astronomy & Cosmology</button></div>",
+      "css": ".ds-chip-active { padding: 6px 14px; border-radius: 12px; font-family: ui-monospace, 'JetBrains Mono', monospace; font-size: 12px; font-weight: 700; background: #22d3ee; color: #03050c; border: none; cursor: pointer; } .ds-chip-inactive { padding: 6px 14px; border-radius: 12px; font-family: ui-monospace, 'JetBrains Mono', monospace; font-size: 12px; background: #0f172a; color: #cbd5e1; border: 1px solid #1e293b; cursor: pointer; transition: border-color 0.2s; } .ds-chip-inactive:hover { border-color: #334155; }"
+    }
+  ],
+  "narrative": {
+    "northStar": "The Deep-Space Planetarium",
+    "overview": "The design language of my-presentation evokes the hushed, reverent atmosphere of an optical planetarium or astronomical observatory at midnight. The interface recedes into an obsidian cosmic void (#03050c), punctuated only by a living canvas of twinkling starlight, rich photographic windows into deep space, and razor-sharp spectral telemetry lines. Rather than viewing slides as corporate office documents, the user steps into an expansive cosmic exhibition where every slide is an illuminated artifact floating in space.\n\nSurfaces are crafted as dark semi-translucent glass slabs (#060919 at 92% opacity with backdrop-blur-xl) bound by delicate 1px luminescent frontiers (border-cyan-500/30). High-chroma color is treated with absolute discipline: hue is never applied as arbitrary surface fill, but exclusively as emitted starlight—phosphorescent cyan, nebula indigo, and solar amber glows that indicate active states, telemetry measurements, and conceptual discoveries.\n\nVisual density balances widescreen cinematic drama with technical rigor. Space Grotesk commands display titles with modern architectural geometry, Plus Jakarta Sans delivers warm, crystalline readability for explanations, and JetBrains Mono anchors timestamps, act numbers, and scientific readouts like instrument markings on an observatory console.",
+    "keyCharacteristics": [
+      "Obsidian Abyssal Void: Base #03050c absorbs the canvas with zero visual noise.",
+      "Translucent Cosmic Glass: Backdrop blur and 1px luminous borders create weightless floating hierarchy.",
+      "Spectral Emission Accents: Vibrant colors appear strictly as emitted photon energy on interactive nodes and badges.",
+      "Dual Presentation Topology: Equal visual dignity between cinematic single-slide stage and continuous long-form scroll.",
+      "Instrument Precision Typography: Tripartite separation between architectural headings, warm prose, and monospaced telemetry."
+    ],
+    "rules": [
+      {
+        "name": "The Emission-Only Rule",
+        "body": "The pitch-black void (#03050c) consumes ≥85% of any viewport. High-chroma accents (cyan, amber, emerald) exist exclusively as luminous emitters on interactive controls, active indicators, and spectral data points (<15% total screen weight). Rarity preserves celestial awe.",
+        "section": "colors"
+      },
+      {
+        "name": "The Spectral Role Rule",
+        "body": "Colors carry semantic physical meaning: Cyan denotes active exploration and current truth; Amber denotes astronomical paradoxes, traps, and historical queries; Indigo denotes mathematical models; Emerald denotes confirmed cosmological resolutions. Colors must not be randomly swapped across acts.",
+        "section": "colors"
+      },
+      {
+        "name": "The Telemetry Contrast Rule",
+        "body": "Display headings always command bold presence in Space Grotesk, body explanations remain in highly legible Plus Jakarta Sans, and all numbers, slide indexes, durations, and metadata are strictly set in JetBrains Mono. Numbers are instruments, not prose.",
+        "section": "typography"
+      },
+      {
+        "name": "The Subtitle Resonance Rule",
+        "body": "Slide subtitles must never repeat the heading color in neutral white. Subtitles take the act's active spectral accent color (e.g. text-cyan-400 or text-amber-400), immediately establishing the thematic tone before the bullet points begin.",
+        "section": "typography"
+      },
+      {
+        "name": "The Horizon-Anchored Frame Rule",
+        "body": "In presentation view, slide cards adapt to viewport constraints with sticky navigation, keeping the interactive slide canvas and primary media centered without window scroll.",
+        "section": "layout"
+      },
+      {
+        "name": "The Dual-Mode Parity Rule",
+        "body": "Every slide component must render with equal structural fidelity in both single-slide stage mode and continuous vertical scroll mode. No feature or interactive diagram may be omitted in either view.",
+        "section": "layout"
+      },
+      {
+        "name": "The Spectral Aura Rule",
+        "body": "Surfaces never cast murky black physical drop-shadows onto the cosmos. Depth is communicated through glass translucency (backdrop-blur-xl), thin boundary lines, and chromatic aura glows (cyan glow on active/hover states).",
+        "section": "elevation"
+      },
+      {
+        "name": "The Z-Plane Integrity Rule",
+        "body": "The visual stack maintains strict layer separation: Starfield canvas (z-0), Background video loops (z-5), Glass card stage (z-10), Header and control bars (z-30), Modal drawers and video player dialogs (z-50).",
+        "section": "elevation"
+      },
+      {
+        "name": "The Planetary Arc Rule",
+        "body": "Major visual enclosures (cards, media viewports, banners) must use generous curvature (≥16px) echoing planetary bodies. Sharp 0px corners are reserved exclusively for code blocks and raw SVG diagram vectors.",
+        "section": "shapes"
+      }
+    ],
+    "dos": [
+      "Do anchor every interface surface against the deep obsidian void (#03050c) with animated or static starfield texture.",
+      "Do use Space Grotesk exclusively for major headings, Plus Jakarta Sans for body prose, and JetBrains Mono for all numbers, metrics, and labels.",
+      "Do limit vivid chromatic accents (cyan, amber, emerald) to active controls, key insight badges, and interactive diagram vectors (<15% screen space).",
+      "Do use rounded glass containers (backdrop-blur-xl, border-slate-800/80, 16px–24px radius) for all elevated UI elements.",
+      "Do provide smooth transitions (transition-all duration-300 ease-out) on card hover states and view-mode toggles.",
+      "Do ensure all audio and video interactions respect browser autoplay restrictions and offer instant mute controls."
+    ],
+    "donts": [
+      "Don't introduce light-mode themes or white page backgrounds; the presentation identity is strictly nocturnal.",
+      "Don't use opaque muddy drop shadows (rgba(0,0,0,0.2)) on dark surfaces; convey depth through glass opacity steps and colored luminescent glows.",
+      "Don't mix random rainbow colors on a single slide; respect the semantic spectral accent assigned to the slide's Act.",
+      "Don't use standard sans-serif fonts for slide numbers, timers, or technical metrics; always use JetBrains Mono.",
+      "Don't create sharp 0px rectangular cards or thick clunky borders (>1px) that break the weightless celestial aesthetic."
+    ]
+  }
+}
