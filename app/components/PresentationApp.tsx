@@ -1642,25 +1642,25 @@ export function PresentationApp({
                 aria-label="Speaker notes teleprompter"
                 className={`${
                   teleprompterDock === "bottom"
-                    ? "fixed bottom-16 sm:bottom-18 left-1/2 -translate-x-1/2 w-[94vw] max-w-3xl z-40 rounded-2xl p-3 sm:p-4 animate-in fade-in slide-in-from-bottom-2"
-                    : "fixed top-14 bottom-16 right-3 w-[92vw] sm:w-[390px] z-40 rounded-2xl p-3.5 sm:p-4.5 flex flex-col justify-between animate-in fade-in slide-in-from-right-2"
+                    ? "fixed bottom-14 sm:bottom-16 left-1/2 -translate-x-1/2 w-[96vw] max-w-5xl lg:max-w-6xl z-40 rounded-xl px-3 sm:px-4 py-2 sm:py-2.5 animate-in fade-in slide-in-from-bottom-2"
+                    : "fixed top-14 bottom-16 right-3 w-[92vw] sm:w-[390px] z-40 rounded-xl p-3 sm:p-3.5 flex flex-col justify-between animate-in fade-in slide-in-from-right-2"
                 } border border-slate-200 dark:border-cyan-500/40 bg-white/98 dark:bg-[#040816]/96 backdrop-blur-2xl shadow-[0_12px_45px_rgba(15,23,42,0.15)] dark:shadow-[0_12px_45px_rgba(0,0,0,0.85)] duration-200`}
               >
-                <div className="flex items-center justify-between gap-2 pb-2 mb-2 border-b border-slate-200 dark:border-slate-800/90">
+                <div className="flex items-center justify-between gap-2 pb-1.5 mb-1.5 border-b border-slate-200 dark:border-slate-800/90">
                   <div className="flex items-center gap-2 min-w-0">
-                    <span className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded text-[11px] font-mono font-bold bg-sky-50 dark:bg-cyan-500/20 text-sky-800 dark:text-cyan-300 border border-sky-200 dark:border-cyan-500/40 truncate">
-                      <IconMic className="w-3.5 h-3.5 text-sky-600 dark:text-cyan-400" />
+                    <span className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded text-[10px] sm:text-[11px] font-mono font-bold bg-sky-50 dark:bg-cyan-500/20 text-sky-800 dark:text-cyan-300 border border-sky-200 dark:border-cyan-500/40 truncate">
+                      <IconMic className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-sky-600 dark:text-cyan-400" />
                       <span>NOTES · S{String(currentSlide.id).padStart(2, "0")}</span>
                     </span>
-                    <span className="text-[11px] font-mono text-slate-500 dark:text-slate-400 hidden sm:inline">
+                    <span className="text-[10px] sm:text-[11px] font-mono text-slate-500 dark:text-slate-400 hidden sm:inline">
                       {currentSlide.voiceover.split(/\s+/).length} words · ~{Math.max(10, Math.round((currentSlide.voiceover.split(/\s+/).length / 130) * 60))}s
                     </span>
                   </div>
-                  <div className="flex items-center gap-1.5 shrink-0">
+                  <div className="flex items-center gap-1 sm:gap-1.5 shrink-0">
                     <button
                       type="button"
                       onClick={() => speakSlide(currentSlide, false)}
-                      className={`inline-flex items-center gap-1 px-2.5 py-1 rounded-md text-[11px] font-mono font-medium transition cursor-pointer ${
+                      className={`inline-flex items-center gap-1 px-2 sm:px-2.5 py-0.5 sm:py-1 rounded-md text-[10px] sm:text-[11px] font-mono font-medium transition cursor-pointer ${
                         speakingSlideId === currentSlide.id
                           ? "bg-sky-500 text-white dark:bg-cyan-400 dark:text-slate-950 font-bold shadow-md border border-sky-400 dark:border-cyan-300"
                           : "bg-sky-50 dark:bg-cyan-500/20 text-sky-800 dark:text-cyan-200 border border-sky-200 dark:border-cyan-500/40 hover:bg-sky-100 dark:hover:bg-cyan-500/30"
@@ -1685,17 +1685,17 @@ export function PresentationApp({
                           prev === "bottom" ? "side" : "bottom"
                         )
                       }
-                      className="hidden sm:inline-flex items-center gap-1 px-2 py-1 rounded-md text-[11px] font-mono text-slate-700 dark:text-slate-300 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 hover:border-slate-400 cursor-pointer"
+                      className="hidden sm:inline-flex items-center gap-1 px-2 py-0.5 sm:py-1 rounded-md text-[10px] sm:text-[11px] font-mono text-slate-700 dark:text-slate-300 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 hover:border-slate-400 cursor-pointer"
                       title="Dock notes to side or bottom so slide visuals stay visible"
                     >
                       {teleprompterDock === "bottom" ? (
                         <>
-                          <IconDockSide className="w-3.5 h-3.5 text-sky-600 dark:text-cyan-400" />
+                          <IconDockSide className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-sky-600 dark:text-cyan-400" />
                           <span>Dock: Side</span>
                         </>
                       ) : (
                         <>
-                          <IconDockBottom className="w-3.5 h-3.5 text-sky-600 dark:text-cyan-400" />
+                          <IconDockBottom className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-sky-600 dark:text-cyan-400" />
                           <span>Dock: Bottom</span>
                         </>
                       )}
@@ -1703,7 +1703,7 @@ export function PresentationApp({
                     <button
                       type="button"
                       onClick={() => setLargeTeleprompter((prev) => !prev)}
-                      className="inline-flex items-center gap-1 px-2 py-1 rounded-md text-[11px] font-mono text-slate-700 dark:text-slate-300 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 hover:border-slate-400 cursor-pointer"
+                      className="inline-flex items-center gap-1 px-2 py-0.5 sm:py-1 rounded-md text-[10px] sm:text-[11px] font-mono text-slate-700 dark:text-slate-300 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 hover:border-slate-400 cursor-pointer"
                       title="Toggle text size"
                     >
                       <IconType className="w-3 h-3 text-sky-600 dark:text-cyan-400" />
@@ -1712,7 +1712,7 @@ export function PresentationApp({
                     <button
                       type="button"
                       onClick={() => handleCopyVoiceover(currentSlide)}
-                      className="inline-flex items-center gap-1 px-2 py-1 rounded-md text-[11px] font-mono text-slate-700 dark:text-slate-300 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 hover:border-slate-400 cursor-pointer"
+                      className="inline-flex items-center gap-1 px-2 py-0.5 sm:py-1 rounded-md text-[10px] sm:text-[11px] font-mono text-slate-700 dark:text-slate-300 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 hover:border-slate-400 cursor-pointer"
                     >
                       {copiedId === currentSlide.id ? (
                         <>
@@ -1729,7 +1729,7 @@ export function PresentationApp({
                     <button
                       type="button"
                       onClick={() => setShowNotes(false)}
-                      className="p-1 rounded-md text-[11px] font-mono text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white bg-slate-100 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 cursor-pointer"
+                      className="p-1 rounded-md text-[10px] sm:text-[11px] font-mono text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white bg-slate-100 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 cursor-pointer"
                       aria-label="Close speaker notes"
                     >
                       <IconClose className="w-3.5 h-3.5" />
@@ -1740,11 +1740,11 @@ export function PresentationApp({
                   className={`text-slate-800 dark:text-slate-100 font-sans leading-relaxed ${
                     teleprompterDock === "side"
                       ? largeTeleprompter
-                        ? "text-base sm:text-lg flex-1 overflow-y-auto my-2 pr-1"
-                        : "text-xs sm:text-sm flex-1 overflow-y-auto my-2 pr-1"
+                        ? "text-xs sm:text-sm flex-1 overflow-y-auto my-1.5 pr-1"
+                        : "text-[11px] sm:text-xs flex-1 overflow-y-auto my-1.5 pr-1"
                       : largeTeleprompter
-                      ? "text-base sm:text-lg max-h-36 overflow-y-auto"
-                      : "text-xs sm:text-sm max-h-24 overflow-y-auto"
+                      ? "text-xs sm:text-sm max-h-24 overflow-y-auto"
+                      : "text-[11px] sm:text-xs max-h-16 overflow-y-auto"
                   }`}
                 >
                   &ldquo;{currentSlide.voiceover}&rdquo;
