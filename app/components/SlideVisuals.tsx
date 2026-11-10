@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useRef, useCallback } from "react";
+import React, { useState, useRef, useCallback, useEffect } from "react";
 
 function IconPhoto({ className = "w-3 h-3" }: { className?: string }) {
   return (
@@ -173,9 +173,25 @@ export const SlideVisual = React.memo(function SlideVisual({ slideId }: SlideVis
   const [splitPos, setSplitPos] = useState<number>(50); // Slide 7
   const [dustStep, setDustStep] = useState<number>(3); // Slide 10
   const [showOverlay, setShowOverlay] = useState<boolean>(true);
-  const [useVideo, setUseVideo] = useState<boolean>(false);
+  const [useVideo, setUseVideo] = useState<boolean>(true);
   const [videoError, setVideoError] = useState<boolean>(false);
   const videoRef = useRef<HTMLVideoElement | null>(null);
+
+  const media = SLIDE_MEDIA_MAP[slideId] || SLIDE_MEDIA_MAP[1];
+
+  // Ensure video starts playing immediately on load or slide change
+  useEffect(() => {
+    if (useVideo && !videoError && media.videoUrl && videoRef.current) {
+      videoRef.current.defaultMuted = true;
+      videoRef.current.muted = true;
+      const playPromise = videoRef.current.play();
+      if (playPromise !== undefined) {
+        playPromise.catch(() => {
+          // Autoplay policy fallback
+        });
+      }
+    }
+  }, [useVideo, videoError, media.videoUrl]);
   const comparisonContainerRef = useRef<HTMLDivElement | null>(null);
   const [isDraggingSplit, setIsDraggingSplit] = useState<boolean>(false);
 
@@ -218,8 +234,6 @@ export const SlideVisual = React.memo(function SlideVisual({ slideId }: SlideVis
     },
     []
   );
-
-  const media = SLIDE_MEDIA_MAP[slideId] || SLIDE_MEDIA_MAP[1];
 
   const containerBase =
     "relative w-full h-full min-h-[180px] flex flex-col justify-between rounded-2xl overflow-hidden bg-[#03050c] select-none group";
@@ -267,13 +281,14 @@ export const SlideVisual = React.memo(function SlideVisual({ slideId }: SlideVis
       return (
         <video
           ref={videoRef}
+          key={media.videoUrl}
           src={media.videoUrl}
           poster={media.primaryImage}
           autoPlay
           loop
           muted
           playsInline
-          preload="metadata"
+          preload="auto"
           onError={() => setVideoError(true)}
           className={`absolute inset-0 w-full h-full ${customImgClass}`}
         />

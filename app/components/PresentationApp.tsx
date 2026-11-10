@@ -1126,7 +1126,7 @@ export function PresentationApp({
             }`}
           >
             <div className="flex-1 min-h-[190px] xs:min-h-[230px] sm:min-h-[260px] lg:min-h-0 flex flex-col">
-              <SlideVisual slideId={slide.id} />
+              <SlideVisual key={slide.id} slideId={slide.id} />
             </div>
 
             <div className="shrink-0 flex items-center justify-between gap-2 px-2.5 py-1 sm:px-3 sm:py-1 rounded-lg bg-slate-100/90 dark:bg-slate-950/85 border border-slate-200 dark:border-slate-800/80 text-[11px] text-slate-500 dark:text-slate-400">
