@@ -502,7 +502,7 @@ const ACCENT_STYLES: Record<
 };
 
 const BACKGROUND_MUSIC_URL =
-  "/sound-background/night-sky-dark/Hans Zimmer - Interstellar - Main Theme (Piano Version) + Sheet Music - YouTube.mp3";
+  "/sound-background/night-sky-dark/interstellar-piano.mp3";
 
 const COSMIC_VIDEOS = [
   {
@@ -594,7 +594,7 @@ export function PresentationApp({
   // Background Piano Music (Interstellar Main Theme - Piano Version)
   const bgAudioRef = useRef<HTMLAudioElement | null>(null);
   const [isBgmPlaying, setIsBgmPlaying] = useState<boolean>(false);
-  const [bgmVolume, setBgmVolume] = useState<number>(0.07); // Soft 7% background volume
+  const [bgmVolume, setBgmVolume] = useState<number>(0.2); // Clear 20% background volume
   const wasBgmPlayingBeforeVideo = useRef<boolean>(false);
   const speakSlideRef = useRef<((slide: SlideData, autoAdvance?: boolean) => void) | null>(null);
 
@@ -685,7 +685,7 @@ export function PresentationApp({
           // Browser autoplay policy: start on first user interaction gesture
           setIsBgmPlaying(false);
           const handleFirstGesture = () => {
-            if (bgAudioRef.current) {
+            if (bgAudioRef.current && bgAudioRef.current.paused) {
               bgAudioRef.current.volume = bgmVolume;
               bgAudioRef.current
                 .play()
@@ -694,9 +694,13 @@ export function PresentationApp({
             }
             window.removeEventListener("pointerdown", handleFirstGesture);
             window.removeEventListener("keydown", handleFirstGesture);
+            window.removeEventListener("touchstart", handleFirstGesture);
+            window.removeEventListener("click", handleFirstGesture);
           };
           window.addEventListener("pointerdown", handleFirstGesture, { once: true });
           window.addEventListener("keydown", handleFirstGesture, { once: true });
+          window.addEventListener("touchstart", handleFirstGesture, { once: true });
+          window.addEventListener("click", handleFirstGesture, { once: true });
         });
     }
   }, [bgmVolume]);
@@ -733,11 +737,19 @@ export function PresentationApp({
     if (!audio) return;
 
     if (audio.paused) {
-      audio.volume = bgmVolume;
-      audio
-        .play()
-        .then(() => setIsBgmPlaying(true))
-        .catch(() => {});
+      const vol = bgmVolume > 0 ? bgmVolume : 0.2;
+      if (bgmVolume <= 0) {
+        setBgmVolume(0.2);
+      }
+      audio.volume = vol;
+      const playPromise = audio.play();
+      if (playPromise !== undefined) {
+        playPromise
+          .then(() => setIsBgmPlaying(true))
+          .catch((err) => {
+            console.error("Audio playback error:", err);
+          });
+      }
     } else {
       audio.pause();
       setIsBgmPlaying(false);
@@ -1262,7 +1274,7 @@ export function PresentationApp({
         ref={bgAudioRef}
         src={BACKGROUND_MUSIC_URL}
         loop
-        preload="none"
+        preload="auto"
         onPlay={() => setIsBgmPlaying(true)}
         onPause={() => setIsBgmPlaying(false)}
         onError={() => setIsBgmPlaying(false)}
@@ -1507,8 +1519,8 @@ export function PresentationApp({
                       </span>
                       <input
                         type="range"
-                        min="0.01"
-                        max="0.25"
+                        min="0"
+                        max="0.6"
                         step="0.01"
                         value={bgmVolume}
                         aria-label="Background music volume"
@@ -1517,6 +1529,12 @@ export function PresentationApp({
                           setBgmVolume(vol);
                           if (bgAudioRef.current) {
                             bgAudioRef.current.volume = vol;
+                            if (vol > 0 && bgAudioRef.current.paused) {
+                              bgAudioRef.current
+                                .play()
+                                .then(() => setIsBgmPlaying(true))
+                                .catch(() => {});
+                            }
                           }
                         }}
                         className="w-full h-1 bg-slate-200 dark:bg-slate-700 accent-sky-500 dark:accent-cyan-400 rounded-lg cursor-pointer"
