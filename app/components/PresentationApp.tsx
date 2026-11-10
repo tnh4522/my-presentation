@@ -570,6 +570,7 @@ export function PresentationApp({
   );
   const [showNotes, setShowNotes] = useState<boolean>(false);
   const [largeTeleprompter, setLargeTeleprompter] = useState<boolean>(false);
+  const [notesLang, setNotesLang] = useState<"en" | "vi">("en");
   const [speakingSlideId, setSpeakingSlideId] = useState<number | null>(null);
   const [autoPlayDeck, setAutoPlayDeck] = useState<boolean>(false);
   const [copiedId, setCopiedId] = useState<number | null>(null);
@@ -773,8 +774,12 @@ export function PresentationApp({
         return;
       }
 
-      const utterance = new SpeechSynthesisUtterance(slide.voiceover);
-      utterance.lang = "en-US";
+      const textToSpeak =
+        notesLang === "vi" && slide.voiceoverVi
+          ? slide.voiceoverVi
+          : slide.voiceover;
+      const utterance = new SpeechSynthesisUtterance(textToSpeak);
+      utterance.lang = notesLang === "vi" && slide.voiceoverVi ? "vi-VN" : "en-US";
       utterance.rate = 0.96;
       utterance.pitch = 1.0;
 
@@ -802,7 +807,7 @@ export function PresentationApp({
 
       window.speechSynthesis.speak(utterance);
     },
-    [speakingSlideId, slides]
+    [speakingSlideId, slides, notesLang]
   );
 
   useEffect(() => {
@@ -914,14 +919,22 @@ export function PresentationApp({
   }, []);
 
   const handleCopyVoiceover = (slide: SlideData) => {
-    navigator.clipboard?.writeText(slide.voiceover);
+    const textToCopy =
+      notesLang === "vi" && slide.voiceoverVi
+        ? slide.voiceoverVi
+        : slide.voiceover;
+    navigator.clipboard?.writeText(textToCopy);
     setCopiedId(slide.id);
     setTimeout(() => setCopiedId(null), 1800);
   };
 
   const renderSlideCard = (slide: SlideData, isScrollMode = false) => {
     const style = ACCENT_STYLES[slide.accent];
-    const wordCount = slide.voiceover.split(/\s+/).length;
+    const currentVoiceover =
+      notesLang === "vi" && slide.voiceoverVi
+        ? slide.voiceoverVi
+        : slide.voiceover;
+    const wordCount = currentVoiceover.split(/\s+/).length;
     const estSeconds = Math.max(10, Math.round((wordCount / 130) * 60));
     const isSpeakingThis = speakingSlideId === slide.id;
     const mediaInfo = SLIDE_MEDIA_MAP[slide.id] || SLIDE_MEDIA_MAP[1];
@@ -1190,6 +1203,17 @@ export function PresentationApp({
 
                 <button
                   type="button"
+                  onClick={() => setNotesLang((prev) => (prev === "en" ? "vi" : "en"))}
+                  className="inline-flex items-center gap-0.5 px-1.5 py-0.5 rounded-md text-[11px] font-mono text-slate-700 dark:text-slate-300 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 hover:border-slate-400 cursor-pointer"
+                  title="Switch between English and Vietnamese notes"
+                >
+                  <span className={notesLang === "en" ? "font-bold text-sky-600 dark:text-cyan-400" : "opacity-60"}>EN</span>
+                  <span className="opacity-40">/</span>
+                  <span className={notesLang === "vi" ? "font-bold text-sky-600 dark:text-cyan-400" : "opacity-60"}>VI</span>
+                </button>
+
+                <button
+                  type="button"
                   onClick={() => handleCopyVoiceover(slide)}
                   className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md text-[11px] font-mono text-slate-700 dark:text-slate-300 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 hover:border-slate-400 cursor-pointer"
                 >
@@ -1215,7 +1239,7 @@ export function PresentationApp({
                   : "text-xs sm:text-sm"
               }`}
             >
-              &ldquo;{slide.voiceover}&rdquo;
+              &ldquo;{currentVoiceover}&rdquo;
             </blockquote>
           </footer>
         )}
@@ -1636,121 +1660,137 @@ export function PresentationApp({
             {renderSlideCard(currentSlide, false)}
 
             {/* Floating Teleprompter Notes Drawer in Deck Mode */}
-            {showNotes && (
-              <div
-                role="region"
-                aria-label="Speaker notes teleprompter"
-                className={`${
-                  teleprompterDock === "bottom"
-                    ? "fixed bottom-14 sm:bottom-16 left-1/2 -translate-x-1/2 w-[96vw] max-w-5xl lg:max-w-6xl z-40 rounded-xl px-3 sm:px-4 py-2 sm:py-2.5 animate-in fade-in slide-in-from-bottom-2"
-                    : "fixed top-14 bottom-16 right-3 w-[92vw] sm:w-[390px] z-40 rounded-xl p-3 sm:p-3.5 flex flex-col justify-between animate-in fade-in slide-in-from-right-2"
-                } border border-slate-200 dark:border-cyan-500/40 bg-white/98 dark:bg-[#040816]/96 backdrop-blur-2xl shadow-[0_12px_45px_rgba(15,23,42,0.15)] dark:shadow-[0_12px_45px_rgba(0,0,0,0.85)] duration-200`}
-              >
-                <div className="flex items-center justify-between gap-2 pb-1.5 mb-1.5 border-b border-slate-200 dark:border-slate-800/90">
-                  <div className="flex items-center gap-2 min-w-0">
-                    <span className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded text-[10px] sm:text-[11px] font-mono font-bold bg-sky-50 dark:bg-cyan-500/20 text-sky-800 dark:text-cyan-300 border border-sky-200 dark:border-cyan-500/40 truncate">
-                      <IconMic className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-sky-600 dark:text-cyan-400" />
-                      <span>NOTES · S{String(currentSlide.id).padStart(2, "0")}</span>
-                    </span>
-                    <span className="text-[10px] sm:text-[11px] font-mono text-slate-500 dark:text-slate-400 hidden sm:inline">
-                      {currentSlide.voiceover.split(/\s+/).length} words · ~{Math.max(10, Math.round((currentSlide.voiceover.split(/\s+/).length / 130) * 60))}s
-                    </span>
-                  </div>
-                  <div className="flex items-center gap-1 sm:gap-1.5 shrink-0">
-                    <button
-                      type="button"
-                      onClick={() => speakSlide(currentSlide, false)}
-                      className={`inline-flex items-center gap-1 px-2 sm:px-2.5 py-0.5 sm:py-1 rounded-md text-[10px] sm:text-[11px] font-mono font-medium transition cursor-pointer ${
-                        speakingSlideId === currentSlide.id
-                          ? "bg-sky-500 text-white dark:bg-cyan-400 dark:text-slate-950 font-bold shadow-md border border-sky-400 dark:border-cyan-300"
-                          : "bg-sky-50 dark:bg-cyan-500/20 text-sky-800 dark:text-cyan-200 border border-sky-200 dark:border-cyan-500/40 hover:bg-sky-100 dark:hover:bg-cyan-500/30"
-                      }`}
-                    >
-                      {speakingSlideId === currentSlide.id ? (
-                        <>
-                          <IconStop className="w-3 h-3 fill-current" />
-                          <span>Stop</span>
-                        </>
-                      ) : (
-                        <>
-                          <IconPlay className="w-3 h-3 fill-current" />
-                          <span>Listen</span>
-                        </>
-                      )}
-                    </button>
-                    <button
-                      type="button"
-                      onClick={() =>
-                        setTeleprompterDock((prev) =>
-                          prev === "bottom" ? "side" : "bottom"
-                        )
-                      }
-                      className="hidden sm:inline-flex items-center gap-1 px-2 py-0.5 sm:py-1 rounded-md text-[10px] sm:text-[11px] font-mono text-slate-700 dark:text-slate-300 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 hover:border-slate-400 cursor-pointer"
-                      title="Dock notes to side or bottom so slide visuals stay visible"
-                    >
-                      {teleprompterDock === "bottom" ? (
-                        <>
-                          <IconDockSide className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-sky-600 dark:text-cyan-400" />
-                          <span>Dock: Side</span>
-                        </>
-                      ) : (
-                        <>
-                          <IconDockBottom className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-sky-600 dark:text-cyan-400" />
-                          <span>Dock: Bottom</span>
-                        </>
-                      )}
-                    </button>
-                    <button
-                      type="button"
-                      onClick={() => setLargeTeleprompter((prev) => !prev)}
-                      className="inline-flex items-center gap-1 px-2 py-0.5 sm:py-1 rounded-md text-[10px] sm:text-[11px] font-mono text-slate-700 dark:text-slate-300 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 hover:border-slate-400 cursor-pointer"
-                      title="Toggle text size"
-                    >
-                      <IconType className="w-3 h-3 text-sky-600 dark:text-cyan-400" />
-                      <span>{largeTeleprompter ? "Normal" : "Large"}</span>
-                    </button>
-                    <button
-                      type="button"
-                      onClick={() => handleCopyVoiceover(currentSlide)}
-                      className="inline-flex items-center gap-1 px-2 py-0.5 sm:py-1 rounded-md text-[10px] sm:text-[11px] font-mono text-slate-700 dark:text-slate-300 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 hover:border-slate-400 cursor-pointer"
-                    >
-                      {copiedId === currentSlide.id ? (
-                        <>
-                          <IconCheck className="w-3 h-3 text-emerald-600 dark:text-emerald-400" />
-                          <span className="text-emerald-600 dark:text-emerald-400 font-bold">Copied</span>
-                        </>
-                      ) : (
-                        <>
-                          <IconCopy className="w-3 h-3" />
-                          <span>Copy</span>
-                        </>
-                      )}
-                    </button>
-                    <button
-                      type="button"
-                      onClick={() => setShowNotes(false)}
-                      className="p-1 rounded-md text-[10px] sm:text-[11px] font-mono text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white bg-slate-100 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 cursor-pointer"
-                      aria-label="Close speaker notes"
-                    >
-                      <IconClose className="w-3.5 h-3.5" />
-                    </button>
-                  </div>
-                </div>
-                <blockquote
-                  className={`text-slate-800 dark:text-slate-100 font-sans leading-relaxed ${
-                    teleprompterDock === "side"
-                      ? largeTeleprompter
-                        ? "text-xs sm:text-sm flex-1 overflow-y-auto my-1.5 pr-1"
-                        : "text-[11px] sm:text-xs flex-1 overflow-y-auto my-1.5 pr-1"
-                      : largeTeleprompter
-                      ? "text-xs sm:text-sm max-h-24 overflow-y-auto"
-                      : "text-[11px] sm:text-xs max-h-16 overflow-y-auto"
-                  }`}
+            {showNotes && (() => {
+              const activeVoiceover =
+                notesLang === "vi" && currentSlide.voiceoverVi
+                  ? currentSlide.voiceoverVi
+                  : currentSlide.voiceover;
+              return (
+                <div
+                  role="region"
+                  aria-label="Speaker notes teleprompter"
+                  className={`${
+                    teleprompterDock === "bottom"
+                      ? "fixed bottom-14 sm:bottom-16 left-1/2 -translate-x-1/2 w-[96vw] max-w-5xl lg:max-w-6xl z-40 rounded-xl px-3 sm:px-4 py-2 sm:py-2.5 animate-in fade-in slide-in-from-bottom-2"
+                      : "fixed top-14 bottom-16 right-3 w-[92vw] sm:w-[390px] z-40 rounded-xl p-3 sm:p-3.5 flex flex-col justify-between animate-in fade-in slide-in-from-right-2"
+                  } border border-slate-200 dark:border-cyan-500/40 bg-white/98 dark:bg-[#040816]/96 backdrop-blur-2xl shadow-[0_12px_45px_rgba(15,23,42,0.15)] dark:shadow-[0_12px_45px_rgba(0,0,0,0.85)] duration-200`}
                 >
-                  &ldquo;{currentSlide.voiceover}&rdquo;
-                </blockquote>
-              </div>
-            )}
+                  <div className="flex items-center justify-between gap-2 pb-1.5 mb-1.5 border-b border-slate-200 dark:border-slate-800/90">
+                    <div className="flex items-center gap-2 min-w-0">
+                      <span className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded text-[10px] sm:text-[11px] font-mono font-bold bg-sky-50 dark:bg-cyan-500/20 text-sky-800 dark:text-cyan-300 border border-sky-200 dark:border-cyan-500/40 truncate">
+                        <IconMic className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-sky-600 dark:text-cyan-400" />
+                        <span>NOTES · S{String(currentSlide.id).padStart(2, "0")}</span>
+                      </span>
+                      <span className="text-[10px] sm:text-[11px] font-mono text-slate-500 dark:text-slate-400 hidden sm:inline">
+                        {activeVoiceover.split(/\s+/).length} words · ~{Math.max(10, Math.round((activeVoiceover.split(/\s+/).length / 130) * 60))}s
+                      </span>
+                    </div>
+                    <div className="flex items-center gap-1 sm:gap-1.5 shrink-0">
+                      <button
+                        type="button"
+                        onClick={() => speakSlide(currentSlide, false)}
+                        className={`inline-flex items-center gap-1 px-2 sm:px-2.5 py-0.5 sm:py-1 rounded-md text-[10px] sm:text-[11px] font-mono font-medium transition cursor-pointer ${
+                          speakingSlideId === currentSlide.id
+                            ? "bg-sky-500 text-white dark:bg-cyan-400 dark:text-slate-950 font-bold shadow-md border border-sky-400 dark:border-cyan-300"
+                            : "bg-sky-50 dark:bg-cyan-500/20 text-sky-800 dark:text-cyan-200 border border-sky-200 dark:border-cyan-500/40 hover:bg-sky-100 dark:hover:bg-cyan-500/30"
+                        }`}
+                      >
+                        {speakingSlideId === currentSlide.id ? (
+                          <>
+                            <IconStop className="w-3 h-3 fill-current" />
+                            <span>Stop</span>
+                          </>
+                        ) : (
+                          <>
+                            <IconPlay className="w-3 h-3 fill-current" />
+                            <span>Listen</span>
+                          </>
+                        )}
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() =>
+                          setTeleprompterDock((prev) =>
+                            prev === "bottom" ? "side" : "bottom"
+                          )
+                        }
+                        className="hidden sm:inline-flex items-center gap-1 px-2 py-0.5 sm:py-1 rounded-md text-[10px] sm:text-[11px] font-mono text-slate-700 dark:text-slate-300 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 hover:border-slate-400 cursor-pointer"
+                        title="Dock notes to side or bottom so slide visuals stay visible"
+                      >
+                        {teleprompterDock === "bottom" ? (
+                          <>
+                            <IconDockSide className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-sky-600 dark:text-cyan-400" />
+                            <span>Dock: Side</span>
+                          </>
+                        ) : (
+                          <>
+                            <IconDockBottom className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-sky-600 dark:text-cyan-400" />
+                            <span>Dock: Bottom</span>
+                          </>
+                        )}
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => setLargeTeleprompter((prev) => !prev)}
+                        className="inline-flex items-center gap-1 px-2 py-0.5 sm:py-1 rounded-md text-[10px] sm:text-[11px] font-mono text-slate-700 dark:text-slate-300 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 hover:border-slate-400 cursor-pointer"
+                        title="Toggle text size"
+                      >
+                        <IconType className="w-3 h-3 text-sky-600 dark:text-cyan-400" />
+                        <span>{largeTeleprompter ? "Normal" : "Large"}</span>
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => setNotesLang((prev) => (prev === "en" ? "vi" : "en"))}
+                        className="inline-flex items-center gap-0.5 px-2 py-0.5 sm:py-1 rounded-md text-[10px] sm:text-[11px] font-mono text-slate-700 dark:text-slate-300 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 hover:border-slate-400 cursor-pointer"
+                        title="Switch between English and Vietnamese notes"
+                      >
+                        <span className={notesLang === "en" ? "font-bold text-sky-600 dark:text-cyan-400" : "opacity-60"}>EN</span>
+                        <span className="opacity-40">/</span>
+                        <span className={notesLang === "vi" ? "font-bold text-sky-600 dark:text-cyan-400" : "opacity-60"}>VI</span>
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => handleCopyVoiceover(currentSlide)}
+                        className="inline-flex items-center gap-1 px-2 py-0.5 sm:py-1 rounded-md text-[10px] sm:text-[11px] font-mono text-slate-700 dark:text-slate-300 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 hover:border-slate-400 cursor-pointer"
+                      >
+                        {copiedId === currentSlide.id ? (
+                          <>
+                            <IconCheck className="w-3 h-3 text-emerald-600 dark:text-emerald-400" />
+                            <span className="text-emerald-600 dark:text-emerald-400 font-bold">Copied</span>
+                          </>
+                        ) : (
+                          <>
+                            <IconCopy className="w-3 h-3" />
+                            <span>Copy</span>
+                          </>
+                        )}
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => setShowNotes(false)}
+                        className="p-1 rounded-md text-[10px] sm:text-[11px] font-mono text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white bg-slate-100 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 cursor-pointer"
+                        aria-label="Close speaker notes"
+                      >
+                        <IconClose className="w-3.5 h-3.5" />
+                      </button>
+                    </div>
+                  </div>
+                  <blockquote
+                    className={`text-slate-800 dark:text-slate-100 font-sans leading-relaxed ${
+                      teleprompterDock === "side"
+                        ? largeTeleprompter
+                          ? "text-xs sm:text-sm flex-1 overflow-y-auto my-1.5 pr-1"
+                          : "text-[11px] sm:text-xs flex-1 overflow-y-auto my-1.5 pr-1"
+                        : largeTeleprompter
+                        ? "text-xs sm:text-sm max-h-24 overflow-y-auto"
+                        : "text-[11px] sm:text-xs max-h-16 overflow-y-auto"
+                    }`}
+                  >
+                    &ldquo;{activeVoiceover}&rdquo;
+                  </blockquote>
+                </div>
+              );
+            })()}
 
             <div className="shrink-0 sticky bottom-2 lg:static z-20 flex items-center justify-between sm:justify-center gap-2 sm:gap-4 md:gap-5 bg-white/95 dark:bg-slate-950/90 border border-slate-200 dark:border-slate-800/80 rounded-2xl px-2.5 sm:px-4 py-1 sm:py-1.5 backdrop-blur-xl shadow-xl dark:shadow-2xl w-full sm:w-auto sm:max-w-fit mx-auto">
               <div className="flex items-center gap-1.5 sm:gap-2">

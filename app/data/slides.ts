@@ -26,6 +26,7 @@ export interface SlideData {
   bullets: SlideBullet[];
   visualPrompt: string;
   voiceover: string;
+  voiceoverVi?: string;
   keyStat?: {
     label: string;
     value: string;
@@ -53,6 +54,8 @@ export const SLIDES: SlideData[] = [
       "Deep starry night sky over a quiet horizon, cinematic lighting.",
     voiceover:
       "Hello everyone. Today I want to talk about a very simple question: why is the sky dark at night? It sounds easy, but this question confused scientists for almost a hundred years. And the answer tells us something amazing about our universe.",
+    voiceoverVi:
+      "Xin chào mọi người. Hôm nay tôi muốn nói về một câu hỏi đơn giản: tại sao bầu trời đêm lại tối? Câu hỏi này từng làm các nhà khoa học bối rối suốt gần một trăm năm, và câu trả lời cho ta biết một điều tuyệt vời về vũ trụ.",
     keyStat: {
       label: "Scientific Mystery",
       value: "~100 Years",
@@ -85,7 +88,9 @@ export const SLIDES: SlideData[] = [
     visualPrompt:
       "A silhouette of an astronomer looking up at a dark sky with a glowing question mark.",
     voiceover:
-      "Look up at the sky tonight. It is black, with a few small stars. Most people never ask why. But for astronomers, this dark sky was a real problem. It did not match what they expected from their theories. Let's see why.",
+      "Look at the sky tonight. It is black, and we can see only a few stars. Most people never ask why. But for astronomers, this was a real problem. It did not fit their ideas.",
+    voiceoverVi:
+      "Hãy nhìn lên bầu trời tối nay: đen thẫm, chỉ có vài ngôi sao. Hầu hết chúng ta chưa bao giờ thắc mắc, nhưng với các nhà thiên văn, đây là một vấn đề thực sự vì nó không khớp với lý thuyết.",
     keyStat: {
       label: "Core Conflict",
       value: "Sight ≠ Theory",
@@ -117,7 +122,9 @@ export const SLIDES: SlideData[] = [
     visualPrompt:
       "Vintage portrait of astronomer Heinrich Olbers next to a telescope and a starry backdrop.",
     voiceover:
-      "In 1823, a German astronomer named Heinrich Olbers looked at the stars and asked a clever question. He thought: if the universe has so many stars, why isn't the night sky bright? This question later became known as Olbers' Paradox.",
+      "In 1823, a German astronomer called Heinrich Olbers asked a smart question. If there are so many stars, why is the night sky not bright? We now call this Olbers' Paradox.",
+    voiceoverVi:
+      "Năm 1823, nhà thiên văn người Đức Heinrich Olbers hỏi: nếu vũ trụ có nhiều sao như vậy, tại sao bầu trời đêm không sáng? Câu hỏi này được gọi là Nghịch lý Olbers.",
     keyStat: {
       label: "Formulated In",
       value: "1823",
@@ -154,7 +161,9 @@ export const SLIDES: SlideData[] = [
     visualPrompt:
       "Concentric rings of stars around Earth showing fewer close stars and many distant stars.",
     voiceover:
-      "Olbers started with a simple idea. Imagine the universe has an endless number of stars, and each one is as bright as our Sun. Of course, far stars look weaker. But there are also many more of them. These two effects balance each other.",
+      "Think of a universe with endless stars. Each star is as bright as our Sun. Stars that are far away look weaker. But there are many more of them. So the two things are equal.",
+    voiceoverVi:
+      "Giả sử vũ trụ có vô số ngôi sao, mỗi sao sáng như Mặt Trời. Sao ở xa trông yếu hơn nhưng số lượng lại nhiều hơn rất nhiều, nên hai hiệu ứng này cân bằng nhau.",
     keyStat: {
       label: "Shell Brightness Law",
       value: "1/r² × r² = 1",
@@ -182,7 +191,9 @@ export const SLIDES: SlideData[] = [
     visualPrompt:
       "Split image comparing lines of sight in a dense forest of trees with lines of sight in a universe full of stars.",
     voiceover:
-      "Now imagine you look in any direction in the sky. If there are endless stars, your eyes must finally meet a star. It doesn't matter how far away it is. It's like standing in a forest: in every direction, you see a tree.",
+      "Look in any direction. If there are endless stars, you will meet a star at last. It is like standing in a forest. In every direction, you see a tree.",
+    voiceoverVi:
+      "Nhìn theo bất kỳ hướng nào, mắt bạn cuối cùng cũng gặp một ngôi sao, giống như đứng giữa rừng: hướng nào cũng thấy một cái cây.",
     keyStat: {
       label: "Line of Sight",
       value: "100% Hit Rate",
@@ -213,7 +224,9 @@ export const SLIDES: SlideData[] = [
     visualPrompt:
       "A surreal illustration of a night landscape where the entire sky is blindingly bright golden-white with overlapping stars.",
     voiceover:
-      "So in theory, the whole sky should be covered by stars. This means that even at night, the sky should shine brightly forever. According to this logic, we should never see darkness. The theory looked perfect.",
+      "So, the whole sky should be full of stars. The night sky should be bright all the time. We should never see darkness. The idea looked perfect.",
+    voiceoverVi:
+      "Vì vậy về lý thuyết, cả bầu trời phải phủ kín sao và sáng rực mãi mãi. Lý thuyết trông thật hoàn hảo.",
     keyStat: {
       label: "Theoretical Sky",
       value: "5,500 °C Glow",
@@ -248,7 +261,9 @@ export const SLIDES: SlideData[] = [
     visualPrompt:
       "High-contrast split screen: half blindingly bright sky (Theory), half pitch-black starry night (Reality).",
     voiceover:
-      'But when we go outside at night, we see the opposite. The sky is dark. Night is a real, proven fact. So we have a problem: the theory says "bright," but the real world says "dark." One of them must be wrong.',
+      'But when we go outside at night, the sky is dark. This is a fact. The idea says "bright", but the real world says "dark". One of them is wrong.',
+    voiceoverVi:
+      "Nhưng ngoài đời, bầu trời đêm lại tối. Lý thuyết nói “sáng”, thực tế nói “tối”: một trong hai phải sai.",
     keyStat: {
       label: "Observed Sky",
       value: "Pitch Black",
@@ -280,7 +295,9 @@ export const SLIDES: SlideData[] = [
     visualPrompt:
       "19th-century astronomers looking puzzled around a chalkboard full of geometry and star charts.",
     voiceover:
-      'This idea shocked the astronomy world. Why? Because the logic was correct in both astronomy and mathematics. There was no obvious mistake. Scientists could not simply say, "Olbers is wrong." They needed a new explanation.',
+      "This surprised scientists. The idea was good in both astronomy and maths. They could not find a mistake. They needed a new answer.",
+    voiceoverVi:
+      "Điều này gây chấn động vì logic đúng cả về thiên văn lẫn toán học, không có lỗi rõ ràng. Các nhà khoa học cần một lời giải thích mới.",
     keyStat: {
       label: "Math & Geometry",
       value: "100% Valid ✅",
@@ -312,7 +329,9 @@ export const SLIDES: SlideData[] = [
     visualPrompt:
       "Distant glowing stars shining through a thick dark nebula cloud of cosmic dust toward Earth.",
     voiceover:
-      "Some people suggested an answer. They said that space has dust and gas, and these absorb the light. Also, light travels at a limited speed. So, they said, light from very far stars never reaches Earth.",
+      "Some people said there is dust and gas in space. The dust and gas take the light. So light from very far stars cannot reach the Earth.",
+    voiceoverVi:
+      "Có người cho rằng bụi và khí trong không gian hấp thụ ánh sáng, nên ánh sáng từ những ngôi sao rất xa không bao giờ đến được Trái Đất.",
     keyStat: {
       label: "Proposed Shield",
       value: "Cosmic Dust",
@@ -354,7 +373,9 @@ export const SLIDES: SlideData[] = [
     visualPrompt:
       "Diagram showing starlight hitting a dust cloud, the cloud heating up and glowing bright red/white toward Earth.",
     voiceover:
-      "But this idea was quickly rejected. Energy cannot just disappear. If dust takes in starlight, it becomes hot. Hot dust then gives off light by itself. That light could travel to Earth, and we could see it. So the sky would still be bright.",
+      "But people soon said no to this idea. Energy cannot disappear. When dust takes starlight, it gets hot. Then it makes its own light. So the sky would still be bright.",
+    voiceoverVi:
+      "Ý tưởng này nhanh chóng bị bác bỏ: năng lượng không tự biến mất. Bụi hấp thụ ánh sáng sẽ nóng lên và tự phát sáng, nên bầu trời vẫn sáng.",
     keyStat: {
       label: "Conservation of Energy",
       value: "Dust Glows 🔥",
@@ -386,7 +407,9 @@ export const SLIDES: SlideData[] = [
     visualPrompt:
       "A shattered glass sphere containing stars, symbolizing a broken model of a static universe.",
     voiceover:
-      "So scientists came back to the main point. Suppose we live in a stable universe that never changes and has no end. In that case, the night sky must be very bright. But the night is dark. That means something is wrong with this picture of the universe.",
+      "Imagine a universe that never changes and never ends. In this universe, the night sky must be very bright. But the night is dark. So this idea of the universe is wrong.",
+    voiceoverVi:
+      "Nếu vũ trụ ổn định, không thay đổi và vô tận, bầu trời đêm phải rất sáng. Nhưng đêm lại tối, nên bức tranh này về vũ trụ có gì đó sai.",
     keyStat: {
       label: "Classical Model",
       value: "Broken ❌",
@@ -424,7 +447,9 @@ export const SLIDES: SlideData[] = [
     visualPrompt:
       'Bold typography "PARADOX" with an impossible optical illusion triangle floating in deep space.',
     voiceover:
-      'This is how Olbers\' Paradox was born. A paradox is when logic leads us to a result that does not match reality. Here, a perfect argument said "the sky is bright," but everyone could see that it was dark. Scientists had to think again.',
+      "This is Olbers' Paradox. A paradox is when good logic gives an answer that is not true in real life. Scientists had to think again.",
+    voiceoverVi:
+      "Nghịch lý là khi logic hoàn hảo dẫn đến kết quả trái với thực tế. Các nhà khoa học phải suy nghĩ lại.",
     keyStat: {
       label: "Paradox Structure",
       value: "Logic ↔ Fact",
@@ -455,7 +480,9 @@ export const SLIDES: SlideData[] = [
     visualPrompt:
       "A finite cluster of galaxies enclosed within a glowing spherical boundary surrounded by complete emptiness.",
     voiceover:
-      "There are two possible answers. First: if the universe has existed forever, then the number of stars must be limited. This means space is not infinite. It must have an edge, or a boundary. So the universe is not endless in size.",
+      "Here is the first answer. If the universe is very old, the number of stars cannot be endless. So space is not endless. It has an end.",
+    voiceoverVi:
+      "Nếu vũ trụ tồn tại mãi mãi thì số sao phải hữu hạn, nghĩa là không gian có ranh giới và không vô tận về kích thước.",
     keyStat: {
       label: "Option 1",
       value: "Finite Space",
@@ -486,7 +513,9 @@ export const SLIDES: SlideData[] = [
     visualPrompt:
       "A cosmic hourglass floating in space with glowing galaxies flowing through it like sand.",
     voiceover:
-      "Now the second answer. If the number of stars is endless, then the universe cannot be infinitely old. If it were, starlight would already have had enough time to reach us from everywhere. The sky would be bright. So the universe's age must be limited.",
+      "Here is the second answer. If there are endless stars, the universe cannot be endlessly old. If it were, the light from all stars would be here now. The sky would be bright. So the universe has an age.",
+    voiceoverVi:
+      "Nếu số sao là vô hạn thì vũ trụ không thể già vô tận, nếu không ánh sáng từ mọi nơi đã đến được chúng ta. Vậy tuổi của vũ trụ phải hữu hạn.",
     keyStat: {
       label: "Option 2",
       value: "Finite Time",
@@ -517,7 +546,9 @@ export const SLIDES: SlideData[] = [
     visualPrompt:
       "Beams of starlight racing through dark space toward Earth, not yet reaching the planet.",
     voiceover:
-      "So the universe must have started at some point in time. It has lived only for a limited time. Light from the farthest stars simply has not arrived yet. This is a big idea. The dark night sky is telling us that the universe is not eternal and unchanging.",
+      "So the universe began at one time. It is not endlessly old. The light from the farthest stars is not here yet. The dark sky tells us: the universe is not forever and it does change.",
+    voiceoverVi:
+      "Vũ trụ phải có một khởi đầu; ánh sáng từ những ngôi sao xa nhất đơn giản là chưa đến nơi. Bầu trời tối cho ta biết vũ trụ không vĩnh cửu và bất biến.",
     keyStat: {
       label: "Speed of Light",
       value: "300,000 km/s",
@@ -549,7 +580,9 @@ export const SLIDES: SlideData[] = [
     visualPrompt:
       "A dramatic, glowing cosmic expansion representing the Big Bang evolving into stars and galaxies.",
     voiceover:
-      "Olbers' Paradox showed that the universe is not stable. Later, it became one of the important clues for the Big Bang theory. This theory says the universe began from a very hot, dense state. It is a base of modern cosmology.",
+      "Olbers' Paradox shows that the universe does not stay the same. Later, it became a clue for the Big Bang theory. This theory says the universe began very hot and very small. It is the base of modern space science.",
+    voiceoverVi:
+      "Nghịch lý Olbers trở thành một manh mối quan trọng cho thuyết Vụ Nổ Lớn: vũ trụ bắt đầu từ trạng thái rất nóng và đặc, nền tảng của vũ trụ học hiện đại.",
     keyStat: {
       label: "Cosmic Origin",
       value: "The Big Bang",
@@ -580,7 +613,9 @@ export const SLIDES: SlideData[] = [
     visualPrompt:
       "Spiral galaxies moving outward in all directions with glowing arrows showing increasing speed with distance.",
     voiceover:
-      "The story continues. We now know that the universe is expanding. And the farther a galaxy is, the faster it moves away from us. The expansion is also speeding up. So the future of the universe looks a little sad and lonely.",
+      "The story goes on. Today we know that the universe is growing bigger. Galaxies that are far from us move away faster. And this is getting faster and faster.",
+    voiceoverVi:
+      "Ngày nay ta biết vũ trụ đang giãn nở: thiên hà càng xa thì càng chuyển động ra xa nhanh hơn, và sự giãn nở còn đang tăng tốc.",
     keyStat: {
       label: "Hubble's Rule",
       value: "Farther = Faster",
@@ -610,7 +645,9 @@ export const SLIDES: SlideData[] = [
     visualPrompt:
       'A boundary circle around Earth ("Observable Universe") with distant galaxies outside fading into redness and darkness.',
     voiceover:
-      "Because of this fast expansion, many distant galaxies move away faster than the speed of light. This means their light can never reach the Earth. It doesn't matter how long we wait. Those parts of the universe are completely out of our sight.",
+      "Because of this, many far galaxies move away faster than light. Their light can never reach the Earth. We can wait a very long time, but it will not come. We can never see these parts of the universe.",
+    voiceoverVi:
+      "Vì thế nhiều thiên hà xa xôi lùi ra nhanh hơn tốc độ ánh sáng, nên ánh sáng của chúng không bao giờ đến được Trái Đất, dù chúng ta chờ bao lâu.",
     keyStat: {
       label: "Cosmic Horizon",
       value: "v > c",
@@ -640,7 +677,9 @@ export const SLIDES: SlideData[] = [
     visualPrompt:
       "A lone radio telescope on Earth pointing into deep space toward a faint, unreachable distant galaxy.",
     voiceover:
-      "Think about this: if aliens live in those far galaxies, we will never see them. We will never get their light or their signals. It is a place that light can never touch. Maybe this is one reason why we cannot find anyone.",
+      "Think about this. Maybe aliens live in those far galaxies. We can never see them. We can never get their light or their signals. Maybe this is one reason why we cannot find anyone.",
+    voiceoverVi:
+      "Nếu có người ngoài hành tinh ở những thiên hà đó, chúng ta sẽ không bao giờ nhận được ánh sáng hay tín hiệu của họ. Có lẽ đó là một lý do khiến ta chưa tìm thấy ai.",
     keyStat: {
       label: "Signal Reach",
       value: "Unreachable",
@@ -678,7 +717,9 @@ export const SLIDES: SlideData[] = [
     visualPrompt:
       "Three clean icon cards showing an apple, mathematical wave equations, and a starry night sky.",
     voiceover:
-      "From one simple question about the night sky, people discovered a deep secret of the universe. Newton used a falling apple to find the law of gravity. Maxwell used a few equations to predict electromagnetic waves. And Olbers used the dark sky to show that the universe has a beginning. Human logic and imagination are truly amazing. Maybe one day, we will find the last secret of the universe. Thank you for listening.",
+      "From one simple question about the night sky, people found a big secret of the universe. Newton used a falling apple to find gravity. Maxwell used a few equations to find electromagnetic waves. Olbers used the dark sky to show that the universe has a beginning. Human thinking is great. Maybe one day we will find the last secret of the universe. Thank you for listening.",
+    voiceoverVi:
+      "Từ một câu hỏi đơn giản về bầu trời đêm, con người đã khám phá ra một bí mật sâu xa của vũ trụ. Newton dùng quả táo rơi, Maxwell dùng vài phương trình, còn Olbers dùng bầu trời tối để chỉ ra vũ trụ có một khởi đầu. Logic và trí tưởng tượng của con người thật đáng kinh ngạc. Cảm ơn mọi người đã lắng nghe.",
     keyStat: {
       label: "Human Curiosity",
       value: "Keep Asking ✨",
